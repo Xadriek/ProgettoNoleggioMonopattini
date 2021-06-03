@@ -3,14 +3,15 @@
 	<head th:replace="fragments/base.html :: headerfiles(title=#{pageTitle.persona})"> </head>
 <body>
 	<header th:replace="fragments/base.html :: intestazione"></header>
-    questa è la homepage dalla quale si puo accedere alla pagina di loginform oppure registerForm oppure alla pagina di informazioni del museo
-    
     <div>
-			<a th:href="@{/login}">login utente</a>
+    	<h4 th:text="#{header.persona}">...</h4>
+    	
+    	<div th:if="${persona}" th:object="${persona}">
+			<span th:text="*{nome}">qui-va-nome</span>
+			<span th:text="*{cognome}">qui-va-cognome</span>
    		</div>
-   		<div>
-			<a th:href="@{/contatti}">informazioni museo</a>
-   		</div>
+    	<div th:unless="${persona}">Non esiste</div>
+    </div>
     <footer th:replace="fragments/base.html :: fondo"></footer>
 </body>
 </html>
