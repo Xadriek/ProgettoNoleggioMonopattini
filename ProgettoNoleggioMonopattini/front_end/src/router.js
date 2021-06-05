@@ -1,26 +1,68 @@
-import Vue from "vue";
-import Router from "vue-router";
+import Vue from 'vue';
+import Router from 'vue-router';
+import Home from './views/Home.vue';
+import Login from './views/Login.vue';
+import Register from './views/Register.vue';
 
 Vue.use(Router);
-//https://bezkoder.com/spring-boot-vue-js-crud-example/
-export default new Router({
-  mode: "history",
+
+export const router = new Router({
+  mode: 'history',
   routes: [
     {
-      path: "/",
-      alias: "/tutorials",
-      name: "tutorials",
-      component: () => import("./components/TutorialsList")
+      path: '/',
+      name: 'home',
+      component: Home
     },
     {
-      path: "/tutorials/:id",
-      name: "tutorial-details",
-      component: () => import("./components/Tutorial")
+      path: '/home',
+      component: Home
     },
     {
-      path: "/add",
-      name: "add",
-      component: () => import("./components/AddTutorial")
+      path: '/login',
+      component: Login
+    },
+    {
+      path: '/register',
+      component: Register
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      // lazy-loaded
+      component: () => import('./views/Profile.vue')
+    },
+    {
+      path: '/admin',
+      name: 'admin',
+      // lazy-loaded
+      component: () => import('./views/BoardAdmin.vue')
+    },
+    {
+      path: '/partner',
+      name: 'partner',
+      // lazy-loaded
+      component: () => import('./views/BoardPartner.vue')
+    },
+    {
+      path: '/customer',
+      name: 'customer',
+      // lazy-loaded
+      component: () => import('./views/BoardCustomer.vue')
     }
   ]
+});
+
+router.beforeEach((to, from, next) => {
+  const publicPages = ['/login', '/register', '/home'];
+  const authRequired = !publicPages.includes(to.path);
+  const loggedIn = localStorage.getItem('user');
+
+  // trying to access a restricted page + not logged in
+  // redirect to login page
+  if (authRequired && !loggedIn) {
+    next('/login');
+  } else {
+    next();
+  }
 });
