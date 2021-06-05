@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.sql.DataSource;
 
@@ -19,7 +20,8 @@ import javax.sql.DataSource;
 
 
 import static it.uniroma3.siw.spring.model.Credentials.ADMIN_ROLE;
-//import static it.uniroma3.siw.spring.model.Credentials.DEFAULT_ROLE;
+import static it.uniroma3.siw.spring.model.Credentials.DEFAULT_ROLE;
+import static it.uniroma3.siw.spring.model.Credentials.PARTNER_ROLE;
 
 /**
  * The AuthConfiguration is a Spring Security Configuration.
@@ -51,6 +53,10 @@ public class AuthConfiguration extends WebSecurityConfigurerAdapter {
                 // solo gli utenti autenticati con ruolo ADMIN possono accedere a risorse con path /admin/**
                 .antMatchers(HttpMethod.GET, "/admin/**").hasAnyAuthority(ADMIN_ROLE)
                 .antMatchers(HttpMethod.POST, "/admin/**").hasAnyAuthority(ADMIN_ROLE)
+                .antMatchers(HttpMethod.GET, "/user/**").hasAnyAuthority(DEFAULT_ROLE)
+                .antMatchers(HttpMethod.POST, "/user/**").hasAnyAuthority(DEFAULT_ROLE)
+                .antMatchers(HttpMethod.GET, "/partner/**").hasAnyAuthority(PARTNER_ROLE)
+                .antMatchers(HttpMethod.POST, "/partner/**").hasAnyAuthority(PARTNER_ROLE)
                 // tutti gli utenti autenticati possono accere alle pagine rimanenti 
                 .anyRequest().authenticated()
 
@@ -67,6 +73,7 @@ public class AuthConfiguration extends WebSecurityConfigurerAdapter {
                 .and().logout()
                 // il logout è attivato con una richiesta GET a "/logout"
                 .logoutUrl("/logout")
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 // in caso di successo, si viene reindirizzati alla /index page
                 .logoutSuccessUrl("/index")        
                 .invalidateHttpSession(true)
