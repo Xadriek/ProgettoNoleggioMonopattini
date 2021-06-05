@@ -10,21 +10,14 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
 import it.uniroma3.siw.rentalev.security.jwt.AuthEntryPointJwt;
 import it.uniroma3.siw.rentalev.security.jwt.AuthTokenFilter;
 import it.uniroma3.siw.rentalev.security.services.UserDetailsServiceImpl;
 
-import static it.uniroma3.siw.rentalev.model.Credentials.ADMIN_ROLE;
-import static it.uniroma3.siw.rentalev.model.Credentials.DEFAULT_ROLE;
-import static it.uniroma3.siw.rentalev.model.Credentials.PARTNER_ROLE;
 
-import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
