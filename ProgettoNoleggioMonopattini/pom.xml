@@ -10,11 +10,11 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>it.uniroma3.siw</groupId>
-	<artifactId>siw-spring-museum</artifactId>
+	<artifactId>siw-spring-rentalEV</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>spring</name>
 	<packaging>jar</packaging>
-	<description>SIW: Spring Boot Demo Project</description>
+	<description>SIW: Spring Boot RentalEV Project</description>
 
 	<properties>
 		<java.version>1.8</java.version>
