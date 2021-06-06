@@ -17,10 +17,10 @@ import it.uniroma3.siw.rentalev.security.services.UserDetailsImpl;
 public class JwtUtils {
 	private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
-	@Value("${bezkoder.app.jwtSecret}")
+	@Value("${fox.app.jwtSecret}")
 	private static String jwtSecret;
 
-	@Value("${bezkoder.app.jwtExpirationMs}")
+	@Value("${fox.app.jwtExpirationMs}")
 	private static int jwtExpirationMs;
 
 	public static String generateJwtToken(Authentication authentication) {

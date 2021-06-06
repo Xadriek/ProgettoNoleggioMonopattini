@@ -95,27 +95,43 @@ public class AuthController {
 		Set<Role> roles = new HashSet<>();
 
 		if (strRoles == null) {
-			Role customerRole = roleService.findByName(ERole.ROLE_CUSTOMER)
-					.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+			Role customerRole=null;
+			try {
+			customerRole = (Role)roleService.findByName(ERole.ROLE_CUSTOMER);
+			}catch(Exception e) {
+				new RuntimeException("Error: Role is not found.");
+			}
 			roles.add(customerRole);
 		} else {
 			strRoles.forEach(role -> {
 				switch (role) {
 				case "admin":
-					Role adminRole = roleService.findByName(ERole.ROLE_ADMIN)
-							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+					Role adminRole=null;
+					try {
+					adminRole = (Role)roleService.findByName(ERole.ROLE_ADMIN);
+					}catch(Exception e) {
+						new RuntimeException("Error: Role is not found.");
+					}
 					roles.add(adminRole);
 
 					break;
 				case "mod":
-					Role partnerRole = roleService.findByName(ERole.ROLE_PARTNER)
-							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+					Role partnerRole=null;
+					try {
+					partnerRole = (Role)roleService.findByName(ERole.ROLE_PARTNER);
+					}catch(Exception e) {
+						new RuntimeException("Error: Role is not found.");
+					}
 					roles.add(partnerRole);
 
 					break;
 				default:
-					Role customerRole = roleService.findByName(ERole.ROLE_CUSTOMER)
-							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+					Role customerRole=null;
+					try {
+					customerRole = (Role)roleService.findByName(ERole.ROLE_CUSTOMER);
+					}catch(Exception e) {
+						new RuntimeException("Error: Role is not found.");
+					}
 					roles.add(customerRole);
 				}
 			});
