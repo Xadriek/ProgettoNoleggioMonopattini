@@ -27,6 +27,7 @@ public class JwtUtils {
 	  
 	jwtSecret="foxSecretKey";
 	jwtExpirationMs=86400000;
+	
     UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
 
     return Jwts.builder().setSubject((userPrincipal.getUsername())).setIssuedAt(new Date())
