@@ -17,14 +17,14 @@ public class TestController {
 	
 	@GetMapping("/customer")
 	@PreAuthorize("hasRole('CUSTOMER')")
-	public String userAccess() {
-		return "User Content.";
+	public String customerAccess() {
+		return "Customer Content.";
 	}
 
-	@GetMapping("/mod")
+	@GetMapping("/partner")
 	@PreAuthorize("hasRole('PARTNER')")
-	public String moderatorAccess() {
-		return "Moderator Board.";
+	public String partnerAccess() {
+		return "Partner Board.";
 	}
 
 	@GetMapping("/admin")

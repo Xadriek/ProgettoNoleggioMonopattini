@@ -12,9 +12,9 @@
           <router-link to="/admin" class="nav-link">Admin Board</router-link>
         </li>
         <li v-if="showPartnerBoard" class="nav-item">
-          <router-link to="/mod" class="nav-link">Partner Board</router-link>
+          <router-link to="/partner" class="nav-link">Partner Board</router-link>
         </li>
-        <li class="nav-item">
+        <li v-if="showCustomerBoard"  class="nav-item">
           <router-link v-if="currentUser" to="/customer" class="nav-link">User</router-link>
         </li>
       </div>
@@ -59,6 +59,13 @@ export default {
     currentUser() {
       return this.$store.state.auth.user;
     },
+    showCustomerBoard() {
+      if (this.currentUser && this.currentUser.roles) {
+        return this.currentUser.roles.includes('ROLE_CUSTOMER');
+      }
+
+      return false;
+    },
     showAdminBoard() {
       if (this.currentUser && this.currentUser.roles) {
         return this.currentUser.roles.includes('ROLE_ADMIN');
@@ -66,7 +73,7 @@ export default {
 
       return false;
     },
-    showModeratorBoard() {
+    showPartnerBoard() {
       if (this.currentUser && this.currentUser.roles) {
         return this.currentUser.roles.includes('ROLE_PARTNER');
       }

@@ -115,7 +115,7 @@ public class AuthController {
 					roles.add(adminRole);
 
 					break;
-				case "mod":
+				case "partner":
 					Role partnerRole=null;
 					try {
 					partnerRole = (Role)roleService.findByName(ERole.ROLE_PARTNER);
