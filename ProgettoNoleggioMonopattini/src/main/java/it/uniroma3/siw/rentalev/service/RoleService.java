@@ -1,4 +1,4 @@
-package it.uniroma3.siw.rentalev.controller;
+package it.uniroma3.siw.rentalev.service;
 
 import javax.transaction.Transactional;
 

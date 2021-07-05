@@ -28,6 +28,7 @@ import it.uniroma3.siw.rentalev.payload.response.JwtResponse;
 import it.uniroma3.siw.rentalev.payload.response.MessageResponse;
 import it.uniroma3.siw.rentalev.security.jwt.JwtUtils;
 import it.uniroma3.siw.rentalev.security.services.UserDetailsImpl;
+import it.uniroma3.siw.rentalev.service.RoleService;
 import it.uniroma3.siw.rentalev.service.UserService;
 
 
