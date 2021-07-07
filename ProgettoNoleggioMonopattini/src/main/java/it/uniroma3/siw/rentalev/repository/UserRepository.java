@@ -6,8 +6,8 @@ import it.uniroma3.siw.rentalev.model.User;
 
 public interface UserRepository extends CrudRepository<User, Long> {
 
-	Object findByUsername(String username);
+	public Object findByUsername(String username);
 
-	Object findByEmail(String email);
+	public Object findByEmail(String email);
 
 }

@@ -7,6 +7,6 @@ import it.uniroma3.siw.rentalev.model.Role;
 
 public interface RoleRepository extends CrudRepository<Role, Long>{
 
-	Role findByName(ERole roleCustomer);
+	Role findByName(ERole role);
 
 }
