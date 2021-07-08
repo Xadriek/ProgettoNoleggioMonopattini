@@ -11,7 +11,7 @@ import it.uniroma3.siw.rentalev.model.Address;
 
 import it.uniroma3.siw.rentalev.model.Hub;
 import it.uniroma3.siw.rentalev.model.Partner;
-import it.uniroma3.siw.rentalev.model.Rent;
+
 import it.uniroma3.siw.rentalev.model.User;
 
 import it.uniroma3.siw.rentalev.repository.PartnerRepository;
