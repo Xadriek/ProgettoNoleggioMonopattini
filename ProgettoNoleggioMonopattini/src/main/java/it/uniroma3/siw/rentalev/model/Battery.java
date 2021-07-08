@@ -9,9 +9,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import lombok.Data;
 
@@ -34,24 +35,13 @@ public class Battery {
 	private LocalDate dateOfDismiss;
 	@OneToMany(mappedBy="battery",cascade = CascadeType.ALL)
 	private List<Swap> swapList;
-	@ManyToMany
-	private List<Hub> hubList;
-	@OneToMany(mappedBy="battery",cascade = CascadeType.ALL)
-	private List<Scooter> scooters;
+	@ManyToOne
+	private Hub hub;
+	@OneToOne
+	private Scooter scooters;
 	
 	
-	public Battery(Long id, float voltage, float capacity, LocalDate dateOfBirth, LocalDate dateOfDismiss,
-			List<Swap> swapList, List<Hub> hubList, List<Scooter> scooters) {
-		super();
-		this.id = id;
-		this.voltage = voltage;
-		this.capacity = capacity;
-		this.dateOfBirth = dateOfBirth;
-		this.dateOfDismiss = dateOfDismiss;
-		this.swapList = swapList;
-		this.hubList = hubList;
-		this.scooters = scooters;
-	}
+	
 	
 	
 	

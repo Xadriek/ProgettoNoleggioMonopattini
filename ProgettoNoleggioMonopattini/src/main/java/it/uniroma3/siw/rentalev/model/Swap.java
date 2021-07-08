@@ -34,14 +34,7 @@ public class Swap {
 	@OneToOne(cascade = CascadeType.ALL)
 	private CoinTransation coinTransation;
 
-	public Swap(LocalDateTime eventLog, Hub hub, Battery battery, Scooter scooter, CoinTransation coinTransation) {
 
-		this.eventLog = eventLog;
-		this.hub = hub;
-		this.battery = battery;
-		this.scooter = scooter;
-		this.coinTransation = coinTransation;
-	}
 	
 	
 	

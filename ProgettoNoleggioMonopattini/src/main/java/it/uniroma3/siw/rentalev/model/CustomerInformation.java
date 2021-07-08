@@ -45,17 +45,7 @@ public class CustomerInformation implements UserInformation{
 	@OneToMany(mappedBy="fromCustomer",cascade = CascadeType.ALL)
 	private List<CoinTransation> coinTransactions;
 
-	public CustomerInformation(String name, String surname, Long telephon, Address address,
-			Wallet customerWallet, List<Rent> rental, List<CoinTransation> coinTransactions) {
-		super();
-		this.name = name;
-		this.surname = surname;
-		this.telephon = telephon;
-		this.address = address;
-		this.customerWallet = customerWallet;
-		this.rental = rental;
-		this.coinTransactions = coinTransactions;
-	}
+	
 	
 	
 	

@@ -9,7 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -24,7 +24,7 @@ public class Scooter {
 	private Long id;
 	@OneToOne 
 	private Rent rent;
-	@ManyToOne
+	@OneToOne
 	private Battery battery;
 	@Column(nullable=false)
 	private LocalDate dateOfBirth;
@@ -34,14 +34,7 @@ public class Scooter {
 	private List<Swap> swapList;
 	
 	
-	public Scooter(Rent rent, Battery battery, LocalDate dateOfBirth, LocalDate dateOfDismiss, List<Swap> swapList) {
-		super();
-		this.rent = rent;
-		this.battery = battery;
-		this.dateOfBirth = dateOfBirth;
-		this.dateOfDismiss = dateOfDismiss;
-		this.swapList = swapList;
-	}
+	
 
 	
 	

@@ -32,16 +32,7 @@ public class CoinTransation {
 	@OneToOne(cascade = CascadeType.ALL)
 	private Swap swap;
 	
-	public CoinTransation(Long id, CustomerInformation fromCustomer, PartnerInformation toPartner, LocalDateTime logTransition, int coin,
-			Swap swap) {
-		super();
-		this.id = id;
-		this.fromCustomer = fromCustomer;
-		this.toPartner = toPartner;
-		this.logTransition = logTransition;
-		this.coin = coin;
-		this.swap = swap;
-	}
+
 	
 	
 	

@@ -9,7 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -29,19 +28,10 @@ public class Hub {
 	private LocalDate dateOfDismiss;
 	@OneToMany(mappedBy="hub",cascade = CascadeType.ALL)
 	private List<Swap> swapCompleted;
-	@ManyToMany(cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="hub",cascade=CascadeType.ALL)
 	private List<Battery> stokedBattery;
 	
-	public Hub(Long id, PartnerInformation custodial, LocalDate dateOfAssembly, LocalDate dateOfDismiss, List<Swap> swapCompleted,
-			List<Battery> stokedBattery) {
-		super();
-		this.id = id;
-		this.custodial = custodial;
-		this.dateOfAssembly = dateOfAssembly;
-		this.dateOfDismiss = dateOfDismiss;
-		this.swapCompleted = swapCompleted;
-		this.stokedBattery = stokedBattery;
-	}
+
 	
 	
 	

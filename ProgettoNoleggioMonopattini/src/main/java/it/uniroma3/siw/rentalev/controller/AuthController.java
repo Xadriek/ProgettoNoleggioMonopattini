@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import ch.qos.logback.classic.Logger;
 import it.uniroma3.siw.rentalev.model.ERole;
 import it.uniroma3.siw.rentalev.model.Role;
 import it.uniroma3.siw.rentalev.model.User;
@@ -60,17 +61,17 @@ public class AuthController {
 
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		String jwt = JwtUtils.generateJwtToken(authentication);
-		
+
 		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();		
 		List<String> roles = userDetails.getAuthorities().stream()
 				.map(item -> item.getAuthority())
 				.collect(Collectors.toList());
 
 		return ResponseEntity.ok(new JwtResponse(jwt, 
-												 userDetails.getId(), 
-												 userDetails.getUsername(), 
-												 userDetails.getEmail(), 
-												 roles));
+				userDetails.getId(), 
+				userDetails.getUsername(), 
+				userDetails.getEmail(), 
+				roles));
 	}
 
 	@PostMapping("/signup")
@@ -89,8 +90,8 @@ public class AuthController {
 
 		// Create new user's account
 		User user = new User(signUpRequest.getUsername(), 
-							 signUpRequest.getEmail(),
-							 encoder.encode(signUpRequest.getPassword()));
+				signUpRequest.getEmail(),
+				encoder.encode(signUpRequest.getPassword()));
 
 		Set<String> strRoles = signUpRequest.getRole();
 		Set<Role> roles = new HashSet<>();
@@ -98,7 +99,7 @@ public class AuthController {
 		if (strRoles == null) {
 			Role customerRole=null;
 			try {
-			customerRole = (Role)roleService.findByName(ERole.ROLE_CUSTOMER);
+				customerRole = roleService.findByName(ERole.ROLE_CUSTOMER);
 			}catch(Exception e) {
 				new RuntimeException("Error: Role is not found.");
 			}
@@ -109,7 +110,7 @@ public class AuthController {
 				case "admin":
 					Role adminRole=null;
 					try {
-					adminRole = (Role)roleService.findByName(ERole.ROLE_ADMIN);
+						adminRole = (Role)roleService.findByName(ERole.ROLE_ADMIN);
 					}catch(Exception e) {
 						new RuntimeException("Error: Role is not found.");
 					}
@@ -119,7 +120,7 @@ public class AuthController {
 				case "partner":
 					Role partnerRole=null;
 					try {
-					partnerRole = (Role)roleService.findByName(ERole.ROLE_PARTNER);
+						partnerRole = (Role)roleService.findByName(ERole.ROLE_PARTNER);
 					}catch(Exception e) {
 						new RuntimeException("Error: Role is not found.");
 					}
@@ -129,7 +130,7 @@ public class AuthController {
 				default:
 					Role customerRole=null;
 					try {
-					customerRole = (Role)roleService.findByName(ERole.ROLE_CUSTOMER);
+						customerRole = (Role)roleService.findByName(ERole.ROLE_CUSTOMER);
 					}catch(Exception e) {
 						new RuntimeException("Error: Role is not found.");
 					}
@@ -139,6 +140,7 @@ public class AuthController {
 		}
 
 		user.setRoles(roles);
+		
 		userService.save(user);
 
 		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));

@@ -35,18 +35,7 @@ public class Rent {
 	@OneToOne(cascade = CascadeType.ALL)
 	private Contract contract;
 	
-	public Rent(Long id, LocalDate startRent, LocalDate finishRent, Long numberPolicy, CustomerInformation customer,
-			Scooter scooter, Boolean ongoing, Contract contract) {
-		super();
-		this.id = id;
-		this.startRent = startRent;
-		this.finishRent = finishRent;
-		this.numberPolicy = numberPolicy;
-		this.customer = customer;
-		this.scooter = scooter;
-		this.ongoing = ongoing;
-		this.contract = contract;
-	}
+	
 
 
 	

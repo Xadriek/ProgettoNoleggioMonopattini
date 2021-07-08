@@ -36,8 +36,6 @@ public class PartnerInformation implements UserInformation {
 	@OneToOne(cascade=CascadeType.ALL)
 	private Hub hub;
 	
-	@Column(nullable=false)
-	private String referencePartner;
 	
 	@Column(nullable=false)
 	private LocalDate startPartnership;
@@ -50,19 +48,7 @@ public class PartnerInformation implements UserInformation {
 	private List<CoinTransation> coinTransactions;
 
 
-	public PartnerInformation(String name, Address address, Wallet partnerWallet, Hub hub,
-			String referencePartner, LocalDate startPartnership, LocalDate closurePartership,
-			List<CoinTransation> coinTransactions) {
-		super();
-		this.name = name;
-		this.address = address;
-		this.partnerWallet = partnerWallet;
-		this.hub = hub;
-		this.referencePartner = referencePartner;
-		this.startPartnership = startPartnership;
-		this.closurePartership = closurePartership;
-		this.coinTransactions = coinTransactions;
-	}
+	
 	
 	
 
