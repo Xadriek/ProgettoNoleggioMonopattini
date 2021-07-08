@@ -15,11 +15,8 @@ public interface PartnerRepository extends CrudRepository<Partner,Long> {
 	
 	public List<Partner> findByAddress(Address address);
 	
-	public List<Partner> findByRent(Rent rent);
 	
 	public List<Partner> findByHub(Hub hub);
-	
-	public List<Partner> findByReferencePartner(String referencePartner);
 	
 	public List<Partner> findByPIva(String pIva);
 }

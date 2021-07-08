@@ -16,4 +16,6 @@ public interface AddressRepository extends CrudRepository<Address, Long> {
 	public List<Address> findByStreetAndNumberStreet(String street, int numberStreet);
 	
 	public List<Address> findByMunicipality(String municipality);
+	
+	public List<Address> findByStreetAndNumberStreetAndCap(String street, int numberStreet, int cap);
 }

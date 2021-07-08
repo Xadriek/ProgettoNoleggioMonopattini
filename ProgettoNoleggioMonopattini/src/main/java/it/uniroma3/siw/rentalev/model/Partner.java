@@ -44,11 +44,9 @@ public class Partner extends User {
 	@Column(nullable=true)
 	private LocalDate closurePartership;
 	
-	@OneToMany(mappedBy="partner",cascade = CascadeType.ALL)
-	private List<Rent> rental;
-	
+
 	@OneToMany(mappedBy="toPartner",cascade = CascadeType.ALL)
-	private CoinTransation coinTransaction;
+	private List<CoinTransation> coinTransactions;
 
 	@Override
 	public boolean equals(Object obj) {
@@ -71,8 +69,8 @@ public class Partner extends User {
 	}
 
 	public Partner(String name, String pIva, Long telephon, Address address, PartnerWallet partnerWallet, Hub hub,
-			String referencePartner, LocalDate startPartnership, LocalDate closurePartership, List<Rent> rental,
-			CoinTransation coinTransaction) {
+			String referencePartner, LocalDate startPartnership, LocalDate closurePartership,
+			List<CoinTransation> coinTransactions) {
 		super();
 		this.name = name;
 		this.pIva = pIva;
@@ -83,9 +81,12 @@ public class Partner extends User {
 		this.referencePartner = referencePartner;
 		this.startPartnership = startPartnership;
 		this.closurePartership = closurePartership;
-		this.rental = rental;
-		this.coinTransaction = coinTransaction;
+
+		this.coinTransactions = coinTransactions;
 	}
+
+	
+	
 
 	
 	
