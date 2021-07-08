@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ch.qos.logback.classic.Logger;
+
 import it.uniroma3.siw.rentalev.model.ERole;
 import it.uniroma3.siw.rentalev.model.Role;
 import it.uniroma3.siw.rentalev.model.User;
