@@ -22,7 +22,7 @@ public class Hub {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@OneToOne
-	private Partner custodial;
+	private PartnerInformation custodial;
 	@Column(nullable=false)
 	private LocalDate dateOfAssembly;
 	@Column(nullable=true)
@@ -32,7 +32,7 @@ public class Hub {
 	@ManyToMany(cascade=CascadeType.ALL)
 	private List<Battery> stokedBattery;
 	
-	public Hub(Long id, Partner custodial, LocalDate dateOfAssembly, LocalDate dateOfDismiss, List<Swap> swapCompleted,
+	public Hub(Long id, PartnerInformation custodial, LocalDate dateOfAssembly, LocalDate dateOfDismiss, List<Swap> swapCompleted,
 			List<Battery> stokedBattery) {
 		super();
 		this.id = id;

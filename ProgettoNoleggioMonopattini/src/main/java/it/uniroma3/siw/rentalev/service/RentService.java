@@ -9,7 +9,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import it.uniroma3.siw.rentalev.model.Contract;
-import it.uniroma3.siw.rentalev.model.Customer;
+
+
 import it.uniroma3.siw.rentalev.model.Rent;
 import it.uniroma3.siw.rentalev.model.Scooter;
 
@@ -58,11 +59,7 @@ public class RentService {
 		Rent result =   this.rentRepository.findByScooter(scooter);
 		return result;
 	}
-	@Transactional
-	public Rent getRentByCustomer(Customer customer) {
-		Rent result =   this.rentRepository.findByCustomer(customer);
-		return result;
-	}
+
 	@Transactional
 	public List<Rent> getRentByOngoing(Boolean ongoing) {
 		List<Rent> result =   this.rentRepository.findByOngoing(ongoing);

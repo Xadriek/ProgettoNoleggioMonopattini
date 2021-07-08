@@ -1,12 +1,12 @@
 package it.uniroma3.siw.rentalev.model;
 
-import javax.persistence.CascadeType;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+
 
 import lombok.Data;
 
@@ -19,13 +19,12 @@ public class Wallet {
 	private Long id;
 	@Column(nullable=false)
 	private int coin;
-	@OneToOne(cascade = CascadeType.ALL)
-	private User owner;
+	
 
-	public Wallet(int coin, Object owner) {
+	public Wallet(int coin) {
 		super();
 		this.coin = coin;
-		this.owner = (User)owner;
+		
 	}
 
 	public Wallet() {

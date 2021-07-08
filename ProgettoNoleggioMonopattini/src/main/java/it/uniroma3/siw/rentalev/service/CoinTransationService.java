@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 
 import it.uniroma3.siw.rentalev.model.CoinTransation;
-import it.uniroma3.siw.rentalev.model.Customer;
-import it.uniroma3.siw.rentalev.model.Partner;
+import it.uniroma3.siw.rentalev.model.CustomerInformation;
+import it.uniroma3.siw.rentalev.model.PartnerInformation;
 import it.uniroma3.siw.rentalev.repository.CoinTransationRepository;
 
 public class CoinTransationService {
@@ -47,11 +47,11 @@ public class CoinTransationService {
 			
 		}
 	 @Transactional
-		public List<CoinTransation> coinTransactionFromCustomer(Customer customer) {
+		public List<CoinTransation> coinTransactionFromCustomer(CustomerInformation customer) {
 			return coinTransationRepository.findByFromCustomer(customer);
 		}
 	 @Transactional
-		public List<CoinTransation> coinTransactionToPartner(Partner partner) {
+		public List<CoinTransation> coinTransactionToPartner(PartnerInformation partner) {
 			return coinTransationRepository.findByToPartner(partner);
 		}
 }

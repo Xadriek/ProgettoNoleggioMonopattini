@@ -27,7 +27,7 @@ public class Rent {
 	@Column(unique=true)
 	private Long numberPolicy;
 	@ManyToOne
-	private Customer customer;
+	private CustomerInformation customer;
 	@OneToOne(cascade = CascadeType.ALL)
 	private Scooter scooter;
 	@Column
@@ -35,7 +35,7 @@ public class Rent {
 	@OneToOne(cascade = CascadeType.ALL)
 	private Contract contract;
 	
-	public Rent(Long id, LocalDate startRent, LocalDate finishRent, Long numberPolicy, Customer customer,
+	public Rent(Long id, LocalDate startRent, LocalDate finishRent, Long numberPolicy, CustomerInformation customer,
 			Scooter scooter, Boolean ongoing, Contract contract) {
 		super();
 		this.id = id;

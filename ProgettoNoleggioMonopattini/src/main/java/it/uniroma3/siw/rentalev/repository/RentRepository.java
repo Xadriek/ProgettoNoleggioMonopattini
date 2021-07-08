@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 
 import it.uniroma3.siw.rentalev.model.Contract;
-import it.uniroma3.siw.rentalev.model.Customer;
+
 import it.uniroma3.siw.rentalev.model.Rent;
 import it.uniroma3.siw.rentalev.model.Scooter;
 
@@ -17,7 +17,6 @@ public interface RentRepository extends CrudRepository<Rent, Long> {
 	
 	public List<Rent> findByOngoing(Boolean ongoing);
 	
-	public Rent findByCustomer(Customer customer);
 	
 	public List<Rent> findByContract(Contract contract);
 }

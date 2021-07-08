@@ -22,9 +22,9 @@ public class CoinTransation {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	@ManyToOne
-	private Customer fromCustomer;
+	private CustomerInformation fromCustomer;
 	@ManyToOne
-	private Partner toPartner;
+	private PartnerInformation toPartner;
 	@Column(nullable=false)
 	private LocalDateTime logTransition;
 	@Column(nullable=false)
@@ -32,7 +32,7 @@ public class CoinTransation {
 	@OneToOne(cascade = CascadeType.ALL)
 	private Swap swap;
 	
-	public CoinTransation(Long id, Customer fromCustomer, Partner toPartner, LocalDateTime logTransition, int coin,
+	public CoinTransation(Long id, CustomerInformation fromCustomer, PartnerInformation toPartner, LocalDateTime logTransition, int coin,
 			Swap swap) {
 		super();
 		this.id = id;

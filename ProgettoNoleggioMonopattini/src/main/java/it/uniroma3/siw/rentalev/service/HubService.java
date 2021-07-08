@@ -9,9 +9,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import it.uniroma3.siw.rentalev.model.Hub;
-import it.uniroma3.siw.rentalev.model.Partner;
 
-
+import it.uniroma3.siw.rentalev.model.PartnerInformation;
 import it.uniroma3.siw.rentalev.repository.HubRepository;
 
 
@@ -27,7 +26,7 @@ public class HubService {
 			return result.orElse(null);
 		}
 		@Transactional
-		public Hub getHubByCustodia(Partner custodial) {
+		public Hub getHubByCustodia(PartnerInformation custodial) {
 			Hub result =   this.hubRepository.findByCustodial(custodial);
 			return result;
 		}

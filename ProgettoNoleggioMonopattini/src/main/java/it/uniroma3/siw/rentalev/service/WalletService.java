@@ -8,9 +8,6 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-
-import it.uniroma3.siw.rentalev.model.CustomerWallet;
-import it.uniroma3.siw.rentalev.model.User;
 import it.uniroma3.siw.rentalev.model.Wallet;
 
 import it.uniroma3.siw.rentalev.repository.WalletRepository;
@@ -25,14 +22,10 @@ public class WalletService {
         Optional<Wallet> result = this.walletRepository.findById(id);
         return result.orElse(null);
     }
-	@Transactional
-    public Wallet getWalletByOwner(User owner) {
-        Wallet result =  this.walletRepository.findByOwner(owner);
-        return result;
-	}
+	
 	 @Transactional
-	    public CustomerWallet saveWallet(CustomerWallet contract) {
-	        return this.walletRepository.save(contract);
+	    public Wallet saveWallet(Wallet wallet) {
+	        return this.walletRepository.save(wallet);
 	    }
 	 @Transactional
 	    public List<Wallet> getAllWallet() {

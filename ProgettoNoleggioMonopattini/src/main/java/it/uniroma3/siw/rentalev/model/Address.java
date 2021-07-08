@@ -33,13 +33,13 @@ public class Address {
 	private String country;
 	
 	@OneToMany(mappedBy="address",cascade = CascadeType.ALL)
-	private List<Partner> partner;
+	private List<PartnerInformation> partnerInformation;
 	
 	@OneToMany(mappedBy="address",cascade = CascadeType.ALL)
-	private List<Customer> customer;
+	private List<CustomerInformation> customerInformation;
 
 	public Address(Long id, String street, int cap, int numberStreet, String municipality, String city, String country,
-			List<Partner> partner, List<Customer> customer) {
+			List<PartnerInformation> partnerInformation, List<CustomerInformation> customerInformation) {
 		super();
 		this.id = id;
 		this.street = street;
@@ -48,8 +48,8 @@ public class Address {
 		this.municipality = municipality;
 		this.city = city;
 		this.country = country;
-		this.partner = partner;
-		this.customer = customer;
+		this.partnerInformation = partnerInformation;
+		this.customerInformation = customerInformation;
 	}
 	
 
