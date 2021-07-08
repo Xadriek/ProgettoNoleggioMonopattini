@@ -13,7 +13,7 @@ public interface RentRepository extends CrudRepository<Rent, Long> {
 	
 	public Rent findByNumberPolicy(Long numberPolicy);
 	
-	public List<Rent> findByScooter(Scooter scooter);
+	public Rent findByScooter(Scooter scooter);
 	
 	public List<Rent> findByOngoing(Boolean ongoing);
 	

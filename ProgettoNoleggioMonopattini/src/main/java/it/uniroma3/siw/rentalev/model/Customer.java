@@ -36,7 +36,7 @@ public class Customer extends User{
 	private List<Rent> rental;
 	
 	@OneToMany(mappedBy="fromCustomer",cascade = CascadeType.ALL)
-	private CoinTransation coinTransaction;
+	private List<CoinTransation> coinTransactions;
 	
 	@Override
 	public boolean equals(Object obj) {
@@ -57,8 +57,9 @@ public class Customer extends User{
 		result = prime * result + Objects.hash(address, telephon, customerWallet);
 		return result;
 	}
+	
 	public Customer(String name, String surname, Long telephon, Address address, CustomerWallet customerWallet,
-			List<Rent> rental, CoinTransation coinTransaction) {
+			List<Rent> rental, List<CoinTransation> coinTransactions) {
 		super();
 		this.name = name;
 		this.surname = surname;
@@ -66,8 +67,9 @@ public class Customer extends User{
 		this.address = address;
 		this.customerWallet = customerWallet;
 		this.rental = rental;
-		this.coinTransaction = coinTransaction;
+		this.coinTransactions = coinTransactions;
 	}
+	
 	
 	
 	

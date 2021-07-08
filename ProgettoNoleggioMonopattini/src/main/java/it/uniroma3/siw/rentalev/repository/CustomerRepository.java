@@ -14,5 +14,6 @@ public interface CustomerRepository extends CrudRepository<Customer, Long>{
 		
 		public List<Customer> findByAddress(Address address);
 		
-		public List<Customer> findByRent(Rent rent);
+		public List<Customer> findBySurname(String surname);
+
 }
