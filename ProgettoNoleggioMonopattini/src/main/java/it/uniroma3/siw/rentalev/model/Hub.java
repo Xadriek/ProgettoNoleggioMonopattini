@@ -17,6 +17,17 @@ import lombok.Data;
 @Entity
 @Data
 public class Hub {
+	
+	public Hub(Long id, PartnerInformation custodial, LocalDate dateOfAssembly, LocalDate dateOfDismiss,
+			List<Swap> swapCompleted, List<Battery> stokedBattery) {
+		super();
+		this.id = id;
+		this.custodial = custodial;
+		this.dateOfAssembly = dateOfAssembly;
+		this.dateOfDismiss = dateOfDismiss;
+		this.swapCompleted = swapCompleted;
+		this.stokedBattery = stokedBattery;
+	}
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

@@ -26,7 +26,7 @@ public class HubService {
 			return result.orElse(null);
 		}
 		@Transactional
-		public Hub getHubByCustodia(PartnerInformation custodial) {
+		public Hub getHubByCustodial(PartnerInformation custodial) {
 			Hub result =   this.hubRepository.findByCustodial(custodial);
 			return result;
 		}
