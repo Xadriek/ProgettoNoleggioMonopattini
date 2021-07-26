@@ -16,6 +16,9 @@ import lombok.Data;
 @Data
 public class Address {
 	
+	
+	
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -31,6 +34,19 @@ public class Address {
 	private String city;
 	@Column(nullable=false)
 	private String country;
+	
+	
+	public Address(Long id, String street, int cap, int numberStreet, String municipality, String city,
+			String country) {
+		super();
+		this.id = id;
+		this.street = street;
+		this.cap = cap;
+		this.numberStreet = numberStreet;
+		this.municipality = municipality;
+		this.city = city;
+		this.country = country;
+	}
 	
 	
 

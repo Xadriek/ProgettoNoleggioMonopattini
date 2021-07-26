@@ -19,9 +19,16 @@ import lombok.Data;
 public class Hub {
 	
 
-	public Hub(Long id2, PartnerInformation custodial2, LocalDate dateOfAssembly2, LocalDate dateOfDismiss2,
-			List<Swap> swapCompleted2, List<Battery> stokedBattery2) {
-		// TODO Auto-generated constructor stub
+	
+	public Hub(Long id, PartnerInformation custodial, LocalDate dateOfAssembly, LocalDate dateOfDismiss,
+			List<Swap> swapCompleted, List<Battery> stokedBattery) {
+		super();
+		this.id = id;
+		this.custodial = custodial;
+		this.dateOfAssembly = dateOfAssembly;
+		this.dateOfDismiss = dateOfDismiss;
+		this.swapCompleted = swapCompleted;
+		this.stokedBattery = stokedBattery;
 	}
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,6 +43,11 @@ public class Hub {
 	private List<Swap> swapCompleted;
 	@OneToMany(mappedBy="hub",cascade=CascadeType.ALL)
 	private List<Battery> stokedBattery;
+	
+	
+
+	
+	
 	
 
 	

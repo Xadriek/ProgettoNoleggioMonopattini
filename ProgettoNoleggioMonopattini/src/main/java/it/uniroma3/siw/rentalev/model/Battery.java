@@ -14,11 +14,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-import lombok.Data;
 
 
 @Entity
-@Data
+
 public class Battery {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -38,7 +37,92 @@ public class Battery {
 	@ManyToOne
 	private Hub hub;
 	@OneToOne
-	private Scooter scooters;
+	private Scooter scooter;
+	
+	public Battery(Long id, float voltage, float capacity, LocalDate dateOfBirth, LocalDate dateOfDismiss,
+			List<Swap> swapList, Hub hub, Scooter scooter) {
+		super();
+		this.id = id;
+		this.voltage = voltage;
+		this.capacity = capacity;
+		this.dateOfBirth = dateOfBirth;
+		this.dateOfDismiss = dateOfDismiss;
+		this.swapList = swapList;
+		this.hub = hub;
+		this.scooter = scooter;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public float getVoltage() {
+		return voltage;
+	}
+
+	public void setVoltage(float voltage) {
+		this.voltage = voltage;
+	}
+
+	public float getCapacity() {
+		return capacity;
+	}
+
+	public void setCapacity(float capacity) {
+		this.capacity = capacity;
+	}
+
+	public LocalDate getDateOfBirth() {
+		return dateOfBirth;
+	}
+
+	public void setDateOfBirth(LocalDate dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
+
+	public LocalDate getDateOfDismiss() {
+		return dateOfDismiss;
+	}
+
+	public void setDateOfDismiss(LocalDate dateOfDismiss) {
+		this.dateOfDismiss = dateOfDismiss;
+	}
+
+	public List<Swap> getSwapList() {
+		return swapList;
+	}
+
+	public void setSwapList(List<Swap> swapList) {
+		this.swapList = swapList;
+	}
+
+	public Hub getHub() {
+		return hub;
+	}
+
+	public void setHub(Hub hub) {
+		this.hub = hub;
+	}
+
+	public Scooter getScooter() {
+		return scooter;
+	}
+
+	public void setScooter(Scooter scooter) {
+		this.scooter = scooter;
+	}
+
+
+
+
+
+	
+	
+	
 	
 	
 	

@@ -23,7 +23,7 @@ public class JwtUtils {
 	
 	private static int jwtExpirationMs;
 
-  public static String generateJwtToken(Authentication authentication) {
+  public String generateJwtToken(Authentication authentication) {
 	  
 	jwtSecret="foxSecretKey";
 	jwtExpirationMs=86400000;

@@ -10,10 +10,10 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import lombok.Data;
+
 
 @Entity
-@Data
+
 @Table(name = "contracs")
 public class Contract {
 	@Id
@@ -27,6 +27,37 @@ public class Contract {
 	@Enumerated(EnumType.STRING)
 	@Column(length = 20)
 	private EContract plan;
+
+	public Contract(Long id, Rent rent, EContract plan) {
+		super();
+		this.id = id;
+		this.rent = rent;
+		this.plan = plan;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Rent getRent() {
+		return rent;
+	}
+
+	public void setRent(Rent rent) {
+		this.rent = rent;
+	}
+
+	public EContract getPlan() {
+		return plan;
+	}
+
+	public void setPlan(EContract plan) {
+		this.plan = plan;
+	}
 
 	
 
