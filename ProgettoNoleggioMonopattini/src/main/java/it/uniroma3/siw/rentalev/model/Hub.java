@@ -19,6 +19,10 @@ import lombok.Data;
 public class Hub {
 	
 
+	public Hub(Long id2, PartnerInformation custodial2, LocalDate dateOfAssembly2, LocalDate dateOfDismiss2,
+			List<Swap> swapCompleted2, List<Battery> stokedBattery2) {
+		// TODO Auto-generated constructor stub
+	}
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

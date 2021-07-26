@@ -29,5 +29,5 @@ public interface RentRepository extends JpaRepository<Rent, Long> {
 	
 	Boolean existsByCustomer(CustomerInformation customer);
 	
-	Boolean existsByEmail(Long numberPolicy);
+	
 }

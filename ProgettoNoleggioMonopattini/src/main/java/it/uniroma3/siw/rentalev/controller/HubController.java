@@ -16,7 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.uniroma3.siw.rentalev.model.Hub;
-import it.uniroma3.siw.rentalev.service.HubService;
+import it.uniroma3.siw.rentalev.repository.HubRepository;
+
 
 @CrossOrigin(origins = "http://localhost:8081")
 @RestController
@@ -24,7 +25,7 @@ import it.uniroma3.siw.rentalev.service.HubService;
 public class HubController {
 
   @Autowired
-  HubService hubService;
+  HubRepository hubRepository;
 
   @GetMapping("/hubs")
   public ResponseEntity<List<Hub>> getAllHubs() {
@@ -32,7 +33,7 @@ public class HubController {
       List<Hub> hubs = new ArrayList<Hub>();
 
       
-     hubService.getAllHubs().forEach(hubs::add);
+     hubRepository.findAll().forEach(hubs::add);
    
 
       if (hubs.isEmpty()) {
@@ -47,7 +48,7 @@ public class HubController {
 
   @GetMapping("/hubs/{id}")
   public ResponseEntity<Hub> getHubById(@PathVariable("id") long id) {
-    Optional<Hub> tutorialData = Optional.ofNullable(hubService.getHub(id));
+    Optional<Hub> tutorialData = hubRepository.findById(id);
 
     if (tutorialData.isPresent()) {
       return new ResponseEntity<>(tutorialData.get(), HttpStatus.OK);
@@ -59,7 +60,7 @@ public class HubController {
   @PostMapping("/hubs")
   public ResponseEntity<Hub> createTutorial(@RequestBody Hub hub) {
     try {
-      Hub _hub = hubService.saveHub(new Hub(hub.getId(), hub.getCustodial(),hub.getDateOfAssembly(),hub.getDateOfDismiss(),hub.getSwapCompleted(),hub.getStokedBattery()));
+      Hub _hub = hubRepository.save(new Hub(hub.getId(), hub.getCustodial(),hub.getDateOfAssembly(),hub.getDateOfDismiss(),hub.getSwapCompleted(),hub.getStokedBattery()));
       return new ResponseEntity<>(_hub, HttpStatus.CREATED);
     } catch (Exception e) {
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
