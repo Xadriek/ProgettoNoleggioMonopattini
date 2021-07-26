@@ -2,12 +2,14 @@ package it.uniroma3.siw.rentalev.repository;
 
 
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import org.springframework.stereotype.Repository;
 
 import it.uniroma3.siw.rentalev.model.Battery;
 
-
-public interface BatteryRepository extends CrudRepository<Battery, Long>{
+@Repository
+public interface BatteryRepository extends JpaRepository<Battery, Long>{
 	
 		
 

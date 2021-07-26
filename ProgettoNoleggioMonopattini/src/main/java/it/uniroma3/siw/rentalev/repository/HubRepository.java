@@ -2,14 +2,17 @@ package it.uniroma3.siw.rentalev.repository;
 
 
 
-import org.springframework.data.repository.CrudRepository;
+
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import it.uniroma3.siw.rentalev.model.Hub;
 
 import it.uniroma3.siw.rentalev.model.PartnerInformation;
-
-public interface HubRepository extends CrudRepository<Hub, Long>{
+@Repository
+public interface HubRepository extends JpaRepository<Hub, Long>{
 	
-	public Hub findByCustodial(PartnerInformation custodial);
+	Hub findByCustodial(PartnerInformation custodial);
 
 }

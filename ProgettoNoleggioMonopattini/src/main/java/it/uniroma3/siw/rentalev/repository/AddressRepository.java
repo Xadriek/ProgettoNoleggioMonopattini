@@ -1,21 +1,25 @@
 package it.uniroma3.siw.rentalev.repository;
 
 import java.util.List;
-import org.springframework.data.repository.CrudRepository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import org.springframework.stereotype.Repository;
 
 import it.uniroma3.siw.rentalev.model.Address;
 
-public interface AddressRepository extends CrudRepository<Address, Long> {
+@Repository
+public interface AddressRepository extends JpaRepository<Address, Long> {
 	
-	public List<Address> findByStreet(String street);
+	List<Address> findByStreet(String street);
 
-	public List<Address> findByCity(String city);
+	List<Address> findByCity(String city);
 	
-	public List<Address> findByCap(int cap);
+	List<Address> findByCap(int cap);
 	
-	public List<Address> findByStreetAndNumberStreet(String street, int numberStreet);
+	List<Address> findByStreetAndNumberStreet(String street, int numberStreet);
 	
-	public List<Address> findByMunicipality(String municipality);
+	List<Address> findByMunicipality(String municipality);
 	
-	public List<Address> findByStreetAndNumberStreetAndCap(String street, int numberStreet, int cap);
+	List<Address> findByStreetAndNumberStreetAndCap(String street, int numberStreet, int cap);
 }

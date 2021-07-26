@@ -29,21 +29,7 @@ public class Contract {
 	private EContract plan;
 
 	
-	public Contract() {
 
-	}
-
-
-
-
-
-	public Contract(Long id, Rent rent, EContract plan) {
-		super();
-		this.id = id;
-		this.rent = rent;
-		this.plan = plan;
-	}
-	
 	
 	
 }

@@ -2,18 +2,21 @@ package it.uniroma3.siw.rentalev.repository;
 
 import java.util.List;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import org.springframework.stereotype.Repository;
 
 import it.uniroma3.siw.rentalev.model.Address;
 
 import it.uniroma3.siw.rentalev.model.CustomerInformation;
 
-public interface CustomerInformationRepository extends CrudRepository<CustomerInformation, Long>{
+@Repository
+public interface CustomerInformationRepository extends JpaRepository<CustomerInformation, Long>{
 	
-		public List<CustomerInformation> findByNameAndSurname(String name,String surname);
+		List<CustomerInformation> findByNameAndSurname(String name,String surname);
 		
-		public List<CustomerInformation> findByAddress(Address address);
+		List<CustomerInformation> findByAddress(Address address);
 		
-		public List<CustomerInformation> findBySurname(String surname);
+		List<CustomerInformation> findBySurname(String surname);
 
 }

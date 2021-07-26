@@ -1,12 +1,14 @@
 package it.uniroma3.siw.rentalev.repository;
 
-import org.springframework.data.repository.CrudRepository;
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import it.uniroma3.siw.rentalev.model.ERole;
 import it.uniroma3.siw.rentalev.model.Role;
 
-public interface RoleRepository extends CrudRepository<Role, Long>{
-
-	 public Role findByName(ERole role);
-
+@Repository
+public interface RoleRepository extends JpaRepository<Role, Long> {
+	Optional<Role> findByName(ERole name);
 }

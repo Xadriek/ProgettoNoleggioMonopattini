@@ -2,22 +2,23 @@ package it.uniroma3.siw.rentalev.repository;
 
 import java.util.List;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import it.uniroma3.siw.rentalev.model.Address;
 import it.uniroma3.siw.rentalev.model.Hub;
 import it.uniroma3.siw.rentalev.model.PartnerInformation;
 
 
-
-public interface PartnerInformationRepository extends CrudRepository<PartnerInformation,Long> {
+@Repository
+public interface PartnerInformationRepository extends JpaRepository<PartnerInformation,Long> {
 	
-	public List<PartnerInformation> findByName(String name);
+	List<PartnerInformation> findByName(String name);
 	
-	public List<PartnerInformation> findByAddress(Address address);
+	List<PartnerInformation> findByAddress(Address address);
 	
 	
-	public List<PartnerInformation> findByHub(Hub hub);
+	List<PartnerInformation> findByHub(Hub hub);
 	
 
 }
