@@ -8,10 +8,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 
-import lombok.Data;
+
 
 @Entity
-@Data
+
 public class Wallet {
 	@Id
 
@@ -21,14 +21,35 @@ public class Wallet {
 	private int coin;
 	
 
-	public Wallet(int coin) {
+
+
+
+	public Wallet(Long id, int coin) {
 		super();
+		this.id = id;
 		this.coin = coin;
-		
 	}
 
-	public Wallet() {
-		
+
+	public Long getId() {
+		return id;
 	}
+
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+
+	public int getCoin() {
+		return coin;
+	}
+
+
+	public void setCoin(int coin) {
+		this.coin = coin;
+	}
+
+
 	
 }

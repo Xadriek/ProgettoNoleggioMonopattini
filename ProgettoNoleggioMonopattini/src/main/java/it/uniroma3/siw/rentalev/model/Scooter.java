@@ -13,10 +13,10 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-import lombok.Data;
+
 
 @Entity
-@Data
+
 public class Scooter {
 @Id
 	
@@ -32,6 +32,78 @@ public class Scooter {
 	private LocalDate dateOfDismiss;
 	@OneToMany(mappedBy="scooter", cascade = CascadeType.ALL)
 	private List<Swap> swapList;
+	
+	
+	public Scooter(Long id, Rent rent, Battery battery, LocalDate dateOfBirth, LocalDate dateOfDismiss,
+			List<Swap> swapList) {
+		super();
+		this.id = id;
+		this.rent = rent;
+		this.battery = battery;
+		this.dateOfBirth = dateOfBirth;
+		this.dateOfDismiss = dateOfDismiss;
+		this.swapList = swapList;
+	}
+
+
+	public Long getId() {
+		return id;
+	}
+
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+
+	public Rent getRent() {
+		return rent;
+	}
+
+
+	public void setRent(Rent rent) {
+		this.rent = rent;
+	}
+
+
+	public Battery getBattery() {
+		return battery;
+	}
+
+
+	public void setBattery(Battery battery) {
+		this.battery = battery;
+	}
+
+
+	public LocalDate getDateOfBirth() {
+		return dateOfBirth;
+	}
+
+
+	public void setDateOfBirth(LocalDate dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
+
+
+	public LocalDate getDateOfDismiss() {
+		return dateOfDismiss;
+	}
+
+
+	public void setDateOfDismiss(LocalDate dateOfDismiss) {
+		this.dateOfDismiss = dateOfDismiss;
+	}
+
+
+	public List<Swap> getSwapList() {
+		return swapList;
+	}
+
+
+	public void setSwapList(List<Swap> swapList) {
+		this.swapList = swapList;
+	}
 	
 	
 	

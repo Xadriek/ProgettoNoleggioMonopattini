@@ -12,10 +12,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
-import lombok.Data;
 
 @Entity
-@Data
+
 
 public class Swap {
 	
@@ -33,6 +32,78 @@ public class Swap {
 	private Scooter scooter;
 	@OneToOne(cascade = CascadeType.ALL)
 	private CoinTransation coinTransation;
+	
+	
+	public Swap(Long id, LocalDateTime eventLog, Hub hub, Battery battery, Scooter scooter,
+			CoinTransation coinTransation) {
+		super();
+		this.id = id;
+		this.eventLog = eventLog;
+		this.hub = hub;
+		this.battery = battery;
+		this.scooter = scooter;
+		this.coinTransation = coinTransation;
+	}
+
+
+	public Long getId() {
+		return id;
+	}
+
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+
+	public LocalDateTime getEventLog() {
+		return eventLog;
+	}
+
+
+	public void setEventLog(LocalDateTime eventLog) {
+		this.eventLog = eventLog;
+	}
+
+
+	public Hub getHub() {
+		return hub;
+	}
+
+
+	public void setHub(Hub hub) {
+		this.hub = hub;
+	}
+
+
+	public Battery getBattery() {
+		return battery;
+	}
+
+
+	public void setBattery(Battery battery) {
+		this.battery = battery;
+	}
+
+
+	public Scooter getScooter() {
+		return scooter;
+	}
+
+
+	public void setScooter(Scooter scooter) {
+		this.scooter = scooter;
+	}
+
+
+	public CoinTransation getCoinTransation() {
+		return coinTransation;
+	}
+
+
+	public void setCoinTransation(CoinTransation coinTransation) {
+		this.coinTransation = coinTransation;
+	}
 
 
 	
