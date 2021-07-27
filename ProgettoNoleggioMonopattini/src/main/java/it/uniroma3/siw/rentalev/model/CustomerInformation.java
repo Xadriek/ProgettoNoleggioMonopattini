@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+//METTERE GEOCODE
 
 @Entity
 
@@ -35,6 +36,9 @@ public class CustomerInformation implements UserInformation{
 	@ManyToOne
 	private Address address;
 	
+	@Column
+	private boolean isActive;
+	
 	@OneToOne(cascade = CascadeType.ALL)
 	private Wallet customerWallet;
 	
@@ -44,7 +48,11 @@ public class CustomerInformation implements UserInformation{
 	@OneToMany(mappedBy="fromCustomer",cascade = CascadeType.ALL)
 	private List<CoinTransation> coinTransactions;
 
-	public CustomerInformation(Long id, String name, String surname, Long telephon, Address address,
+
+
+	
+
+	public CustomerInformation(Long id, String name, String surname, Long telephon, Address address, boolean isActive,
 			Wallet customerWallet, List<Rent> rental, List<CoinTransation> coinTransactions) {
 		super();
 		this.id = id;
@@ -52,6 +60,7 @@ public class CustomerInformation implements UserInformation{
 		this.surname = surname;
 		this.telephon = telephon;
 		this.address = address;
+		this.isActive = isActive;
 		this.customerWallet = customerWallet;
 		this.rental = rental;
 		this.coinTransactions = coinTransactions;
@@ -120,6 +129,15 @@ public class CustomerInformation implements UserInformation{
 	public void setCoinTransactions(List<CoinTransation> coinTransactions) {
 		this.coinTransactions = coinTransactions;
 	}
+
+	public boolean isActive() {
+		return isActive;
+	}
+
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
+	
 
 	
 	

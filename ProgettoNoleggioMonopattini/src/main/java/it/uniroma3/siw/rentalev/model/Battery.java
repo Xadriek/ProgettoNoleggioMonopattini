@@ -6,6 +6,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -39,8 +41,14 @@ public class Battery {
 	@OneToOne
 	private Scooter scooter;
 	
+	@Enumerated(EnumType.STRING)
+	@Column(length = 20)
+	private EBattery state;
+	
+	
+
 	public Battery(Long id, float voltage, float capacity, LocalDate dateOfBirth, LocalDate dateOfDismiss,
-			List<Swap> swapList, Hub hub, Scooter scooter) {
+			List<Swap> swapList, Hub hub, Scooter scooter, EBattery state) {
 		super();
 		this.id = id;
 		this.voltage = voltage;
@@ -50,6 +58,7 @@ public class Battery {
 		this.swapList = swapList;
 		this.hub = hub;
 		this.scooter = scooter;
+		this.state = state;
 	}
 
 	public Long getId() {
@@ -114,6 +123,14 @@ public class Battery {
 
 	public void setScooter(Scooter scooter) {
 		this.scooter = scooter;
+	}
+
+	public EBattery getState() {
+		return state;
+	}
+
+	public void setState(EBattery state) {
+		this.state = state;
 	}
 
 

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -64,25 +64,25 @@ public class SwapController {
   @PostMapping("/swaps")
   public ResponseEntity<Swap> createSwap(@RequestBody Swap swap) {
     try {
-      Swap _swap = swapRepository.save(new Swap(swap.getId(), swap.getEventLog(),swap.getHub(),swap.getBattery(),swap.getScooter(),swap.getCoinTransation()));
+      Swap _swap = swapRepository.save(new Swap(swap.getId(), swap.getEventLog(),swap.getHub(),swap.getBattery(),swap.getScooter(),swap.getCoinTransation(),swap.isActive()));
       return new ResponseEntity<>(_swap, HttpStatus.CREATED);
     } catch (Exception e) {
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
- /* @PutMapping("/swaps/{id}")
+ @PutMapping("/swaps/{id}")
   public ResponseEntity<Swap> updateSwap(@PathVariable("id") long id, @RequestBody Swap swap) {
     Optional<Swap> swapData = swapRepository.findById(id);
 
     if (swapData.isPresent()) {
     	Swap _swap = swapData.get();
-    	_swap.setCustodial(swap.getCustodial());
-    	_swap.setDateOfDismiss(swap.getDateOfDismiss());
+    	_swap.setCoinTransation(swap.getCoinTransation());
+
       return new ResponseEntity<>(swapRepository.save(_swap), HttpStatus.OK);
     } else {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-  }*/
+  }
 
   @DeleteMapping("/swaps/{id}")
   public ResponseEntity<HttpStatus> deleteSwap(@PathVariable("id") long id) {
@@ -105,12 +105,12 @@ public class SwapController {
 
   }
 
- /* @GetMapping("/swaps/custodial")
-  public ResponseEntity<Swap> findByCustodial(@RequestBody PartnerInformation custodial) {
+ @GetMapping("/swaps/custodial")
+  public ResponseEntity<List<Swap>> findByIsActive() {
     try {
-      Swap swap = swapRepository.findByCustodial(custodial);
+      List<Swap> swap = swapRepository.findByIsActive(true);
 
-      if (swap==null) {
+      if (swap.isEmpty()) {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
       }
       return new ResponseEntity<>(swap, HttpStatus.OK);
@@ -118,6 +118,6 @@ public class SwapController {
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
-  */
+  
 
 }

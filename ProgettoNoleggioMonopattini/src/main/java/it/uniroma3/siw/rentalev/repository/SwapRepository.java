@@ -28,5 +28,7 @@ public interface SwapRepository extends JpaRepository<Swap, Long>{
 	Boolean existsByBattery(Battery battery);
 	
 	Boolean existsByHub(Hub hub);
+
+	List<Swap> findByIsActive(boolean b);
 	
 }

@@ -64,7 +64,7 @@ public class PartnerInformationController {
   @PostMapping("/partnerInformations")
   public ResponseEntity<PartnerInformation> createPartnerInformation(@RequestBody PartnerInformation partnerInformation) {
     try {
-      PartnerInformation _partnerInformation = partnerInformationRepository.save(new PartnerInformation(partnerInformation.getId(), partnerInformation.getName(),partnerInformation.getAddress(),partnerInformation.getPartnerWallet(),partnerInformation.getHub(),partnerInformation.getStartPartnership(),partnerInformation.getClosurePartnership(),partnerInformation.getCoinTransactions()));
+      PartnerInformation _partnerInformation = partnerInformationRepository.save(new PartnerInformation(partnerInformation.getId(), partnerInformation.getName(), partnerInformation.getpIva(),partnerInformation.getAddress(),partnerInformation.getPartnerWallet(),partnerInformation.getHub(),partnerInformation.getStartPartnership(),partnerInformation.getClosurePartnership(),partnerInformation.getCoinTransactions(), partnerInformation.isActive()));
       return new ResponseEntity<>(_partnerInformation, HttpStatus.CREATED);
     } catch (Exception e) {
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -108,12 +108,12 @@ public class PartnerInformationController {
 
   }
 
- /* @GetMapping("/partnerInformations/custodial")
-  public ResponseEntity<PartnerInformation> findByCustodial(@RequestBody PartnerInformation custodial) {
+ @GetMapping("/partnerInformations/isActive")
+  public ResponseEntity<List<PartnerInformation>> findByCustodial() {
     try {
-      PartnerInformation partnerInformation = partnerInformationRepository.findByCustodial(custodial);
+      List<PartnerInformation> partnerInformation = partnerInformationRepository.findByIsActive(true);
 
-      if (partnerInformation==null) {
+      if (partnerInformation.isEmpty()) {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
       }
       return new ResponseEntity<>(partnerInformation, HttpStatus.OK);
@@ -121,6 +121,6 @@ public class PartnerInformationController {
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
-  */
+ 
 
 }

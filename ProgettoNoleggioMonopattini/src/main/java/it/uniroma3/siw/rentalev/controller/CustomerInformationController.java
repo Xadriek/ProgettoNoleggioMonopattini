@@ -66,7 +66,7 @@ public class CustomerInformationController {
   @PostMapping("/customerInformations")
   public ResponseEntity<CustomerInformation> createCustomerInformation(@RequestBody CustomerInformation customerInformation) {
     try {
-      CustomerInformation _customerInformation = customerInformationRepository.save(new CustomerInformation(customerInformation.getId(), customerInformation.getName(),customerInformation.getSurname(),customerInformation.getTelephon(),customerInformation.getAddress(),customerInformation.getCustomerWallet(),customerInformation.getRental(),customerInformation.getCoinTransactions()));
+      CustomerInformation _customerInformation = customerInformationRepository.save(new CustomerInformation(customerInformation.getId(), customerInformation.getName(),customerInformation.getSurname(),customerInformation.getTelephon(),customerInformation.getAddress(),customerInformation.isActive(),customerInformation.getCustomerWallet(),customerInformation.getRental(),customerInformation.getCoinTransactions()));
       return new ResponseEntity<>(_customerInformation, HttpStatus.CREATED);
     } catch (Exception e) {
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -109,20 +109,20 @@ public class CustomerInformationController {
     }
 
   }
-/*
-  @GetMapping("/customerInformations/custodial")
-  public ResponseEntity<CustomerInformation> findByCustodial(@RequestBody PartnerInformation custodial) {
-    try {
-      CustomerInformation customerInformation = customerInformationRepository.findByCustodial(custodial);
 
-      if (customerInformation==null) {
+  @GetMapping("/customerInformations/isActive")
+  public ResponseEntity<List<CustomerInformation>> findByIsActive() {
+    try {
+      List<CustomerInformation> customerInformation = customerInformationRepository.findByIsActive(true);
+
+      if (customerInformation.isEmpty()) {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
       }
       return new ResponseEntity<>(customerInformation, HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
-  }*/
-  
+
+  }
 
 }

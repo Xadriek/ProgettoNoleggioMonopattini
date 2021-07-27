@@ -14,7 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-
+//METTERE GEOCODE
 
 @Entity
 
@@ -26,6 +26,9 @@ public class PartnerInformation implements UserInformation {
 	private Long id;
 	@Column(nullable=false)
 	private String name;
+	
+	@Column(nullable=false)
+	private String pIva;
 	
 	@ManyToOne
 	private Address address;
@@ -43,21 +46,30 @@ public class PartnerInformation implements UserInformation {
 	@Column(nullable=true)
 	private LocalDate closurePartnership;
 	
+	@Column
+	private boolean isActive;
+	
 
 	@OneToMany(mappedBy="toPartner",cascade = CascadeType.ALL)
 	private List<CoinTransation> coinTransactions;
 
 
-	public PartnerInformation(Long id, String name, Address address, Wallet partnerWallet, Hub hub,
-			LocalDate startPartnership, LocalDate closurePartnership, List<CoinTransation> coinTransactions) {
+	
+
+
+	public PartnerInformation(Long id, String name, String pIva, Address address, Wallet partnerWallet, Hub hub,
+			LocalDate startPartnership, LocalDate closurePartnership, List<CoinTransation> coinTransactions,
+			boolean isActive) {
 		super();
 		this.id = id;
 		this.name = name;
+		this.pIva = pIva;
 		this.address = address;
 		this.partnerWallet = partnerWallet;
 		this.hub = hub;
 		this.startPartnership = startPartnership;
 		this.closurePartnership = closurePartnership;
+		this.isActive = isActive;
 		this.coinTransactions = coinTransactions;
 	}
 
@@ -79,6 +91,16 @@ public class PartnerInformation implements UserInformation {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+
+	public String getpIva() {
+		return pIva;
+	}
+
+
+	public void setpIva(String pIva) {
+		this.pIva = pIva;
 	}
 
 
@@ -141,6 +163,18 @@ public class PartnerInformation implements UserInformation {
 		this.coinTransactions = coinTransactions;
 	}
 
+
+	public boolean isActive() {
+		return isActive;
+	}
+
+
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
+
+
+	
 
 	
 	

@@ -112,7 +112,7 @@ public class RentController {
     try {
       List<Rent> rent = rentRepository.findByOngoing(true);
 
-      if (rent==null) {
+      if (rent.isEmpty()) {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
       }
       return new ResponseEntity<>(rent, HttpStatus.OK);

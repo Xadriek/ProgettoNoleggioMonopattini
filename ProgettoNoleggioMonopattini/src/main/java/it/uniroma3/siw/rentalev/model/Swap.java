@@ -33,9 +33,16 @@ public class Swap {
 	@OneToOne(cascade = CascadeType.ALL)
 	private CoinTransation coinTransation;
 	
+	@Column
+	private boolean isActive;
 	
+	
+	
+
+
+
 	public Swap(Long id, LocalDateTime eventLog, Hub hub, Battery battery, Scooter scooter,
-			CoinTransation coinTransation) {
+			CoinTransation coinTransation, boolean isActive) {
 		super();
 		this.id = id;
 		this.eventLog = eventLog;
@@ -43,6 +50,7 @@ public class Swap {
 		this.battery = battery;
 		this.scooter = scooter;
 		this.coinTransation = coinTransation;
+		this.isActive = isActive;
 	}
 
 
@@ -105,6 +113,15 @@ public class Swap {
 		this.coinTransation = coinTransation;
 	}
 
+	
+	public boolean isActive() {
+		return isActive;
+	}
+	
+	
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
 
 	
 	
