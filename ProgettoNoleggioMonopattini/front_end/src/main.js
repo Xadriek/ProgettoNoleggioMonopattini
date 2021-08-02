@@ -22,6 +22,16 @@ import {
 library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt);
 
 Vue.config.productionTip = false;
+import * as VueGoogleMaps from "vue2-google-maps" // Import package
+
+Vue.config.productionTip = false
+
+Vue.use(VueGoogleMaps, {
+  load: {
+    key: "AIzaSyB18pGBr0LVzJjWgb6IP0jslb5Or-NJhDw",
+    libraries: "places"
+  }
+});
 
 Vue.use(VeeValidate);
 Vue.use(BootstrapVue);

@@ -1,105 +1,195 @@
 <template>
   <div class="container">
     <header class="jumbotron">
-        <h3>{{content}}</h3>
+      <h3>{{ content }}</h3>
     </header>
+    <div>
+      <b-carousel
+        id="carousel-1"
+        :interval="4000"
+        controls
+        indicators
+        background="#ababab"
+        img-width="1024"
+        img-height="480"
+        style="text-shadow: 1px 1px 2px #333"
+        @sliding-start="onSlideStart"
+        @sliding-end="onSlideEnd"
+      >
+        <!-- Text slides with image -->
+        <b-carousel-slide
+          caption="First slide"
+          text="Nulla vitae elit libero, a pharetra augue mollis interdum."
+          img-src="https://picsum.photos/1024/480/?image=52"
+        ></b-carousel-slide>
 
-    <div class="container-fluid text-center"> 
+        <!-- Slides with custom text -->
+        <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=54">
+          <h1>Hello world!</h1>
+        </b-carousel-slide>
 
-      <center>
-        <img src="/images/homelogotitolo.png" with=50%>
-      </center>
+        <!-- Slides with image only -->
+        <b-carousel-slide
+          img-src="https://picsum.photos/1024/480/?image=58"
+        ></b-carousel-slide>
 
-    <h1 class="text-center">Benvenuti al FoxRental </h1>
-    <hr>
-    <div class="row content">
-    <div class="col-sm-2 sidenav">
-      <p><a href="#lanostraazienda">La Nostra Azienda</a></p>
-      <p><a href="#iservizi">I Servizi</a></p>
-      <p><a href="#ipianitariffari">I Piani Tariffati</a></p>
-      <p><a href="#icontatti">I contatti</a></p>
+        <!-- Slides with img slot -->
+        <!-- Note the classes .d-block and .img-fluid to prevent browser default image alignment -->
+        <b-carousel-slide>
+          <template #img>
+            <img
+              class="d-block img-fluid w-100"
+              width="1024"
+              height="480"
+              src="https://picsum.photos/1024/480/?image=55"
+              alt="image slot"
+            />
+          </template>
+        </b-carousel-slide>
+
+        <!-- Slide with blank fluid image to maintain slide aspect ratio -->
+        <b-carousel-slide caption="Blank Image" img-blank img-alt="Blank image">
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+            eros felis, tincidunt a tincidunt eget, convallis vel est. Ut
+            pellentesque ut lacus vel interdum.
+          </p>
+        </b-carousel-slide>
+      </b-carousel>
     </div>
-
-    <div class="col-sm-8 text-left"> 
-      <p>
-      <p>   
-      <a name="lanostraazienda"><h2>La nosta azienda </h2></a>
-      
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-      <hr>
-      <h3>Test</h3>
-      <p>Lorem ipsum...</p>
-    
-      <p>
-      <p>   
-      <a name="iservizi"><h2>I Nostri Servizi </h2></a>
-      <p>
-      <h3>Le Nostre Batterie</h3>  
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-      <h3>I Nostri Mezzi</h3>  
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-      <center>
-        <img src="/images/inostrimezzi.png" with=50%>
-      </center>
-      <p>
-      <hr>
-      <a name="ipianitariffari"><h2>I Piani Tariffati </h2></a>
-      
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-      <hr>
-       <center>
-        <img src="/images/tariffe.png" with=50%>
-      </center>
-      <p>Lorem ipsum...</p>
-    
-
-      <p>
-      <p>   
-      <a name="icontatti"><h2>Riferimenti</h2></a>
-       <br>
-      <center>
-      <button @click="showModal = true" class="button" >Dove Siamo</button> 
-      <button @click="showModal = true" class="button" >Contattaci</button>
-      <button @click="showModal = true" class="button" >Parner Swap-Point</button>
-      </center>
-    <hr>
-          <h3>Test</h3>
-      <p>Lorem ipsum...</p>
-
-
-
+    <div>
+      <b-container fluid class="text-center">
+        <h3 class="display-2">LA NOSTRA MISSIONE</h3>
+        <p class="h3">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+            eros felis, tincidunt a tincidunt eget, convallis vel est. Ut
+            pellentesque ut lacus vel interdum.
+          </p>
+         </b-container>
     </div>
+    <div>
+      <b-container fluid class="text-center">
+        <b-row class="mb-3">
+          <b-col md="4" class="p-3 bg-default"
+            >1 of 3
+            <div>
+              <b-card
+                title="Card Title"
+                img-src="https://picsum.photos/600/300/?image=25"
+                img-alt="Image"
+                img-top
+                tag="article"
+                style="max-width: 20rem"
+                class="mb-2"
+              >
+                <b-card-text>
+                  Some quick example text to build on the card title and make up
+                  the bulk of the card's content.
+                </b-card-text>
 
-    <hr>
-    <hr>
-    <hr>
-  </div>
-</div>
+                <b-button href="#" variant="dark">Go somewhere</b-button>
+              </b-card>
+            </div>
+          </b-col>
+          <b-col md="4" class="p-3 bg-default"
+            >2 of 3
+            <div>
+              <b-card
+                title="Card Title"
+                img-src="https://picsum.photos/600/300/?image=25"
+                img-alt="Image"
+                img-top
+                tag="article"
+                style="max-width: 20rem"
+                class="mb-2"
+              >
+                <b-card-text>
+                  Some quick example text to build on the card title and make up
+                  the bulk of the card's content.
+                </b-card-text>
+
+                <b-button href="#" variant="dark">Go somewhere</b-button>
+              </b-card>
+            </div>
+          </b-col>
+          <b-col md="4" class="p-3 bg-default"
+            >3 of 3
+            <div>
+              <b-card
+                title="Card Title"
+                img-src="https://picsum.photos/600/300/?image=25"
+                img-alt="Image"
+                img-top
+                tag="article"
+                style="max-width: 20rem"
+                class="mb-2"
+              >
+                <b-card-text>
+                  Some quick example text to build on the card title and make up
+                  the bulk of the card's content.
+                </b-card-text>
+
+                <b-button href="#" variant="dark">Go somewhere</b-button>
+              </b-card>
+            </div>
+          </b-col>
+        </b-row>
+      </b-container>
+       <div>
+      <b-container fluid class="text-center">
+        <h3 class="display-2">I NOSTRI PARTNER</h3>
+        <p class="h3">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+            eros felis, tincidunt a tincidunt eget, convallis vel est. Ut
+            pellentesque ut lacus vel interdum.
+          </p>
+         </b-container>
+    </div>
+      <div >
+      <AddGoogleMap />
+   </div>
+    </div>
   </div>
 </template>
 
 <script>
-import UserService from '../services/user.service';
-
+import UserService from "../services/user.service";
+import AddGoogleMap from "../components/AddGoogleMap";
 export default {
-  name: 'Home',
+  name: "Home",
+ 
   data() {
     return {
-      content: ''
+      content: ""
+
     };
   },
+  components:{AddGoogleMap},
+  
+
+
   mounted() {
     UserService.getPublicContent().then(
-      response => {
+      (response) => {
         this.content = response.data;
       },
-      error => {
+      (error) => {
         this.content =
           (error.response && error.response.data) ||
           error.message ||
           error.toString();
       }
     );
-  }
+  },
 };
 </script>
+<style>
+#home {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #000000;
+  margin-top: 50px;
+}
+</style>
