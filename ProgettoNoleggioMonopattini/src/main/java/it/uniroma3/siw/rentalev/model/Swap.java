@@ -1,7 +1,8 @@
 package it.uniroma3.siw.rentalev.model;
 
 
-import java.time.LocalDateTime;
+
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -23,7 +24,7 @@ public class Swap {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	@Column(nullable=false)
-	private LocalDateTime eventLog;
+	private Date eventLog;
 	@ManyToOne
 	private Hub hub;
 	@ManyToOne
@@ -33,24 +34,21 @@ public class Swap {
 	@OneToOne(cascade = CascadeType.ALL)
 	private CoinTransation coinTransation;
 	
-	@Column
-	private boolean isActive;
+
 	
 	
 	
 
 
 
-	public Swap(Long id, LocalDateTime eventLog, Hub hub, Battery battery, Scooter scooter,
-			CoinTransation coinTransation, boolean isActive) {
+	public Swap( Date eventLog, Hub hub, Battery battery, Scooter scooter
+			 ) {
 		super();
-		this.id = id;
 		this.eventLog = eventLog;
 		this.hub = hub;
 		this.battery = battery;
 		this.scooter = scooter;
-		this.coinTransation = coinTransation;
-		this.isActive = isActive;
+		
 	}
 
 
@@ -64,12 +62,12 @@ public class Swap {
 	}
 
 
-	public LocalDateTime getEventLog() {
+	public Date getEventLog() {
 		return eventLog;
 	}
 
 
-	public void setEventLog(LocalDateTime eventLog) {
+	public void setEventLog(Date eventLog) {
 		this.eventLog = eventLog;
 	}
 
@@ -114,14 +112,7 @@ public class Swap {
 	}
 
 	
-	public boolean isActive() {
-		return isActive;
-	}
-	
-	
-	public void setActive(boolean isActive) {
-		this.isActive = isActive;
-	}
+
 
 	
 	

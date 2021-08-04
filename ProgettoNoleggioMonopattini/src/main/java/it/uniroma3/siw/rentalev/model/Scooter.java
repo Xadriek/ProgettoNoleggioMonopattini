@@ -1,6 +1,7 @@
 package it.uniroma3.siw.rentalev.model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -34,15 +35,14 @@ public class Scooter {
 	private List<Swap> swapList;
 	
 	
-	public Scooter(Long id, Rent rent, Battery battery, LocalDate dateOfBirth, LocalDate dateOfDismiss,
+	public Scooter(Rent rent, LocalDate dateOfBirth,
 			List<Swap> swapList) {
 		super();
-		this.id = id;
+
 		this.rent = rent;
-		this.battery = battery;
+		this.battery = new Battery();
 		this.dateOfBirth = dateOfBirth;
-		this.dateOfDismiss = dateOfDismiss;
-		this.swapList = swapList;
+		this.swapList = new ArrayList<Swap>();
 	}
 
 

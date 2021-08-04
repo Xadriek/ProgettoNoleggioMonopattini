@@ -64,7 +64,7 @@ public class WalletController {
   @PostMapping("/wallets")
   public ResponseEntity<Wallet> createWallet(@RequestBody Wallet wallet) {
     try {
-      Wallet _wallet = walletRepository.save(new Wallet(wallet.getId(), wallet.getCoin()));
+      Wallet _wallet = walletRepository.save(new Wallet(0));
       return new ResponseEntity<>(_wallet, HttpStatus.CREATED);
     } catch (Exception e) {
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

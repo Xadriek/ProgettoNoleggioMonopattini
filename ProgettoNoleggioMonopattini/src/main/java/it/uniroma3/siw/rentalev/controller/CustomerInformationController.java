@@ -66,7 +66,7 @@ public class CustomerInformationController {
   @PostMapping("/customerInformations")
   public ResponseEntity<CustomerInformation> createCustomerInformation(@RequestBody CustomerInformation customerInformation) {
     try {
-      CustomerInformation _customerInformation = customerInformationRepository.save(new CustomerInformation(customerInformation.getId(), customerInformation.getName(),customerInformation.getSurname(),customerInformation.getTelephon(),customerInformation.getAddress(),customerInformation.isActive(),customerInformation.getCustomerWallet(),customerInformation.getRental(),customerInformation.getCoinTransactions()));
+      CustomerInformation _customerInformation = customerInformationRepository.save(new CustomerInformation( customerInformation.getName(),customerInformation.getSurname(),customerInformation.getTelephon(),customerInformation.getAddress()));
       return new ResponseEntity<>(_customerInformation, HttpStatus.CREATED);
     } catch (Exception e) {
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -79,10 +79,9 @@ public class CustomerInformationController {
     if (customerInformationData.isPresent()) {
     	CustomerInformation _customerInformation = customerInformationData.get();
     	_customerInformation.setAddress(customerInformation.getAddress());
-    	_customerInformation.setRental(customerInformation.getRental());
+    	_customerInformation.setActive(customerInformation.isActive());
     	_customerInformation.setTelephon(customerInformation.getTelephon());
-    	_customerInformation.setCustomerWallet(customerInformation.getCustomerWallet());
-    	_customerInformation.setCoinTransactions(customerInformation.getCoinTransactions());
+
       return new ResponseEntity<>(customerInformationRepository.save(_customerInformation), HttpStatus.OK);
     } else {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);

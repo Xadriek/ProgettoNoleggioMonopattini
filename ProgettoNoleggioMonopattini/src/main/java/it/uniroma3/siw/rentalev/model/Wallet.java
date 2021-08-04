@@ -24,9 +24,8 @@ public class Wallet {
 
 
 
-	public Wallet(Long id, int coin) {
-		super();
-		this.id = id;
+	public Wallet(int coin) {
+		
 		this.coin = coin;
 	}
 

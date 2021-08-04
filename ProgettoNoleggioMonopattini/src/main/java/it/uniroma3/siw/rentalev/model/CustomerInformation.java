@@ -1,5 +1,6 @@
 package it.uniroma3.siw.rentalev.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -13,7 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-//METTERE GEOCODE
+
 
 @Entity
 
@@ -43,7 +44,7 @@ public class CustomerInformation implements UserInformation{
 	private Wallet customerWallet;
 	
 	@OneToMany(mappedBy="customer",cascade = CascadeType.ALL)
-	private List<Rent> rental;
+	private List<Rent> rent;
 	
 	@OneToMany(mappedBy="fromCustomer",cascade = CascadeType.ALL)
 	private List<CoinTransation> coinTransactions;
@@ -52,18 +53,17 @@ public class CustomerInformation implements UserInformation{
 
 	
 
-	public CustomerInformation(Long id, String name, String surname, Long telephon, Address address, boolean isActive,
-			Wallet customerWallet, List<Rent> rental, List<CoinTransation> coinTransactions) {
+	public CustomerInformation(String name, String surname, Long telephon, Address address ) {
 		super();
-		this.id = id;
+
 		this.name = name;
 		this.surname = surname;
 		this.telephon = telephon;
 		this.address = address;
-		this.isActive = isActive;
-		this.customerWallet = customerWallet;
-		this.rental = rental;
-		this.coinTransactions = coinTransactions;
+		this.isActive = false;
+		this.customerWallet = new Wallet(0);
+		this.rent = new ArrayList<Rent>();
+		this.coinTransactions = new ArrayList<CoinTransation>();
 	}
 
 	public Long getId() {
@@ -114,12 +114,12 @@ public class CustomerInformation implements UserInformation{
 		this.customerWallet = customerWallet;
 	}
 
-	public List<Rent> getRental() {
-		return rental;
+	public List<Rent> getRent() {
+		return rent;
 	}
 
-	public void setRental(List<Rent> rental) {
-		this.rental = rental;
+	public void setRent(List<Rent> rent) {
+		this.rent = rent;
 	}
 
 	public List<CoinTransation> getCoinTransactions() {

@@ -1,6 +1,7 @@
 package it.uniroma3.siw.rentalev.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -64,7 +65,7 @@ public class HubController {
   @PostMapping("/hubs")
   public ResponseEntity<Hub> createHub(@RequestBody Hub hub) {
     try {
-      Hub _hub = hubRepository.save(new Hub(hub.getId(), hub.getCustodial(),hub.getDateOfAssembly(),hub.getDateOfDismiss(),hub.getSwapCompleted(),hub.getStokedBattery()));
+      Hub _hub = hubRepository.save(new Hub(hub.getCustodial()));
       return new ResponseEntity<>(_hub, HttpStatus.CREATED);
     } catch (Exception e) {
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -77,7 +78,7 @@ public class HubController {
     if (hubData.isPresent()) {
     	Hub _hub = hubData.get();
     	_hub.setCustodial(hub.getCustodial());
-    	_hub.setDateOfDismiss(hub.getDateOfDismiss());
+    	_hub.setDateOfDismiss(new Date());
       return new ResponseEntity<>(hubRepository.save(_hub), HttpStatus.OK);
     } else {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);

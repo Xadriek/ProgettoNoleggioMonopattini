@@ -1,6 +1,7 @@
 package it.uniroma3.siw.rentalev.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -64,7 +65,7 @@ public class SwapController {
   @PostMapping("/swaps")
   public ResponseEntity<Swap> createSwap(@RequestBody Swap swap) {
     try {
-      Swap _swap = swapRepository.save(new Swap(swap.getId(), swap.getEventLog(),swap.getHub(),swap.getBattery(),swap.getScooter(),swap.getCoinTransation(),swap.isActive()));
+      Swap _swap = swapRepository.save(new Swap(new Date(),swap.getHub(),swap.getBattery(),swap.getScooter()));
       return new ResponseEntity<>(_swap, HttpStatus.CREATED);
     } catch (Exception e) {
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

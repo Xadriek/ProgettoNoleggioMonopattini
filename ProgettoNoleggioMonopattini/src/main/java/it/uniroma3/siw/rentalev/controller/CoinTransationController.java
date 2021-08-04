@@ -1,6 +1,7 @@
 package it.uniroma3.siw.rentalev.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -64,7 +65,7 @@ public class CoinTransationController {
   @PostMapping("/coinTransactions")
   public ResponseEntity<CoinTransation> createCoinTransation(@RequestBody CoinTransation coinTransaction) {
     try {
-      CoinTransation _coinTransaction = coinTransactionRepository.save(new CoinTransation(coinTransaction.getId(), coinTransaction.getFromCustomer(),coinTransaction.getToPartner(),coinTransaction.getLogTransition(),coinTransaction.getCoin(),coinTransaction.getSwap()));
+      CoinTransation _coinTransaction = coinTransactionRepository.save(new CoinTransation( coinTransaction.getFromCustomer(),coinTransaction.getToPartner(),new Date(),coinTransaction.getCoin(),coinTransaction.getSwap()));
       return new ResponseEntity<>(_coinTransaction, HttpStatus.CREATED);
     } catch (Exception e) {
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
