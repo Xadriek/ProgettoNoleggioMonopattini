@@ -5,7 +5,7 @@ import java.util.Date;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
@@ -23,7 +23,7 @@ public class JwtUtils {
 	
 	private static int jwtExpirationMs;
 
-  public static String generateJwtToken(Authentication authentication) {
+  public String generateJwtToken(Authentication authentication) {
 	  
 	jwtSecret="foxSecretKey";
 	jwtExpirationMs=86400000;

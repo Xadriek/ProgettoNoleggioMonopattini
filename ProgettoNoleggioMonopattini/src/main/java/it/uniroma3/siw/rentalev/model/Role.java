@@ -9,11 +9,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import lombok.Data;
+
 
 @Entity
 @Table(name = "roles")
-@Data
+
 public class Role {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +28,23 @@ public class Role {
 	}
 
 	public Role(ERole name) {
+		this.name = name;
+	}
+
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public ERole getName() {
+		return name;
+	}
+
+	public void setName(ERole name) {
 		this.name = name;
 	}
 }
