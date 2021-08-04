@@ -1,6 +1,8 @@
 package it.uniroma3.siw.rentalev.model;
 
-import java.time.LocalDate;
+
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -14,7 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-//METTERE GEOCODE
+
 
 @Entity
 
@@ -41,36 +43,35 @@ public class PartnerInformation implements UserInformation {
 	
 	
 	@Column(nullable=false)
-	private LocalDate startPartnership;
+	private Date startPartnership;
 	
 	@Column(nullable=true)
-	private LocalDate closurePartnership;
+	private Date closurePartnership;
 	
 	@Column
 	private boolean isActive;
 	
 
 	@OneToMany(mappedBy="toPartner",cascade = CascadeType.ALL)
-	private List<CoinTransation> coinTransactions;
+	private List<CoinTransation> coinTransations;
 
 
 	
 
 
-	public PartnerInformation(Long id, String name, String pIva, Address address, Wallet partnerWallet, Hub hub,
-			LocalDate startPartnership, LocalDate closurePartnership, List<CoinTransation> coinTransactions,
-			boolean isActive) {
+	public PartnerInformation( String name, String pIva, Address address, 
+			Date startPartnership 
+			) {
 		super();
-		this.id = id;
+
 		this.name = name;
 		this.pIva = pIva;
 		this.address = address;
-		this.partnerWallet = partnerWallet;
-		this.hub = hub;
+		this.partnerWallet = new Wallet(0);
+		this.hub = new Hub(this);
 		this.startPartnership = startPartnership;
-		this.closurePartnership = closurePartnership;
-		this.isActive = isActive;
-		this.coinTransactions = coinTransactions;
+		this.isActive = false;
+		this.coinTransations = new ArrayList<CoinTransation>();
 	}
 
 
@@ -134,33 +135,33 @@ public class PartnerInformation implements UserInformation {
 	}
 
 
-	public LocalDate getStartPartnership() {
+	public Date getStartPartnership() {
 		return startPartnership;
 	}
 
 
-	public void setStartPartnership(LocalDate startPartnership) {
+	public void setStartPartnership(Date startPartnership) {
 		this.startPartnership = startPartnership;
 	}
 
 
-	public LocalDate getClosurePartnership() {
+	public Date getClosurePartnership() {
 		return closurePartnership;
 	}
 
 
-	public void setClosurePartnership(LocalDate closurePartnership) {
+	public void setClosurePartnership(Date closurePartnership) {
 		this.closurePartnership = closurePartnership;
 	}
 
 
 	public List<CoinTransation> getCoinTransactions() {
-		return coinTransactions;
+		return coinTransations;
 	}
 
 
-	public void setCoinTransactions(List<CoinTransation> coinTransactions) {
-		this.coinTransactions = coinTransactions;
+	public void setCoinTransactions(List<CoinTransation> coinTransations) {
+		this.coinTransations = coinTransations;
 	}
 
 

@@ -1,6 +1,7 @@
 package it.uniroma3.siw.rentalev.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -64,7 +65,7 @@ public class PartnerInformationController {
   @PostMapping("/partnerInformations")
   public ResponseEntity<PartnerInformation> createPartnerInformation(@RequestBody PartnerInformation partnerInformation) {
     try {
-      PartnerInformation _partnerInformation = partnerInformationRepository.save(new PartnerInformation(partnerInformation.getId(), partnerInformation.getName(), partnerInformation.getpIva(),partnerInformation.getAddress(),partnerInformation.getPartnerWallet(),partnerInformation.getHub(),partnerInformation.getStartPartnership(),partnerInformation.getClosurePartnership(),partnerInformation.getCoinTransactions(), partnerInformation.isActive()));
+      PartnerInformation _partnerInformation = partnerInformationRepository.save(new PartnerInformation( partnerInformation.getName(), partnerInformation.getpIva(),partnerInformation.getAddress(),new Date()));
       return new ResponseEntity<>(_partnerInformation, HttpStatus.CREATED);
     } catch (Exception e) {
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -77,10 +78,7 @@ public class PartnerInformationController {
     if (partnerInformationData.isPresent()) {
     	PartnerInformation _partnerInformation = partnerInformationData.get();
     	_partnerInformation.setAddress(partnerInformation.getAddress());
-    	_partnerInformation.setPartnerWallet(partnerInformation.getPartnerWallet());
-    	_partnerInformation.setHub(partnerInformation.getHub());
     	_partnerInformation.setClosurePartnership(partnerInformation.getClosurePartnership());
-    	_partnerInformation.setPartnerWallet(partnerInformation.getPartnerWallet());
       return new ResponseEntity<>(partnerInformationRepository.save(_partnerInformation), HttpStatus.OK);
     } else {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -109,7 +107,7 @@ public class PartnerInformationController {
   }
 
  @GetMapping("/partnerInformations/isActive")
-  public ResponseEntity<List<PartnerInformation>> findByCustodial() {
+  public ResponseEntity<List<PartnerInformation>> findByIsActive() {
     try {
       List<PartnerInformation> partnerInformation = partnerInformationRepository.findByIsActive(true);
 

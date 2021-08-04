@@ -28,9 +28,8 @@ public class Contract {
 	@Column(length = 20)
 	private EContract plan;
 
-	public Contract(Long id, Rent rent, EContract plan) {
+	public Contract(Rent rent, EContract plan) {
 		super();
-		this.id = id;
 		this.rent = rent;
 		this.plan = plan;
 	}

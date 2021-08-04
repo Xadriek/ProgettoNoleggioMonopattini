@@ -1,6 +1,7 @@
 package it.uniroma3.siw.rentalev.model;
 
-import java.time.LocalDate;
+
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -21,10 +22,11 @@ public class Rent {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	@Column(nullable=false)
-	private LocalDate startRent;
+	private Date startRent;
 	@Column(nullable=false)
-	private LocalDate finishRent;
+	private Date finishRent;
 	@Column(unique=true)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long numberPolicy;
 	@ManyToOne
 	private CustomerInformation customer;
@@ -35,16 +37,15 @@ public class Rent {
 	@OneToOne(cascade = CascadeType.ALL)
 	private Contract contract;
 	
-	public Rent(Long id, LocalDate startRent, LocalDate finishRent, Long numberPolicy, CustomerInformation customer,
-			Scooter scooter, Boolean ongoing, Contract contract) {
+	public Rent(Date startRent, CustomerInformation customer,
+			Scooter scooter, Contract contract) {
 		super();
-		this.id = id;
+
 		this.startRent = startRent;
-		this.finishRent = finishRent;
-		this.numberPolicy = numberPolicy;
+
 		this.customer = customer;
 		this.scooter = scooter;
-		this.ongoing = ongoing;
+		this.ongoing = false;
 		this.contract = contract;
 	}
 
@@ -56,19 +57,19 @@ public class Rent {
 		this.id = id;
 	}
 
-	public LocalDate getStartRent() {
+	public Date getStartRent() {
 		return startRent;
 	}
 
-	public void setStartRent(LocalDate startRent) {
+	public void setStartRent(Date startRent) {
 		this.startRent = startRent;
 	}
 
-	public LocalDate getFinishRent() {
+	public Date getFinishRent() {
 		return finishRent;
 	}
 
-	public void setFinishRent(LocalDate finishRent) {
+	public void setFinishRent(Date finishRent) {
 		this.finishRent = finishRent;
 	}
 

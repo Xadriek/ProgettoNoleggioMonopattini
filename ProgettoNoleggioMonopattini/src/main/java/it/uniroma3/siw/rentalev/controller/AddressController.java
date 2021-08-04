@@ -61,7 +61,7 @@ public class AddressController {
   @PostMapping("/Addresses")
   public ResponseEntity<Address> createAddress(@RequestBody Address Address) {
     try {
-      Address _Address = AddressRepository.save(new Address(Address.getId(), Address.getStreet(),Address.getCap(),Address.getNumberStreet(),Address.getMunicipality(),Address.getCity(),Address.getCountry()));
+      Address _Address = AddressRepository.save(new Address(Address.getStreet(),Address.getCap(),Address.getNumberStreet(),Address.getMunicipality(),Address.getCity(),Address.getCountry()));
       return new ResponseEntity<>(_Address, HttpStatus.CREATED);
     } catch (Exception e) {
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

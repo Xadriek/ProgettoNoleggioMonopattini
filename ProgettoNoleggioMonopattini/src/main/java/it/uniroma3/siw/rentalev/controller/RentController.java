@@ -1,6 +1,7 @@
 package it.uniroma3.siw.rentalev.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -63,7 +64,7 @@ public class RentController {
   @PostMapping("/rents")
   public ResponseEntity<Rent> createRent(@RequestBody Rent rent) {
     try {
-      Rent _rent = rentRepository.save(new Rent(rent.getId(), rent.getStartRent(),rent.getFinishRent(),rent.getNumberPolicy(),rent.getCustomer(),rent.getScooter(),rent.getOngoing(),rent.getContract()));
+      Rent _rent = rentRepository.save(new Rent(new Date(),rent.getCustomer(),rent.getScooter(),rent.getContract()));
       return new ResponseEntity<>(_rent, HttpStatus.CREATED);
     } catch (Exception e) {
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -76,7 +77,6 @@ public class RentController {
     if (rentData.isPresent()) {
     	Rent _rent = rentData.get();
     	_rent.setFinishRent(rent.getFinishRent());
-    	_rent.setCustomer(rent.getCustomer());
     	_rent.setScooter(rent.getScooter());
     	_rent.setOngoing(rent.getOngoing());
     	_rent.setContract(rent.getContract());

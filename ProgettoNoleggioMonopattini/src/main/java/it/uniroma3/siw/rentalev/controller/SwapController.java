@@ -106,19 +106,7 @@ public class SwapController {
 
   }
 
- @GetMapping("/swaps/custodial")
-  public ResponseEntity<List<Swap>> findByIsActive() {
-    try {
-      List<Swap> swap = swapRepository.findByIsActive(true);
-
-      if (swap.isEmpty()) {
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-      }
-      return new ResponseEntity<>(swap, HttpStatus.OK);
-    } catch (Exception e) {
-      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+ 
   }
   
 
-}

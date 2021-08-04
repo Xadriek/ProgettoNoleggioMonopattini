@@ -63,7 +63,7 @@ public class ContractController {
   @PostMapping("/contracts")
   public ResponseEntity<Contract> createContract(@RequestBody Contract contract) {
     try {
-      Contract _contract = contractRepository.save(new Contract(contract.getId(), contract.getRent(),contract.getPlan()));
+      Contract _contract = contractRepository.save(new Contract(contract.getRent(),contract.getPlan()));
       return new ResponseEntity<>(_contract, HttpStatus.CREATED);
     } catch (Exception e) {
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -75,7 +75,6 @@ public class ContractController {
 
     if (contractData.isPresent()) {
     	Contract _contract = contractData.get();
-    	_contract.setRent(contract.getRent());
     	_contract.setPlan(contract.getPlan());
       return new ResponseEntity<>(contractRepository.save(_contract), HttpStatus.OK);
     } else {
