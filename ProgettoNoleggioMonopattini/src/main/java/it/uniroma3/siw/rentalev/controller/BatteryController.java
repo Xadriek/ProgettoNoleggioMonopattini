@@ -1,6 +1,7 @@
 package it.uniroma3.siw.rentalev.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -62,7 +63,7 @@ public class BatteryController {
   @PostMapping("/batteries")
   public ResponseEntity<Battery> createBattery(@RequestBody Battery battery) {
     try {
-      Battery _battery = batteryRepository.save(new Battery(battery.getId(), battery.getVoltage(),battery.getCapacity(),battery.getDateOfBirth(),battery.getDateOfDismiss(),battery.getSwapList(),battery.getHub(),battery.getScooter(),battery.getState()));
+      Battery _battery = batteryRepository.save(new Battery(new Date(),battery.getScooter()));
       return new ResponseEntity<>(_battery, HttpStatus.CREATED);
     } catch (Exception e) {
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -76,6 +77,7 @@ public class BatteryController {
     	Battery _battery = batteryData.get();
     	_battery.setHub(battery.getHub());
     	_battery.setScooter(battery.getScooter());
+    	_battery.setState(battery.getState());
       return new ResponseEntity<>(batteryRepository.save(_battery), HttpStatus.OK);
     } else {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);

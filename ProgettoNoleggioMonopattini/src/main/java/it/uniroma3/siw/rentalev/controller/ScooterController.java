@@ -1,6 +1,7 @@
 package it.uniroma3.siw.rentalev.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -64,7 +65,7 @@ public class ScooterController {
   @PostMapping("/scooters")
   public ResponseEntity<Scooter> createScooter(@RequestBody Scooter scooter) {
     try {
-      Scooter _scooter = scooterRepository.save(new Scooter(scooter.getId(), scooter.getRent(),scooter.getBattery(),scooter.getDateOfBirth(),scooter.getDateOfDismiss(),scooter.getSwapList()));
+      Scooter _scooter = scooterRepository.save(new Scooter( scooter.getRent(),new Date()));
       return new ResponseEntity<>(_scooter, HttpStatus.CREATED);
     } catch (Exception e) {
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

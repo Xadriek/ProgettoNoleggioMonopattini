@@ -1,7 +1,8 @@
 package it.uniroma3.siw.rentalev.model;
 
-import java.time.LocalDate;
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -28,19 +29,19 @@ public class Scooter {
 	@OneToOne
 	private Battery battery;
 	@Column(nullable=false)
-	private LocalDate dateOfBirth;
+	private Date dateOfBirth;
 	@Column(nullable=true)
-	private LocalDate dateOfDismiss;
+	private Date dateOfDismiss;
 	@OneToMany(mappedBy="scooter", cascade = CascadeType.ALL)
 	private List<Swap> swapList;
 	
 	
-	public Scooter(Rent rent, LocalDate dateOfBirth,
-			List<Swap> swapList) {
+	public Scooter(Rent rent, Date dateOfBirth
+			) {
 		super();
 
 		this.rent = rent;
-		this.battery = new Battery();
+		this.battery = new Battery(new Date(),this);
 		this.dateOfBirth = dateOfBirth;
 		this.swapList = new ArrayList<Swap>();
 	}
@@ -76,22 +77,22 @@ public class Scooter {
 	}
 
 
-	public LocalDate getDateOfBirth() {
+	public Date getDateOfBirth() {
 		return dateOfBirth;
 	}
 
 
-	public void setDateOfBirth(LocalDate dateOfBirth) {
+	public void setDateOfBirth(Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
 
 
-	public LocalDate getDateOfDismiss() {
+	public Date getDateOfDismiss() {
 		return dateOfDismiss;
 	}
 
 
-	public void setDateOfDismiss(LocalDate dateOfDismiss) {
+	public void setDateOfDismiss(Date dateOfDismiss) {
 		this.dateOfDismiss = dateOfDismiss;
 	}
 
