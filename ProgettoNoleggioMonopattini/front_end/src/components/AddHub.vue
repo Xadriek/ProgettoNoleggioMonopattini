@@ -32,7 +32,7 @@
           <div class="form-group">
             <label for="address">Indirizzo</label>
             <input
-              v-model="partner.address"
+              v-model="address.street"
               class="form-control"
               name="address"
             />
@@ -47,10 +47,5 @@
         </div>
       </form>
 
-      <div
-        v-if="message"
-        class="alert"
-        :class="successful ? 'alert-success' : 'alert-danger'"
-      >{{message}}</div>
-    </div>
+      
 </template>

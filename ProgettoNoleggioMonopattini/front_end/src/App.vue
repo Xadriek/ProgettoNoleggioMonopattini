@@ -15,7 +15,7 @@
           <router-link to="/partner" class="nav-link">Partner Board</router-link>
         </li>
         <li v-if="showCustomerBoard"  class="nav-item">
-          <router-link v-if="currentUser" to="/customer" class="nav-link">User</router-link>
+          <router-link v-if="currentUser" to="/customer" class="nav-link">Customer</router-link>
         </li>
       </div>
 
