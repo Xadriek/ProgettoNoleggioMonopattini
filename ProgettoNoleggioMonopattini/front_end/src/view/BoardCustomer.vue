@@ -5,9 +5,9 @@
     </header>
     <div>
       <div class="mb-3">
-        <b-button v-b-toggle.creanoleggio>Crea Noleggio</b-button>
-        <b-button v-b-toggle.cercaswappoint>Cerca SwapPoint</b-button>
-        <b-button v-b-toggle.listaswappoint>Lista SwapPoint</b-button
+        <b-button v-b-toggle.creanoleggio class="m-1">Crea Noleggio</b-button>
+        <b-button v-b-toggle.cercaswappoint class="m-1">Cerca SwapPoint</b-button>
+        <b-button v-b-toggle.listaswappoint class="m-1">Lista SwapPoint</b-button
         >
       </div>
     </div>
@@ -24,7 +24,9 @@
           </b-card>
         </b-collapse>
         <b-collapse id="listaswappoint">
-          <b-card>I am collapsible content!</b-card>
+          <b-card title="Lista Swap Point">
+           <swap-points />
+          </b-card>
         </b-collapse>
       </div>
     </div>
@@ -34,10 +36,11 @@
 <script>
 import AddRent from "../components/AddRent.vue";
 import SwapPoint from "../components/SwapPoint.vue";
+import SwapPoints from "../components/SwapPoints.vue";
 import UserService from "../services/user.service";
 
 export default {
-  components: { AddRent , SwapPoint },
+  components: { AddRent , SwapPoint, SwapPoints },
   name: "customer",
   data() {
     return {
