@@ -10,9 +10,32 @@
       {{currentUser.accessToken.substring(0, 20)}} ... {{currentUser.accessToken.substr(currentUser.accessToken.length - 20)}}
     </p>
     <p>
-      <strong>Id:</strong>
-      {{currentUser.id}}
+    <strong>Id:</strong>
+    {{currentUser.id}}
     </p>
+    <p>
+    <strong>Nome:</strong>
+    </p>
+    <p>
+    <strong>Cognome:</strong>
+    </p>
+    <p>
+    <strong>Telefono:</strong>
+    </p>
+    <p>
+    <strong>Stato Attivo/Disattivo</strong>
+    </p>        
+    <p>
+    <strong>Monete nel Wallet</strong>
+    </p>
+    <p>
+    <strong>ID Noleggio</strong>
+    </p>    
+    <p>
+    <strong>Numero Transazioni</strong>
+    </p>   
+
+
     <p>
       <strong>Email:</strong>
       {{currentUser.email}}
