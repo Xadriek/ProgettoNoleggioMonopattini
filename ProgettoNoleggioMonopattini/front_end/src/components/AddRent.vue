@@ -1,92 +1,142 @@
 <template>
   <div>
     <b-form @submit="onSubmit" @reset="onReset" v-if="show">
-      <b-form-group
-        id="input-group-1"
-        label="Email address:"
-        label-for="input-1"
-        description="We'll never share your email with anyone else."
-      >
-        <b-form-input
-          id="input-1"
-          v-model="form.email"
-          type="email"
-          placeholder="Enter email"
-          required
-        ></b-form-input>
-      </b-form-group>
-
-      <b-form-group id="input-group-2" label="Your Name:" label-for="input-2">
+      <b-form-group id="input-group-2" label="Nome:" label-for="input-2">
         <b-form-input
           id="input-2"
           v-model="form.name"
-          placeholder="Enter name"
+          placeholder="Inserisci il Nome"
           required
         ></b-form-input>
       </b-form-group>
 
-      <b-form-group id="input-group-3" label="Food:" label-for="input-3">
-        <b-form-select
-          id="input-3"
-          v-model="form.food"
-          :options="foods"
+      <b-form-group id="input-group-2" label="Cognome:" label-for="input-2">
+        <b-form-input
+          id="input-2"
+          v-model="form.cognome"
+          placeholder="Inserisci il Cognome"
           required
-        ></b-form-select>
+        ></b-form-input>
       </b-form-group>
 
-      <b-form-group id="input-group-4" v-slot="{ ariaDescribedby }">
-        <b-form-checkbox-group
-          v-model="form.checked"
-          id="checkboxes-4"
-          :aria-describedby="ariaDescribedby"
-        >
-          <b-form-checkbox value="me">Check me out</b-form-checkbox>
-          <b-form-checkbox value="that">Check that out</b-form-checkbox>
-        </b-form-checkbox-group>
+      <b-form-group id="input-group-2" label="Telefono:" label-for="input-2">
+        <b-form-input
+          id="input-2"
+          v-model="form.telefono"
+          placeholder="Inserisci il telefono"
+          required
+        ></b-form-input>
       </b-form-group>
 
-      <b-button type="submit" variant="primary">Submit</b-button>
-      <b-button type="reset" variant="danger">Reset</b-button>
+      <b-form-group id="input-group-2" label="Indirizzo:" label-for="input-2">
+        <b-form-input
+          id="input-2"
+          v-model="form.indirizzo"
+          placeholder="Inserisci Indirizzo"
+          required
+        ></b-form-input>
+      </b-form-group>
+
+      <b-form-group id="input-group-2" label="Citta:" label-for="input-2">
+        <b-form-input
+          id="input-2"
+          v-model="form.citta"
+          placeholder="Inserisci la Citta"
+          required
+        ></b-form-input>
+      </b-form-group>
+
+      <b-form-group id="input-group-2" label="Naziome:" label-for="input-2">
+        <b-form-input
+          id="input-2"
+          v-model="form.nazione"
+          placeholder="Inserisci la Nazione"
+          required
+        ></b-form-input>
+      </b-form-group>
+
+      <b-form-group id="input-group-2" label="DataInizio:" label-for="input-2">
+        <b-form-input
+          id="input-2"
+          v-model="form.datainizio"
+          placeholder="Inserisci la Data di Inizio Noleggio"
+          required
+        ></b-form-input>
+      </b-form-group>
+
+      <b-form-group id="input-group-2" label="Durata:" label-for="input-2">
+        <b-form-input
+          id="input-2"
+          v-model="form.durata"
+          placeholder="Inserisci la durata del Noleggio"
+          required
+        ></b-form-input>
+      </b-form-group>
+
+      <b-form-group
+        id="input-group-2"
+        label="PianoTariffario:"
+        label-for="input-2"
+      >
+        <b-form-input
+          id="input-2"
+          v-model="form.pianotariffa"
+          placeholder="Inserisci il Piano Tariffario"
+          required
+        ></b-form-input>
+      </b-form-group>
+
+      <b-button type="submit" variant="primary">Conferma</b-button>
+      <b-button type="reset" variant="danger">Annulla</b-button>
     </b-form>
-    <b-card class="mt-3" header="Form Data Result">
-      <pre class="m-0">{{ form }}</pre>
-    </b-card>
+    
   </div>
 </template>
 
 <script>
-  export default {
-      name:"AddRent",
-    data() {
-      return {
-        form: {
-          email: '',
-          name: '',
-          food: null,
-          checked: []
-        },
-        foods: [{ text: 'Select One', value: null }, 'Carrots', 'Beans', 'Tomatoes', 'Corn'],
-        show: true
-      }
-    },
-    methods: {
-      onSubmit(event) {
-        event.preventDefault()
-        alert(JSON.stringify(this.form))
+export default {
+  name: "AddRent",
+  data() {
+    return {
+      form: {
+        nome: "",
+        cognome: "",
+        telefono: "",
+        indirizzo: "",
+        citta: "",
+        nazione: "",
+        datainizio: "",
+        durata: "",
+        pianotariffa: "",
       },
-      onReset(event) {
-        event.preventDefault()
-        // Reset our form values
-        this.form.email = ''
-        this.form.name = ''
-        this.form.food = null
-        this.form.checked = []
-        // Trick to reset/clear native browser form validation state
-        this.show = false
-        this.$nextTick(() => {
-          this.show = true
-        })
-      }
-    }
-  }
+      show: true,
+    };
+  },
+  methods: {
+    onSubmit(event) {
+      event.preventDefault();
+      alert(JSON.stringify(this.form));
+    },
+    onReset(event) {
+      event.preventDefault();
+      // Reset our form values
+
+      this.form.name = "";
+      this.cognome = "";
+      this.telefono = "";
+      this.indirizzo = "";
+      this.citta = "";
+      this.nazione = "";
+      this.datainizio = "";
+      this.durata = "";
+      this.pianotariffa = "";
+
+      // Trick to reset/clear native browser form validation state
+      this.show = false;
+      this.$nextTick(() => {
+        this.show = true;
+      });
+    },
+  },
+};
 </script>
