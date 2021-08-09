@@ -31,16 +31,16 @@ public class CustomerInformation implements UserInformation{
 	@Column(nullable=false)
 	private String surname;
 	
-	@Column(nullable=false)
+	@Column
 	private Long telephon;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Address address;
 	
 	@Column
 	private boolean isActive;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private Wallet customerWallet;
 	
 	@OneToMany(mappedBy="customer",cascade = CascadeType.ALL)

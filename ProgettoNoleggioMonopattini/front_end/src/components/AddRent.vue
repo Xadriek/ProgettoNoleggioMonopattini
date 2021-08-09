@@ -140,7 +140,7 @@ export default {
         "",
         "",
         "",
-        ""
+        this.currentUser
       ),
       address: new Address("", "", "", "", "",""),
       contract: new Contract(""),
@@ -149,8 +149,19 @@ export default {
     };
   },
   methods: {
-    createCustomerInformation() {
-      rentService.saveRent(this.customerInformation,this.address,this.contract);
+    createRent() {
+      
+      return rentService.saveRent(this.customerInformation,this.address,this.contract).then(
+        response=> {
+          alert('WIN');
+          return response.data;
+
+        },
+        () => {
+          alert('dio cane');
+          return alert("errore");
+        }
+      );
       
    },
     currentUser() {
