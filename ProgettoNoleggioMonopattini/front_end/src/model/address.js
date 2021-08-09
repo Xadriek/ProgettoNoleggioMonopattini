@@ -1,6 +1,5 @@
 export default class Address{
-    constructor(id,street,cap,numberStreet,municipality,city,country){
-        this.id;
+    constructor(street,cap,numberStreet,municipality,city,country){
         this.street=street;
         this.cap=cap;
         this.numberStreet=numberStreet;

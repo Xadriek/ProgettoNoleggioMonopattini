@@ -10,7 +10,6 @@ class ContractService{
 
     saveContract(contract) {
             return axios.post(API_URL + 'contracts',{
-            rent:contract.rent,
             plan:contract.plan    
             }, {headers: authHeader() })
             .then((response) => {

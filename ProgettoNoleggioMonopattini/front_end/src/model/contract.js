@@ -1,7 +1,5 @@
 export default class Contract{
-    constructor(id,rent,plan){
-       this.id=id;
-        this.rent=rent;
+    constructor(plan){
         this.plan=plan;
     }
 }
