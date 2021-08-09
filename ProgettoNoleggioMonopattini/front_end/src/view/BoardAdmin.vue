@@ -57,7 +57,12 @@
               <b-button v-b-modal.modalListaClienti>Lista Clienti</b-button>
 
               <b-modal id="modalListaClienti" title="Lista Clienti" ok-only>
-                <p>This</p>
+                <b-table
+                      striped
+                      hover
+                      :items="listaswappoint"
+                      :fields="campibusy"
+                    ></b-table>
               </b-modal>
             </b-card>
 
@@ -71,7 +76,12 @@
               <b-button v-b-modal.modalListaPartner>Lista Partner</b-button>
 
               <b-modal id="modalListaPartner" title="Lista Partner" ok-only>
-                <p>This</p>
+                <b-table
+                      striped
+                      hover
+                      :items="listaswappoint"
+                      :fields="campibusy"
+                    ></b-table>
               </b-modal>
             </b-card>
 
@@ -87,7 +97,12 @@
               <b-button v-b-modal.modalListaNoleggi>Lista Noleggi</b-button>
 
               <b-modal id="modalListaNoleggi" title="Lista Noleggi" ok-only>
-                <p>This</p>
+                 <b-table
+                      striped
+                      hover
+                      :items="listaswappoint"
+                      :fields="campibusy"
+                    ></b-table>
               </b-modal>
             </b-card>
           </b-card-group>
@@ -103,7 +118,12 @@
               <b-button v-b-modal.modalListaSwap>Lista Swap</b-button>
 
               <b-modal id="modalListaSwap" title="Lista Swap" ok-only>
-                <p>This</p>
+                    <b-table
+                      striped
+                      hover
+                      :items="listaswappoint"
+                      :fields="campibusy"
+                    ></b-table>
               </b-modal>
             </b-card>
 
@@ -112,7 +132,12 @@
               <b-button v-b-modal.modalListaScooter>Lista Scooter</b-button>
 
               <b-modal id="modalListaScooter" title="Lista Scooter" ok-only>
-                <p>This</p>
+                 <b-table
+                      striped
+                      hover
+                      :items="listaswappoint"
+                      :fields="campibusy"
+                    ></b-table>
               </b-modal>
             </b-card>
           </b-card-group>
@@ -131,6 +156,13 @@ export default {
     return {
       content: "",
       text: "This is some text.\nIt is read only and doesn't look like an input.",
+      campibusy: ["name", "indirizzo", "distanza"],
+      listaswappoint: [
+        { distanza: 40, name: "Dickerson", indirizzo: "Via Roma" },
+        { distanza: 21, name: "Larsen", indirizzo: "Viale Marconi" },
+        { distanza: 89, name: "Geneva", indirizzo: "Piazza Verdi" },
+        { distanza: 38, name: "Jami", indirizzo: "Colosseo" },
+      ],
     };
   },
   mounted() {
