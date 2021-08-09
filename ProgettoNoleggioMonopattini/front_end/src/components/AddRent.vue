@@ -128,11 +128,7 @@
 <script>
 import CustomerInformation from "../model/customerInformation";
 import Address from "../model/address";
-import Rent from "../model/rent";
 import Contract from "../model/contract";
-import customerInformationService from "../services/customerInformation.service.js";
-import addressService from "../services/address.service.js";
-import contractService from "../services/contract.service.js";
 import rentService from "../services/rent.service.js";
 
 export default {
@@ -140,44 +136,27 @@ export default {
   data() {
     return {
       customerInformation: new CustomerInformation(
-        null,
-        "",
         "",
         "",
         "",
         "",
         ""
       ),
-      address: new Address(null, "", "", "", "", "",""),
-      rent: new Rent(null,"", ""),
-      contract: new Contract(null,"", ""),
+      address: new Address("", "", "", "", "",""),
+      contract: new Contract(""),
       show: true,
       
     };
   },
   methods: {
     createCustomerInformation() {
-      this.customerInformation.user = this.currentUser;
-      var responseData=customerInformationService.saveCustomerInformation(this.customerInformation);
-      return responseData;
+      rentService.saveRent(this.customerInformation,this.address,this.contract);
+      
    },
     currentUser() {
       return this.$store.state.auth.user;
     },
-    createAddress(){
-     var responseData=addressService.saveAddress(this.address);
-      this.customerInformation.address=responseData;
-    },
-    createContract(){
-    contractService.saveContract(this.contract);
-    },
-    createRent(){
-     this.rent.customer=this.createCustomerInformation;
-     this.rent.contract=this.createContract;
-     rentService.saveRent(this.rent);
-     
-     
-    },
+    
     
     onReset(event) {
       event.preventDefault();

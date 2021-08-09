@@ -1,3 +1,4 @@
+
 import axios from 'axios';
 import authHeader from './auth-header';
 
@@ -8,10 +9,21 @@ class RentService{
     getAllRents() {
         return axios.get(API_URL + 'rents', {headers: authHeader() })}
 
-    saveRent(rent) {
+    saveRent(customerInformation,address,contract) {
             return axios.post(API_URL + 'rents',{
-            customer: rent.customer,
-            contract: rent.contract    
+              name: customerInformation.name,
+              surname: customerInformation.surname,
+              telephon: customerInformation.telephon,
+              street:address.street,
+              cap:address.cap,
+              numberStreet:address.numberStreet,
+              municipality: address.municipality,
+              city:address.city,
+              country:address.country,
+              plan:contract.plan,
+              user: customerInformation.user,
+              
+                
             }, {headers: authHeader() })
             .then((response) => {
               return response.data;

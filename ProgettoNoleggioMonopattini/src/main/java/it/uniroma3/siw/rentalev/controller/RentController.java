@@ -19,10 +19,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
 
-
+import it.uniroma3.siw.rentalev.model.Address;
+import it.uniroma3.siw.rentalev.model.Contract;
+import it.uniroma3.siw.rentalev.model.CustomerInformation;
 import it.uniroma3.siw.rentalev.model.Rent;
 import it.uniroma3.siw.rentalev.model.Scooter;
-
+import it.uniroma3.siw.rentalev.payload.request.RentRequest;
 import it.uniroma3.siw.rentalev.repository.RentRepository;
 
 
@@ -68,10 +70,12 @@ public class RentController {
   }
 
   @PostMapping("/rents")
-  public ResponseEntity<Rent> createRent(@RequestBody Rent rent) {
+  public ResponseEntity<Rent> createRent(@RequestBody RentRequest rentRequest) {
     try {
-
-      Rent _rent = rentRepository.save(new Rent(new Date(),rent.getCustomer(),new Scooter(new Date()),rent.getContract()));
+    	Address _address= new Address(rentRequest.getStreet(), rentRequest.getCap(), rentRequest.getNumberStreet(), rentRequest.getMunicipality(), rentRequest.getCity(), rentRequest.getCountry());
+    	CustomerInformation _customer=new CustomerInformation(rentRequest.getName(), rentRequest.getSurname(), rentRequest.getTelephon(),_address, rentRequest.getUser());
+    	Contract _contract=new Contract(rentRequest.getPlan());
+      Rent _rent = rentRepository.save(new Rent(new Date(),_customer,new Scooter(new Date()),_contract));
       return new ResponseEntity<>(_rent, HttpStatus.CREATED);
     } catch (Exception e) {
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

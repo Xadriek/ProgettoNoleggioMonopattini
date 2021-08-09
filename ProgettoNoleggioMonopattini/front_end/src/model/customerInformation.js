@@ -1,6 +1,5 @@
 export default class CustomerInformation{
-    constructor(id,name,surname,telephon,address,user){
-        this.id=id;
+    constructor(name,surname,telephon,address,user){
         this.name=name;
         this.surname=surname;
         this.telephon=telephon;
