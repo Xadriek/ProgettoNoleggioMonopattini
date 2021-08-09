@@ -3,15 +3,15 @@ import authHeader from './auth-header';
 
 const API_URL = 'http://localhost:8080/api/rest/';
 
-class RentService{
+class ContractService{
 
-    getAllRents() {
-        return axios.get(API_URL + 'rents', {headers: authHeader() })}
+    getAllContracts() {
+        return axios.get(API_URL + 'contracts', {headers: authHeader() })}
 
-    saveRent(rent) {
-            return axios.post(API_URL + 'rents',{
-            customer: rent.customer,
-            contract: rent.contract    
+    saveContract(contract) {
+            return axios.post(API_URL + 'contracts',{
+            rent:contract.rent,
+            plan:contract.plan    
             }, {headers: authHeader() })
             .then((response) => {
               return response.data;
@@ -20,6 +20,6 @@ class RentService{
               console.log(e);
             });
         }
-    }
+}
 
-export default new RentService();
+export default new ContractService();

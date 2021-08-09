@@ -1,7 +1,6 @@
 export default class Rent{
-    constructor(customer,ongoing,contract){
+    constructor(customer,contract){
         this.customer=customer;
-        this.ongoing=ongoing;
         this.contract=contract;
     }
 }

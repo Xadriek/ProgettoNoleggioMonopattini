@@ -7,7 +7,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -21,16 +20,13 @@ public class Contract {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	@OneToOne
-	private Rent rent;
 
 	@Enumerated(EnumType.STRING)
 	@Column(length = 20)
 	private EContract plan;
 
-	public Contract(Rent rent, EContract plan) {
+	public Contract(EContract plan) {
 		super();
-		this.rent = rent;
 		this.plan = plan;
 	}
 
@@ -42,13 +38,6 @@ public class Contract {
 		this.id = id;
 	}
 
-	public Rent getRent() {
-		return rent;
-	}
-
-	public void setRent(Rent rent) {
-		this.rent = rent;
-	}
 
 	public EContract getPlan() {
 		return plan;

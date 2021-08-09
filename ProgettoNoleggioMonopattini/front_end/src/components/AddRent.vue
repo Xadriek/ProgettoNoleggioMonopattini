@@ -1,122 +1,184 @@
 <template>
   <div>
-    <b-form @submit="onSubmit" @reset="onReset" v-if="show">
-      <b-form-group id="input-group-2" label="Nome:" label-for="input-2">
+    <b-form v-if="show">
+      <b-form-group label="Nome:" >
         <b-form-input
           id="input-2"
-          v-model="form.name"
+          v-model="customerInformation.name"
           placeholder="Inserisci il Nome"
           required
+          name="name"
         ></b-form-input>
       </b-form-group>
 
-      <b-form-group id="input-group-2" label="Cognome:" label-for="input-2">
+      <b-form-group label="Cognome:" >
         <b-form-input
           id="input-2"
-          v-model="form.cognome"
+          v-model="customerInformation.cognome"
           placeholder="Inserisci il Cognome"
           required
+          name="surname"
         ></b-form-input>
       </b-form-group>
 
-      <b-form-group id="input-group-2" label="Telefono:" label-for="input-2">
+      <b-form-group label="Telefono:" >
         <b-form-input
           id="input-2"
-          v-model="form.telefono"
+          v-model="customerInformation.telefono"
           placeholder="Inserisci il telefono"
           required
+          name="telephon"
         ></b-form-input>
       </b-form-group>
 
-      <b-form-group id="input-group-2" label="Indirizzo:" label-for="input-2">
+      <b-form-group label="Via:" >
         <b-form-input
           id="input-2"
-          v-model="form.indirizzo"
-          placeholder="Inserisci Indirizzo"
+          v-model="address.street"
+          placeholder="Inserisci via/viale/piazza"
           required
+          name="street"
         ></b-form-input>
       </b-form-group>
 
-      <b-form-group id="input-group-2" label="Citta:" label-for="input-2">
+      <b-form-group label="Civico:" >
         <b-form-input
           id="input-2"
-          v-model="form.citta"
+          v-model="address.numberStreet"
+          placeholder="Inserisci il civico"
+          required
+          name="numberStreet"
+        ></b-form-input>
+      </b-form-group>
+
+       <b-form-group label="Cap:" >
+        <b-form-input
+          id="input-2"
+          v-model="address.cap"
+          placeholder="Inserisci il cap"
+          required
+          name="cap"
+        ></b-form-input>
+      </b-form-group>
+
+      <b-form-group label="Comune:" >
+        <b-form-input
+          id="input-2"
+          v-model="address.municipality"
+          placeholder="Inserisci il comune"
+          required
+          name="municipality"
+        ></b-form-input>
+      </b-form-group>
+
+      <b-form-group  label="Citta:" >
+        <b-form-input
+          id="input-2"
+          v-model="address.city"
           placeholder="Inserisci la Citta"
           required
+          name="city"
         ></b-form-input>
       </b-form-group>
 
-      <b-form-group id="input-group-2" label="Naziome:" label-for="input-2">
+      <b-form-group  label="Nazione:" >
         <b-form-input
           id="input-2"
-          v-model="form.nazione"
+          v-model="address.country"
           placeholder="Inserisci la Nazione"
           required
-        ></b-form-input>
-      </b-form-group>
-
-      <b-form-group id="input-group-2" label="DataInizio:" label-for="input-2">
-        <b-form-input
-          id="input-2"
-          v-model="form.datainizio"
-          placeholder="Inserisci la Data di Inizio Noleggio"
-          required
-        ></b-form-input>
-      </b-form-group>
-
-      <b-form-group id="input-group-2" label="Durata:" label-for="input-2">
-        <b-form-input
-          id="input-2"
-          v-model="form.durata"
-          placeholder="Inserisci la durata del Noleggio"
-          required
+          name="country"
         ></b-form-input>
       </b-form-group>
 
       <b-form-group
-        id="input-group-2"
-        label="PianoTariffario:"
-        label-for="input-2"
+        id="new-contract"
+        label="Piano tariffario:"
+        
       >
-        <b-form-input
-          id="input-2"
-          v-model="form.pianotariffa"
-          placeholder="Inserisci il Piano Tariffario"
-          required
-        ></b-form-input>
+        <b-form-radio
+          v-model="contract.plan"
+          
+          name="plan"
+          value="PIANO_TARIFFARIO1"
+          >Trimestrale</b-form-radio
+        >
+        <b-form-radio
+          v-model="contract.plan"
+          
+          name="plan"
+          value="PIANO_TARIFFARIO2"
+          >Semetrale</b-form-radio
+        >
+        <b-form-radio
+          v-model="contract.plan"
+          
+          name="plan"
+          value="PIANO_TARIFFARIO3"
+          >Annuale</b-form-radio
+        >
       </b-form-group>
 
-      <b-button type="submit" variant="primary">Conferma</b-button>
+      <b-button @click="createRent" type="submit" variant="primary">Conferma</b-button>
       <b-button type="reset" variant="danger">Annulla</b-button>
     </b-form>
-    
   </div>
 </template>
 
 <script>
+import CustomerInformation from "../model/customerInformation";
+import Address from "../model/address";
+import Rent from "../model/rent";
+import Contract from "../model/contract";
+import customerInformationService from "../services/customerInformation.service.js";
+import addressService from "../services/address.service.js";
+import contractService from "../services/contract.service.js";
+import rentService from "../services/rent.service.js";
+
 export default {
   name: "AddRent",
   data() {
     return {
-      form: {
-        nome: "",
-        cognome: "",
-        telefono: "",
-        indirizzo: "",
-        citta: "",
-        nazione: "",
-        datainizio: "",
-        durata: "",
-        pianotariffa: "",
-      },
+      customerInformation: new CustomerInformation(
+        null,
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ),
+      address: new Address(null, "", "", "", "", "",""),
+      rent: new Rent(null,"", ""),
+      contract: new Contract(null,"", ""),
       show: true,
+      
     };
   },
   methods: {
-    onSubmit(event) {
-      event.preventDefault();
-      alert(JSON.stringify(this.form));
+    createCustomerInformation() {
+      this.customerInformation.user = this.currentUser;
+      var responseData=customerInformationService.saveCustomerInformation(this.customerInformation);
+      return responseData;
+   },
+    currentUser() {
+      return this.$store.state.auth.user;
     },
+    createAddress(){
+     var responseData=addressService.saveAddress(this.address);
+      this.customerInformation.address=responseData;
+    },
+    createContract(){
+    contractService.saveContract(this.contract);
+    },
+    createRent(){
+     this.rent.customer=this.createCustomerInformation;
+     this.rent.contract=this.createContract;
+     rentService.saveRent(this.rent);
+     
+     
+    },
+    
     onReset(event) {
       event.preventDefault();
       // Reset our form values

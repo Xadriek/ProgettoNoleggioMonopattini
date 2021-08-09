@@ -1,10 +1,10 @@
 export default class CustomerInformation{
-    constructor(name,surname,telephon,address,isActive,rent){
+    constructor(id,name,surname,telephon,address,user){
+        this.id=id;
         this.name=name;
         this.surname=surname;
         this.telephon=telephon;
         this.address=address;
-        this.isActive=isActive;
-        this.rent=rent;
+        this.user=user;
     }
 }

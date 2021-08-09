@@ -11,7 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Email;
@@ -45,7 +45,8 @@ public class User {
 	@NotBlank
 	@Size(max = 120)
 	private String password;
-
+	
+	
 
 
 	@ManyToMany(fetch = FetchType.LAZY)
@@ -102,4 +103,8 @@ public class User {
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}
+
+	
+	
+	
 }

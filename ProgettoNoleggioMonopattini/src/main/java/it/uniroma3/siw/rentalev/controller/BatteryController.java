@@ -72,7 +72,6 @@ public class BatteryController {
   @PutMapping("/batteries/{id}")
   public ResponseEntity<Battery> updateBattery(@PathVariable("id") long id, @RequestBody Battery battery) {
     Optional<Battery> batteryData = batteryRepository.findById(id);
-//fare i casi di scambio PORCO DIO APPENA FINISCI DI CACARE
     if ((batteryData.isPresent()) && (battery.getHub()!=null)) {
     	Battery _battery = batteryData.get();
     	_battery.setHub(null);

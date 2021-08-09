@@ -71,6 +71,7 @@ public class UserController {
     	_user.setRoles(user.getRoles());
     	_user.setPassword(encoder.encode(user.getPassword()));
 
+
       return new ResponseEntity<>(userRepository.save(_user), HttpStatus.OK);
     } else {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);

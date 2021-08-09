@@ -40,20 +40,21 @@ public class CustomerInformation implements UserInformation{
 	@Column
 	private boolean isActive;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne
 	private Wallet customerWallet;
 	
 	@OneToMany(mappedBy="customer",cascade = CascadeType.ALL)
-	private List<Rent> rent;
+	private List<Rent> rents;
 	
 	@OneToMany(mappedBy="fromCustomer",cascade = CascadeType.ALL)
 	private List<CoinTransation> coinTransactions;
 
-
+	@OneToOne
+	private User user;
 
 	
 
-	public CustomerInformation(String name, String surname, Long telephon, Address address ) {
+	public CustomerInformation(String name, String surname, Long telephon, Address address,User user ) {
 		super();
 
 		this.name = name;
@@ -62,8 +63,9 @@ public class CustomerInformation implements UserInformation{
 		this.address = address;
 		this.isActive = false;
 		this.customerWallet = new Wallet(0);
-		this.rent = new ArrayList<Rent>();
+		this.rents = new ArrayList<Rent>();
 		this.coinTransactions = new ArrayList<CoinTransation>();
+		this.user=user;
 	}
 
 	public Long getId() {
@@ -114,12 +116,12 @@ public class CustomerInformation implements UserInformation{
 		this.customerWallet = customerWallet;
 	}
 
-	public List<Rent> getRent() {
-		return rent;
+	public List<Rent> getRents() {
+		return rents;
 	}
 
-	public void setRent(List<Rent> rent) {
-		this.rent = rent;
+	public void setRents(List<Rent> rents) {
+		this.rents = rents;
 	}
 
 	public List<CoinTransation> getCoinTransactions() {
@@ -136,6 +138,14 @@ public class CustomerInformation implements UserInformation{
 
 	public void setActive(boolean isActive) {
 		this.isActive = isActive;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 	
 

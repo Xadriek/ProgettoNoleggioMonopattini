@@ -40,7 +40,7 @@ public class Battery {
 	private List<Swap> swapList;
 	@ManyToOne
 	private Hub hub;
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private Scooter scooter;
 	
 	@Enumerated(EnumType.STRING)

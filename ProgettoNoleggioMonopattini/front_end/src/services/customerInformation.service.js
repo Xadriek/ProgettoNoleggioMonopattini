@@ -6,7 +6,26 @@ const API_URL = 'http://localhost:8080/api/rest/';
 class CustomerInformationService{
 
     getAllCustomerInformations() {
-        return axios.get(API_URL + 'customerInformations', {headers: authHeader() })}
+        return axios.get(API_URL + 'customerInformations', {headers: authHeader() });}
+
+    
+    saveCustomerInformation(customerInformation) {
+        return axios.post(API_URL + 'customerInformations',{
+            name: customerInformation.name,
+            surname: customerInformation.surname,
+            telephon: customerInformation.telephon,
+            address: customerInformation.address,
+            user: customerInformation.user
+
+        }, {headers: authHeader() })
+        .then((response) => {
+          return response.data;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
 }
+    
 
 export default new CustomerInformationService();

@@ -23,12 +23,12 @@ public class Rent {
 	private Long id;
 	@Column(nullable=false)
 	private Date startRent;
-	@Column(nullable=false)
+	@Column(nullable=true)
 	private Date finishRent;
 	@Column(unique=true)
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long numberPolicy;
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private CustomerInformation customer;
 	@OneToOne(cascade = CascadeType.ALL)
 	private Scooter scooter;

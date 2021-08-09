@@ -19,8 +19,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
 
+
 import it.uniroma3.siw.rentalev.model.Rent;
+import it.uniroma3.siw.rentalev.model.Scooter;
+
 import it.uniroma3.siw.rentalev.repository.RentRepository;
+
 
 
 @CrossOrigin(origins = "*")
@@ -30,6 +34,8 @@ public class RentController {
 
   @Autowired
   RentRepository rentRepository;
+  
+
 
   @GetMapping("/rents")
   public ResponseEntity<List<Rent>> getAllRents() {
@@ -64,7 +70,8 @@ public class RentController {
   @PostMapping("/rents")
   public ResponseEntity<Rent> createRent(@RequestBody Rent rent) {
     try {
-      Rent _rent = rentRepository.save(new Rent(new Date(),rent.getCustomer(),rent.getScooter(),rent.getContract()));
+
+      Rent _rent = rentRepository.save(new Rent(new Date(),rent.getCustomer(),new Scooter(new Date()),rent.getContract()));
       return new ResponseEntity<>(_rent, HttpStatus.CREATED);
     } catch (Exception e) {
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
