@@ -1,124 +1,142 @@
 <template>
-  <div class="container">
+<div class="container">
     <header class="jumbotron">
-      <h3>{{content}}</h3>
+      <h3>{{ content }}</h3>
     </header>
-  <div>
-    <nav class="navbar navbar-inverse visible-xs">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>                        
-      </button>
-      <a class="navbar-brand" href="#">Logo</a>
-    </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Dashboard</a></li>
-        <li><a href="#">Age</a></li>
-        <li><a href="#">Gender</a></li>
-        <li><a href="#">Geo</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
 
-<div class="container-fluid">
-  <div class="row content">
-    <div class="col-sm-3 sidenav hidden-xs">
-      <h2>Logo</h2>
-      <ul class="nav nav-pills nav-stacked">
-        <li class="active"><a href="#section1">Dashboard</a></li>
-        <li><a href="#section2">Age</a></li>
-        <li><a href="#section3">Gender</a></li>
-        <li><a href="#section3">Geo</a></li>
-      </ul><br>
+    <div>
+      <div>
+        <div>
+          <b-card-group deck>
+            <b-card
+              bg-variant="primary"
+              text-variant="white"
+              header="Numero Swap"
+              class="text-center"
+            >
+              <b-button variant="primary">
+                I Swap effettuati sono : <b-badge variant="light">4</b-badge>
+              </b-button>
+            </b-card>
+
+            <b-card
+              bg-variant="secondary"
+              text-variant="white"
+              header="Completa Iscrizione"
+              class="text-center"
+            >
+              <b-button v-b-toggle.creaiscrizione class="m-1">Completa Iscrizione</b-button>
+            </b-card>
+
+            <b-card
+              bg-variant="success"
+              text-variant="white"
+              header="Numero Batterie"
+              class="text-center"
+            >
+              <b-button variant="info">
+                Numero Batterie Cariche: <b-badge variant="light">9</b-badge>
+              </b-button>
+            </b-card>
+          </b-card-group>
+        </div>
+
+         <b-collapse id="creaiscrizione">
+        <b-card title="Completa Iscrizione">
+         <add-partner />
+        </b-card>
+      </b-collapse>
+
+        <div class="mt-3">
+          <b-card-group deck>
+            <b-card
+              bg-variant="info"
+              text-variant="white"
+              header="Lista Swap Arrivo"
+              class="text-center"
+            >
+              <b-card-text
+                >Qui puoi visualizzare la lista dei Swap in Arrivo</b-card-text
+              >
+              <b-button v-b-modal.modalListaSwapArrivo>Lista Swap</b-button>
+
+              <b-modal id="modalListaSwapArrivo" title="Lista Swap" ok-only>
+                <b-table
+                      striped
+                      hover
+                      :items="listaswappoint"
+                      :fields="campibusy"
+                    ></b-table>
+              </b-modal>
+            </b-card>
+
+            <b-card
+              bg-variant="warning"
+              text-variant="white"
+              header="Lista Swap Terminati"
+              class="text-center"
+            >
+              <b-card-text>Qui puoi visualizzare la lista dei Swap Terminati</b-card-text>
+              <b-button v-b-modal.modalListSwapTerm>Lista Swap</b-button>
+
+              <b-modal id="modalListSwapTerm" title="Lista Swap" ok-only>
+                <b-table
+                      striped
+                      hover
+                      :items="listaswappoint"
+                      :fields="campibusy"
+                    ></b-table>
+              </b-modal>
+            </b-card>
+
+            <b-card
+              bg-variant="danger"
+              text-variant="white"
+              header="Lista Batterie"
+              class="text-center"
+            >
+              <b-card-text
+                >Qui vengono visualizzati la lista Batterie</b-card-text
+              >
+              <b-button v-b-modal.modalListaNoleggi>Lista Batterie</b-button>
+
+              <b-modal id="modalListaNoleggi" title="Lista Batterie" ok-only>
+                 <b-table
+                      striped
+                      hover
+                      :items="listaswappoint"
+                      :fields="campibusy"
+                    ></b-table>
+              </b-modal>
+            </b-card>
+          </b-card-group>
+        </div>
+        
+      </div>
     </div>
-    <br>
-    
-    <div class="col-sm-9">
-      <div class="well">
-        <h4>Dashboard</h4>
-        <p>Some text..</p>
-      </div>
-      <div class="row">
-        <div class="col-sm-3">
-          <div class="well">
-            <h4>Users</h4>
-            <p>1 Million</p> 
-          </div>
-        </div>
-        <div class="col-sm-3">
-          <div class="well">
-            <h4>Pages</h4>
-            <p>100 Million</p> 
-          </div>
-        </div>
-        <div class="col-sm-3">
-          <div class="well">
-            <h4>Sessions</h4>
-            <p>10 Million</p> 
-          </div>
-        </div>
-        <div class="col-sm-3">
-          <div class="well">
-            <h4>Bounce</h4>
-            <p>30%</p> 
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-4">
-          <div class="well">
-            <p>Text</p> 
-            <p>Text</p> 
-            <p>Text</p> 
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="well">
-            <p>Text</p> 
-            <p>Text</p> 
-            <p>Text</p> 
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="well">
-            <p>Text</p> 
-            <p>Text</p> 
-            <p>Text</p> 
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-8">
-          <div class="well">
-            <p>Text</p> 
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="well">
-            <p>Text</p> 
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-  </div>
-  </div>
+  </div> 
 </template>
 
 <script>
+import AddPartner from "../components/AddPartner.vue";
 import UserService from '../services/user.service';
 
+
+
 export default {
+  components: { AddPartner},
   name: 'partner',
   data() {
     return {
-      content: ''
+      content: "",
+      text: "This is some text.\nIt is read only and doesn't look like an input.",
+      campibusy: ["name", "indirizzo", "distanza"],
+      listaswappoint: [
+        { distanza: 40, name: "Dickerson", indirizzo: "Via Roma" },
+        { distanza: 21, name: "Larsen", indirizzo: "Viale Marconi" },
+        { distanza: 89, name: "Geneva", indirizzo: "Piazza Verdi" },
+        { distanza: 38, name: "Jami", indirizzo: "Colosseo" },
+      ],
     };
   },
   mounted() {
@@ -135,19 +153,3 @@ export default {
     );
   }
 };
-</script>
- <style>
-    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
-    .row.content {height: 550px}
-    
-    /* Set gray background color and 100% height */
-    .sidenav {
-      background-color: #f1f1f1;
-      height: 100%;
-    }
-        
-    /* On small screens, set height to 'auto' for the grid */
-    @media screen and (max-width: 767px) {
-      .row.content {height: auto;} 
-    }
-  </style>
