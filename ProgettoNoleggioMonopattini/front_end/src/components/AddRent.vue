@@ -14,7 +14,7 @@
       <b-form-group label="Cognome:" >
         <b-form-input
           id="input-2"
-          v-model="customerInformation.cognome"
+          v-model="customerInformation.surname"
           placeholder="Inserisci il Cognome"
           required
           name="surname"
@@ -24,7 +24,7 @@
       <b-form-group label="Telefono:" >
         <b-form-input
           id="input-2"
-          v-model="customerInformation.telefono"
+          v-model="customerInformation.telephon"
           placeholder="Inserisci il telefono"
           required
           name="telephon"
@@ -140,7 +140,7 @@ export default {
         "",
         "",
         "",
-        this.currentUser
+        ""
       ),
       address: new Address("", "", "", "", "",""),
       contract: new Contract(""),
@@ -151,7 +151,7 @@ export default {
   methods: {
     createRent() {
       
-      return rentService.saveRent(this.customerInformation,this.address,this.contract).then(
+      return rentService.saveRent(this.customerInformation,this.address,this.contract,this.currentUser.id).then(
         response=> {
           alert('WIN');
           return response.data;

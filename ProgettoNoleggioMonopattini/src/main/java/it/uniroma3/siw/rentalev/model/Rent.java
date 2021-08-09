@@ -3,6 +3,7 @@ package it.uniroma3.siw.rentalev.model;
 
 import java.util.Date;
 
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,7 +28,7 @@ public class Rent {
 	private Date finishRent;
 	@Column(unique=true)
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long numberPolicy;
+	private Double numberPolicy;
 	@ManyToOne(cascade = CascadeType.ALL)
 	private CustomerInformation customer;
 	@OneToOne(cascade = CascadeType.ALL)
@@ -47,6 +48,12 @@ public class Rent {
 		this.scooter = scooter;
 		this.ongoing = false;
 		this.contract = contract;
+		this.numberPolicy=initNP();
+	}
+
+	private Double initNP() {
+		
+		return (double)Math.random()*100000;
 	}
 
 	public Long getId() {
@@ -73,11 +80,11 @@ public class Rent {
 		this.finishRent = finishRent;
 	}
 
-	public Long getNumberPolicy() {
+	public Double getNumberPolicy() {
 		return numberPolicy;
 	}
 
-	public void setNumberPolicy(Long numberPolicy) {
+	public void setNumberPolicy(Double numberPolicy) {
 		this.numberPolicy = numberPolicy;
 	}
 
