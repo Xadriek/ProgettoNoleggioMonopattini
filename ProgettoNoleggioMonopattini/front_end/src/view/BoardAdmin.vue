@@ -92,6 +92,31 @@
             </b-card>
           </b-card-group>
         </div>
+        <div class="mt-3">
+          <b-card-group deck class="mb-3">
+            <b-card
+              border-variant="dark"
+              header="Lista Swap"
+              class="text-center"
+            >
+              <b-card-text>Qui vengono visualizzati gli Swap</b-card-text>
+              <b-button v-b-modal.modalListaSwap>Lista Swap</b-button>
+
+              <b-modal id="modalListaSwap" title="Lista Swap" ok-only>
+                <p>This</p>
+              </b-modal>
+            </b-card>
+
+            <b-card border-variant="dark" header="Lista Scooter" align="center">
+              <b-card-text>Qui vengono visualizzati gli Scooter</b-card-text>
+              <b-button v-b-modal.modalListaScooter>Lista Scooter</b-button>
+
+              <b-modal id="modalListaScooter" title="Lista Scooter" ok-only>
+                <p>This</p>
+              </b-modal>
+            </b-card>
+          </b-card-group>
+        </div>
       </div>
     </div>
   </div>
