@@ -4,7 +4,7 @@
       <b-form-group id="input-group-2" label="Nome:" label-for="input-2">
         <b-form-input
           id="input-2"
-          v-model="form.name"
+          v-model="form2.name"
           placeholder="Inserisci il Nome"
           required
         ></b-form-input>
@@ -13,7 +13,7 @@
       <b-form-group id="input-group-2" label="Cognome:" label-for="input-2">
         <b-form-input
           id="input-2"
-          v-model="form.cognome"
+          v-model="form2.cognome"
           placeholder="Inserisci il Cognome"
           required
         ></b-form-input>
@@ -22,7 +22,7 @@
       <b-form-group id="input-group-2" label="Telefono:" label-for="input-2">
         <b-form-input
           id="input-2"
-          v-model="form.telefono"
+          v-model="form2.telefono"
           placeholder="Inserisci il telefono"
           required
         ></b-form-input>
@@ -31,7 +31,7 @@
       <b-form-group id="input-group-2" label="Indirizzo:" label-for="input-2">
         <b-form-input
           id="input-2"
-          v-model="form.indirizzo"
+          v-model="form2.indirizzo"
           placeholder="Inserisci Indirizzo"
           required
         ></b-form-input>
@@ -40,7 +40,7 @@
       <b-form-group id="input-group-2" label="Citta:" label-for="input-2">
         <b-form-input
           id="input-2"
-          v-model="form.citta"
+          v-model="form2.citta"
           placeholder="Inserisci la Citta"
           required
         ></b-form-input>
@@ -49,7 +49,7 @@
       <b-form-group id="input-group-2" label="Naziome:" label-for="input-2">
         <b-form-input
           id="input-2"
-          v-model="form.nazione"
+          v-model="form2.nazione"
           placeholder="Inserisci la Nazione"
           required
         ></b-form-input>
@@ -58,7 +58,7 @@
       <b-form-group id="input-group-2" label="DataInizio:" label-for="input-2">
         <b-form-input
           id="input-2"
-          v-model="form.datainizio"
+          v-model="form2.datainizio"
           placeholder="Inserisci la Data di Inizio Noleggio"
           required
         ></b-form-input>
@@ -67,7 +67,7 @@
       <b-form-group id="input-group-2" label="Partita Iva:" label-for="input-2">
         <b-form-input
           id="input-2"
-          v-model="form.piva"
+          v-model="form2.piva"
           placeholder="Inserisci la Partita Iva"
           required
         ></b-form-input>
@@ -84,7 +84,7 @@ export default {
   name: "AddPartner",
   data() {
     return {
-      form: {
+      form2: {
         nome: "",
         cognome: "",
         telefono: "",
