@@ -32,7 +32,10 @@ public class PartnerInformation implements UserInformation {
 	@Column(nullable=false)
 	private String pIva;
 	
-	@ManyToOne
+	@Column
+	private Long telephon;
+	
+	@ManyToOne(cascade=CascadeType.ALL)
 	private Address address;
 	
 	@OneToOne(cascade = CascadeType.ALL)
@@ -51,8 +54,7 @@ public class PartnerInformation implements UserInformation {
 	@Column
 	private boolean isActive;
 	
-	@OneToOne
-	private User user;
+	private String email;
 	
 
 	@OneToMany(mappedBy="toPartner",cascade = CascadeType.ALL)
@@ -62,20 +64,20 @@ public class PartnerInformation implements UserInformation {
 	
 
 
-	public PartnerInformation( String name, String pIva, Address address, 
-			Date startPartnership, User user
+	public PartnerInformation( String name, String pIva,Long telephon, Address address, 
+			Date startPartnership, String email
 			) {
 		super();
 
 		this.name = name;
 		this.pIva = pIva;
+		this.telephon = telephon;
 		this.address = address;
 		this.partnerWallet = new Wallet(0);
-		this.hub = new Hub(this);
 		this.startPartnership = startPartnership;
 		this.isActive = false;
 		this.coinTransations = new ArrayList<CoinTransation>();
-		this.user=user;
+		this.email=email;
 	}
 
 
@@ -106,6 +108,13 @@ public class PartnerInformation implements UserInformation {
 
 	public void setpIva(String pIva) {
 		this.pIva = pIva;
+	}
+	public Long getTelephon() {
+		return telephon;
+	}
+
+	public void setTelephon(Long telephon) {
+		this.telephon = telephon;
 	}
 
 
@@ -178,15 +187,13 @@ public class PartnerInformation implements UserInformation {
 		this.isActive = isActive;
 	}
 	
-	public User getUser() {
-		return user;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setEmail(String userEmail) {
+		this.email = userEmail;
 	}
-
-
 	
 
 	

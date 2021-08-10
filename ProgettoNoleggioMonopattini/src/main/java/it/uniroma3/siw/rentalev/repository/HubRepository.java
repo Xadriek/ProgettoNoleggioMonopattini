@@ -13,6 +13,6 @@ import it.uniroma3.siw.rentalev.model.PartnerInformation;
 @Repository
 public interface HubRepository extends JpaRepository<Hub, Long>{
 	
-	Hub findByCustodial(PartnerInformation custodial);
+	Hub findByPartnerInformation(PartnerInformation partnerInformation);
 
 }

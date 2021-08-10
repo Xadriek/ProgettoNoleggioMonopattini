@@ -63,7 +63,7 @@ public class BatteryController {
   @PostMapping("/batteries")
   public ResponseEntity<Battery> createBattery(@RequestBody Battery battery) {
     try {
-      Battery _battery = batteryRepository.save(new Battery(new Date(),battery.getScooter()));
+      Battery _battery = batteryRepository.save(new Battery(new Date(),battery.getScooter(),battery.getHub()));
       return new ResponseEntity<>(_battery, HttpStatus.CREATED);
     } catch (Exception e) {
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

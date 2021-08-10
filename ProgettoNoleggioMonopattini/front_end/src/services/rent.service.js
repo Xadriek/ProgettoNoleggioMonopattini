@@ -25,13 +25,7 @@ class RentService{
               
                 
             }, {headers: authHeader() })
-            .then((response) => {
-              console.log(response);
-              return true;
-            })
-            .catch((e) => {
-              console.log(e);
-            });
+            ;
         }
     }
 

@@ -23,27 +23,27 @@ public class Hub {
 	
 //INSERIRE GEOCODE
 	
-	public Hub( PartnerInformation custodial) {
+	public Hub( PartnerInformation partnerInformation) {
 		super();
 
-		this.custodial = custodial;
+		this.partnerInformation = partnerInformation;
 		this.dateOfAssembly = new Date();
 		this.swapCompleted = new ArrayList<Swap>();
-		this.stokedBattery = new ArrayList<Battery>();
+		this.stokedBattery = initStock();
 	}
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@OneToOne
-	private PartnerInformation custodial;
+	@OneToOne(cascade=CascadeType.ALL)
+	private PartnerInformation partnerInformation;
 	@Column(nullable=false)
 	private Date dateOfAssembly;
 	@Column(nullable=true)
 	private Date dateOfDismiss;
 	@OneToMany(mappedBy="hub",cascade = CascadeType.ALL)
 	private List<Swap> swapCompleted;
-	@OneToMany(mappedBy="hub",cascade=CascadeType.ALL)
 	
+	@OneToMany(mappedBy="hub",cascade=CascadeType.ALL)
 	private List<Battery> stokedBattery;
 	
 	public Long getId() {
@@ -52,11 +52,11 @@ public class Hub {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public PartnerInformation getCustodial() {
-		return custodial;
+	public PartnerInformation getPartnerInformation() {
+		return partnerInformation;
 	}
-	public void setCustodial(PartnerInformation custodial) {
-		this.custodial = custodial;
+	public void setPartnerInformation(PartnerInformation partnerInformation) {
+		this.partnerInformation = partnerInformation;
 	}
 	public Date getDateOfAssembly() {
 		return dateOfAssembly;
@@ -82,6 +82,20 @@ public class Hub {
 	public void setStokedBattery(List<Battery> stokedBattery) {
 		this.stokedBattery = stokedBattery;
 	}
+	
+	public List<Battery> initStock(){
+		List<Battery> aux=new ArrayList<>();
+		aux.add(new Battery(new Date(),null,this));
+		aux.add(new Battery(new Date(),null,this));
+		aux.add(new Battery(new Date(),null,this));
+		aux.add(new Battery(new Date(),null,this));
+		aux.add(new Battery(new Date(),null,this));
+		aux.add(new Battery(new Date(),null,this));
+	
+		
+		return aux;
+	}
+	
 	
 	
 

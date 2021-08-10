@@ -6,7 +6,7 @@
       </div>
       
         <b-card title="Inserimento Nuovo Noleggio">
-          <add-rent />
+          <add-hub />
         </b-card>
       
       <div>
@@ -68,11 +68,11 @@
 
 <script>
 
-import AddRent from '../components/AddRent.vue';
+import AddHub from '../components/AddHub.vue';
 import UserService from "../services/user.service";
 
 export default {
-  components: { AddRent },
+  components: { AddHub },
   name: "partner",
   data() {
     return {

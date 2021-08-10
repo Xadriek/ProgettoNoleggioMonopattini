@@ -38,7 +38,7 @@ public class Battery {
 	private Date dateOfDismiss;
 	@OneToMany(mappedBy="battery",cascade = CascadeType.ALL)
 	private List<Swap> swapList;
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Hub hub;
 	@OneToOne(cascade = CascadeType.ALL)
 	private Scooter scooter;
@@ -49,7 +49,7 @@ public class Battery {
 	
 	
 
-	public Battery(Date dateOfBirth, Scooter scooter) {
+	public Battery(Date dateOfBirth, Scooter scooter, Hub hub) {
 		super();
 		this.voltage = 48;
 		this.capacity = 13;
@@ -57,6 +57,7 @@ public class Battery {
 		this.swapList = new ArrayList<>();
 		this.scooter = scooter;
 		this.state = EBattery.CARICA;
+		this.hub =hub;
 	}
 
 	public Long getId() {

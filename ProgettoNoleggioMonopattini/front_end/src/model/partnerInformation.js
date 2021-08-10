@@ -1,10 +1,10 @@
 export default class PartnerInformation{
-    constructor(name,pIva,address,hub,isActive,user){
+    constructor(name,pIva,telephon,address,hub,email){
         this.name=name;
         this.pIva=pIva;
+        this.telephon=telephon;
         this.address=address;
         this.hub=hub;
-        this.isActive=isActive;
-        this.user=user;
+        this.email=email;
     }
 }
