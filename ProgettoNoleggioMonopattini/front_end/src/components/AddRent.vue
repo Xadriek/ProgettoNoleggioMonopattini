@@ -10,7 +10,7 @@
           name="name"
         ></b-form-input>
       </b-form-group>
-      <p>{{currentUser.email}}</p>
+      
 
       <b-form-group label="Cognome:" >
         <b-form-input
