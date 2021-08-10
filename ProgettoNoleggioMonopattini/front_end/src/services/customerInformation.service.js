@@ -27,7 +27,7 @@ class CustomerInformationService{
     }
 
     getCustomerByEmail(email){
-      return axios.get(API_URL +'customerInformations'+ {email}, {headers: authHeader() })
+      return axios.get(API_URL +'customerInformationsByEmail',{email}, {headers: authHeader() })
        
     }
 }

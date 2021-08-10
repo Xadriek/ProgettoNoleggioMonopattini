@@ -1,0 +1,76 @@
+package it.uniroma3.siw.rentalev.payload.response;
+
+public class UserInformationProfile {
+	
+	private String name;
+	
+	private String surname;
+	
+	private Long telephon;
+	
+	private Boolean isActive;
+	
+	private int walletCoin;
+	
+	private Long rentId;
+	
+	private int transationNumber;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getSurname() {
+		return surname;
+	}
+
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+
+	public Long getTelephon() {
+		return telephon;
+	}
+
+	public void setTelephon(Long telephon) {
+		this.telephon = telephon;
+	}
+
+	public Boolean getIsActive() {
+		return isActive;
+	}
+
+	public void setIsActive(Boolean isActive) {
+		this.isActive = isActive;
+	}
+
+	public int getWalletCoin() {
+		return walletCoin;
+	}
+
+	public void setWalletCoin(int walletCoin) {
+		this.walletCoin = walletCoin;
+	}
+
+	public Long getRentId() {
+		return rentId;
+	}
+
+	public void setRentId(Long rentId) {
+		this.rentId = rentId;
+	}
+
+	public int getTransationNumber() {
+		return transationNumber;
+	}
+
+	public void setTransationNumber(int transationNumber) {
+		this.transationNumber = transationNumber;
+	}
+	
+	
+}

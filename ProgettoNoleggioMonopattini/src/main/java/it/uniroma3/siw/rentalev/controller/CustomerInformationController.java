@@ -20,9 +20,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import it.uniroma3.siw.rentalev.model.CoinTransation;
 import it.uniroma3.siw.rentalev.model.CustomerInformation;
-
+import it.uniroma3.siw.rentalev.model.Rent;
+import it.uniroma3.siw.rentalev.payload.response.UserInformationProfile;
 import it.uniroma3.siw.rentalev.repository.CustomerInformationRepository;
+import it.uniroma3.siw.rentalev.repository.RentRepository;
 
 
 @CrossOrigin(origins = "*")
@@ -32,6 +35,9 @@ public class CustomerInformationController {
 
   @Autowired
   CustomerInformationRepository customerInformationRepository;
+  
+  @Autowired
+  RentRepository rentRepository;
 
   @GetMapping("/customerInformations")
   public ResponseEntity<List<CustomerInformation>> getAllCustomerInformations() {
@@ -124,14 +130,24 @@ public class CustomerInformationController {
 
   }
   @GetMapping("/customerInformationsByEmail}")
-  public CustomerInformation getCustomerInformationByEmail(@RequestBody String email) {
+  public UserInformationProfile getCustomerInformationByEmail(@RequestBody String email) {
     CustomerInformation customerInformationData = customerInformationRepository.findByEmail(email);
-    System.out.println(email);
-    if (customerInformationData!=null) {
-      return customerInformationData;
-    } else {
-      return null;
+    UserInformationProfile userProfile=new UserInformationProfile();
+    userProfile.setName(customerInformationData.getName());
+    userProfile.setSurname(customerInformationData.getSurname());
+    userProfile.setTelephon(customerInformationData.getTelephon());
+    userProfile.setIsActive(customerInformationData.isActive());
+    userProfile.setWalletCoin(customerInformationData.getCustomerWallet().getCoin());
+    List<Rent> rentsList= rentRepository.findByCustomer(customerInformationData);
+    for(Rent rent:rentsList) {
+    	if(rent.getOngoing()==true) {
+    		userProfile.setRentId(rent.getId());
+    	}
     }
+    List<CoinTransation> listTransation=customerInformationData.getCoinTransactions();
+    userProfile.setTransationNumber(listTransation.size());
+    
+    return userProfile; 
   }
 
 }
