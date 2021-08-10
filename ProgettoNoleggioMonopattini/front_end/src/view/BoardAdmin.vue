@@ -80,7 +80,7 @@
                   :fields="campibusy"
                 ></b-table>
               </b-tab>
-              <b-tab no-body title="scooter">
+              <b-tab no-body title="Scooter">
                 <b-table
                   striped
                   hover
