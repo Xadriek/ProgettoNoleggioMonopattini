@@ -49,12 +49,12 @@ public class CustomerInformation implements UserInformation{
 	@OneToMany(mappedBy="fromCustomer",cascade = CascadeType.ALL)
 	private List<CoinTransation> coinTransactions;
 
-	@OneToOne
-	private User user;
+	
+	private String userEmail;
 
 	
 
-	public CustomerInformation(String name, String surname, Long telephon, Address address,User user ) {
+	public CustomerInformation(String name, String surname, Long telephon, Address address,String userEmail ) {
 		super();
 
 		this.name = name;
@@ -65,7 +65,7 @@ public class CustomerInformation implements UserInformation{
 		this.customerWallet = new Wallet(0);
 		this.rents = new ArrayList<Rent>();
 		this.coinTransactions = new ArrayList<CoinTransation>();
-		this.user=user;
+		this.userEmail=userEmail;
 	}
 
 	public Long getId() {
@@ -140,13 +140,15 @@ public class CustomerInformation implements UserInformation{
 		this.isActive = isActive;
 	}
 
-	public User getUser() {
-		return user;
+	public String getUserEmail() {
+		return userEmail;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
 	}
+
+	
 	
 
 	
