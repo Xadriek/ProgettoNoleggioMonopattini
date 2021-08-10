@@ -1,155 +1,128 @@
 <template>
-<div class="container">
+  <div class="container">
     <header class="jumbotron">
       <h3>{{ content }}</h3>
     </header>
 
     <div>
       <div>
-        <div>
-          <b-card-group deck>
-            <b-card
-              bg-variant="primary"
-              text-variant="white"
-              header="Numero Swap"
-              class="text-center"
+        <b-card-group deck>
+          <b-card
+            bg-variant="primary"
+            text-variant="white"
+            header="Numero Swap"
+            class="text-center"
+          >
+            <b-button variant="primary">
+              I Swap effettuati sono : <b-badge variant="light">4</b-badge>
+            </b-button>
+          </b-card>
+
+          <b-card
+            bg-variant="success"
+            text-variant="white"
+            header="Numero Batterie"
+            class="text-center"
+          >
+            <b-button variant="info">
+              Numero Batterie Cariche: <b-badge variant="light">9</b-badge>
+            </b-button>
+          </b-card>
+        </b-card-group>
+      </div>
+
+      <div class="mt-3">
+        <b-card-group deck>
+          <b-card
+            bg-variant="info"
+            text-variant="white"
+            header="Lista Swap Arrivo"
+            class="text-center"
+          >
+            <b-card-text
+              >Qui puoi visualizzare la lista dei Swap in Arrivo</b-card-text
             >
-              <b-button variant="primary">
-                I Swap effettuati sono : <b-badge variant="light">4</b-badge>
-              </b-button>
-            </b-card>
+            <b-button v-b-modal.modalListaSwapArrivo>Lista Swap</b-button>
 
-            <b-card
-              bg-variant="secondary"
-              text-variant="white"
-              header="Completa Iscrizione"
-              class="text-center"
+            <b-modal id="modalListaSwapArrivo" title="Lista Swap" ok-only>
+              <b-table
+                striped
+                hover
+                :items="listaswappoint"
+                :fields="campibusy"
+              ></b-table>
+            </b-modal>
+          </b-card>
+
+          <b-card
+            bg-variant="warning"
+            text-variant="white"
+            header="Lista Swap Terminati"
+            class="text-center"
+          >
+            <b-card-text
+              >Qui puoi visualizzare la lista dei Swap Terminati</b-card-text
             >
-              <b-button v-b-toggle.creaiscrizione class="m-1">Completa Iscrizione</b-button>
-            </b-card>
+            <b-button v-b-modal.modalListSwapTerm>Lista Swap</b-button>
 
-            <b-card
-              bg-variant="success"
-              text-variant="white"
-              header="Numero Batterie"
-              class="text-center"
+            <b-modal id="modalListSwapTerm" title="Lista Swap" ok-only>
+              <b-table
+                striped
+                hover
+                :items="listaswappoint"
+                :fields="campibusy"
+              ></b-table>
+            </b-modal>
+          </b-card>
+
+          <b-card
+            bg-variant="danger"
+            text-variant="white"
+            header="Lista Batterie"
+            class="text-center"
+          >
+            <b-card-text
+              >Qui vengono visualizzati la lista Batterie</b-card-text
             >
-              <b-button variant="info">
-                Numero Batterie Cariche: <b-badge variant="light">9</b-badge>
-              </b-button>
-            </b-card>
-          </b-card-group>
-        </div>
+            <b-button v-b-modal.modalListaNoleggi>Lista Batterie</b-button>
 
-         <b-collapse id="creaiscrizione">
-        <b-card title="Completa Iscrizione">
-         <add-partner />
-        </b-card>
-      </b-collapse>
-
-        <div class="mt-3">
-          <b-card-group deck>
-            <b-card
-              bg-variant="info"
-              text-variant="white"
-              header="Lista Swap Arrivo"
-              class="text-center"
-            >
-              <b-card-text
-                >Qui puoi visualizzare la lista dei Swap in Arrivo</b-card-text
-              >
-              <b-button v-b-modal.modalListaSwapArrivo>Lista Swap</b-button>
-
-              <b-modal id="modalListaSwapArrivo" title="Lista Swap" ok-only>
-                <b-table
-                      striped
-                      hover
-                      :items="listaswappoint"
-                      :fields="campibusy"
-                    ></b-table>
-              </b-modal>
-            </b-card>
-
-            <b-card
-              bg-variant="warning"
-              text-variant="white"
-              header="Lista Swap Terminati"
-              class="text-center"
-            >
-              <b-card-text>Qui puoi visualizzare la lista dei Swap Terminati</b-card-text>
-              <b-button v-b-modal.modalListSwapTerm>Lista Swap</b-button>
-
-              <b-modal id="modalListSwapTerm" title="Lista Swap" ok-only>
-                <b-table
-                      striped
-                      hover
-                      :items="listaswappoint"
-                      :fields="campibusy"
-                    ></b-table>
-              </b-modal>
-            </b-card>
-
-            <b-card
-              bg-variant="danger"
-              text-variant="white"
-              header="Lista Batterie"
-              class="text-center"
-            >
-              <b-card-text
-                >Qui vengono visualizzati la lista Batterie</b-card-text
-              >
-              <b-button v-b-modal.modalListaNoleggi>Lista Batterie</b-button>
-
-              <b-modal id="modalListaNoleggi" title="Lista Batterie" ok-only>
-                 <b-table
-                      striped
-                      hover
-                      :items="listaswappoint"
-                      :fields="campibusy"
-                    ></b-table>
-              </b-modal>
-            </b-card>
-          </b-card-group>
-        </div>
-        
+            <b-modal id="modalListaNoleggi" title="Lista Batterie" ok-only>
+              <b-table
+                striped
+                hover
+                :items="listaswappoint"
+                :fields="campibusy"
+              ></b-table>
+            </b-modal>
+          </b-card>
+        </b-card-group>
       </div>
     </div>
-  </div> 
+  </div>
 </template>
 
 <script>
-import AddPartner from "../components/AddPartner.vue";
-import UserService from '../services/user.service';
-
-
+import UserService from "../services/user.service";
 
 export default {
-  components: { AddPartner},
-  name: 'partner',
+  name: "partner",
   data() {
     return {
-      content: "",
-      text: "This is some text.\nIt is read only and doesn't look like an input.",
-      campibusy: ["name", "indirizzo", "distanza"],
-      listaswappoint: [
-        { distanza: 40, name: "Dickerson", indirizzo: "Via Roma" },
-        { distanza: 21, name: "Larsen", indirizzo: "Viale Marconi" },
-        { distanza: 89, name: "Geneva", indirizzo: "Piazza Verdi" },
-        { distanza: 38, name: "Jami", indirizzo: "Colosseo" },
-      ],
+      show: true,
     };
   },
+
   mounted() {
     UserService.getPartnerBoard().then(
-      response => {
+      (response) => {
         this.content = response.data;
       },
-      error => {
+      (error) => {
         this.content =
           (error.response && error.response.data) ||
           error.message ||
           error.toString();
       }
     );
-  }
+  },
 };
