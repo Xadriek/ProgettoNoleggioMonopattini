@@ -1,10 +1,15 @@
 <template>
   <div class="container">
-    <header class="jumbotron">
-      <h3>{{ content }}</h3>
-    </header>
+    
 
     <div>
+      </div>
+      
+        <b-card title="Inserimento Nuovo Noleggio">
+          <add-rent />
+        </b-card>
+      
+      <div>
       <div>
         <b-card-group deck>
           <b-card
@@ -62,9 +67,12 @@
 </template>
 
 <script>
+
+import AddRent from '../components/AddRent.vue';
 import UserService from "../services/user.service";
 
 export default {
+  components: { AddRent },
   name: "partner",
   data() {
     return {
@@ -86,3 +94,4 @@ export default {
     );
   },
 };
+</script>
