@@ -10,6 +10,7 @@
           name="name"
         ></b-form-input>
       </b-form-group>
+      <p>{{currentUser.email}}</p>
 
       <b-form-group label="Cognome:" >
         <b-form-input
@@ -133,6 +134,11 @@ import rentService from "../services/rent.service.js";
 
 export default {
   name: "AddRent",
+  computed: {
+    currentUser() {
+      return this.$store.state.auth.user;
+    }
+  },
   data() {
     return {
       customerInformation: new CustomerInformation(
@@ -151,7 +157,7 @@ export default {
   methods: {
     createRent() {
       
-      return rentService.saveRent(this.customerInformation,this.address,this.contract,this.currentUser.id).then(
+      return rentService.saveRent(this.customerInformation,this.address,this.contract,this.currentUser.email).then(
         response=> {
           alert('WIN');
           return response.data;
@@ -164,9 +170,7 @@ export default {
       );
       
    },
-    currentUser() {
-      return this.$store.state.auth.user;
-    },
+    
     
     
     onReset(event) {

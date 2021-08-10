@@ -1,7 +1,7 @@
 package it.uniroma3.siw.rentalev.payload.request;
 
 import it.uniroma3.siw.rentalev.model.EContract;
-import it.uniroma3.siw.rentalev.model.User;
+
 
 public class RentRequest {
 	
@@ -25,7 +25,7 @@ public class RentRequest {
 	
 	private EContract plan;
 	
-	private User user;
+	private String userEmail;
 
 	public String getName() {
 		return name;
@@ -107,13 +107,15 @@ public class RentRequest {
 		this.plan = plan;
 	}
 
-	public User getUser() {
-		return user;
+	public String getUserEmail() {
+		return userEmail;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
 	}
+
+	
 	
 	
 	
