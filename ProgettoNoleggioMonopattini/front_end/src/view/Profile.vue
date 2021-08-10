@@ -16,6 +16,7 @@
     <p>
     <strong>Nome:</strong>
     </p>
+    {{userProfile.name}}
     <p>
     <strong>Cognome:</strong>
     </p>
@@ -48,6 +49,8 @@
 </template>
 
 <script>
+import customerInformationService from "../services/customerInformation.service"
+import UserProfile from '../model/userProfile';
 export default {
   name: 'Profile',
   computed: {
@@ -55,11 +58,21 @@ export default {
       return this.$store.state.auth.user;
     }
   },
+  data(){return{
+      userProfile: new UserProfile()
+  }
+  },
   mounted() {
     if (!this.currentUser) {
       
       this.$router.push('/login');
     }
+  customerInformationService.getCustomerByEmail(this.currentUser.email)
+    .then(response=>{
+      this.userProfile=response.data;
+    }
+    )
+    
   }
 };
 </script>

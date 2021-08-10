@@ -9,6 +9,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -129,9 +130,10 @@ public class CustomerInformationController {
     }
 
   }
+  
   @GetMapping("/customerInformationsByEmail}")
-  public UserInformationProfile getCustomerInformationByEmail(@RequestBody String email) {
-    CustomerInformation customerInformationData = customerInformationRepository.findByEmail(email);
+  public UserInformationProfile getCustomerInformationByEmail(@RequestBody String emailRequest) {
+    CustomerInformation customerInformationData = customerInformationRepository.findByEmail(emailRequest);
     UserInformationProfile userProfile=new UserInformationProfile();
     userProfile.setName(customerInformationData.getName());
     userProfile.setSurname(customerInformationData.getSurname());
