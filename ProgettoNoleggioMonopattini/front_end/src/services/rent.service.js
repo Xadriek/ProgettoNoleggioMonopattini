@@ -26,7 +26,8 @@ class RentService{
                 
             }, {headers: authHeader() })
             .then((response) => {
-              return response.data;
+              console.log(response);
+              return true;
             })
             .catch((e) => {
               console.log(e);

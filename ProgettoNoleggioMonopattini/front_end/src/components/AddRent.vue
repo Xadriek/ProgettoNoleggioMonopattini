@@ -159,12 +159,12 @@ export default {
       
       return rentService.saveRent(this.customerInformation,this.address,this.contract,this.currentUser.email).then(
         response=> {
-          alert('WIN');
-          return response.data;
+         if(response!=null)return alert('Noleggio creato con successo, attendere per la verifica');
+          
 
         },
         () => {
-          alert('dio cane');
+          
           return alert("errore");
         }
       );

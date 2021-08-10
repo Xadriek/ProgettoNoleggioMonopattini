@@ -25,6 +25,11 @@ class CustomerInformationService{
           console.log(e);
         });
     }
+
+    getCustomerByEmail(email){
+      return axios.get(API_URL +'customerInformations'+ {email}, {headers: authHeader() })
+       
+    }
 }
     
 

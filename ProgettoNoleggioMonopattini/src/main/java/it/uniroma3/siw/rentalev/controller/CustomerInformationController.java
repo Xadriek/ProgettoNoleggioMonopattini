@@ -66,7 +66,7 @@ public class CustomerInformationController {
   @PostMapping("/customerInformations")
   public ResponseEntity<CustomerInformation> createCustomerInformation(@RequestBody CustomerInformation customerInformation) {
     try {
-      CustomerInformation _customerInformation = customerInformationRepository.save(new CustomerInformation( customerInformation.getName(),customerInformation.getSurname(),customerInformation.getTelephon(),customerInformation.getAddress(),customerInformation.getUserEmail()));
+      CustomerInformation _customerInformation = customerInformationRepository.save(new CustomerInformation( customerInformation.getName(),customerInformation.getSurname(),customerInformation.getTelephon(),customerInformation.getAddress(),customerInformation.getEmail()));
       return new ResponseEntity<>(_customerInformation, HttpStatus.CREATED);
     } catch (Exception e) {
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -122,6 +122,16 @@ public class CustomerInformationController {
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+  }
+  @GetMapping("/customerInformationsByEmail}")
+  public CustomerInformation getCustomerInformationByEmail(@RequestBody String email) {
+    CustomerInformation customerInformationData = customerInformationRepository.findByEmail(email);
+    System.out.println(email);
+    if (customerInformationData!=null) {
+      return customerInformationData;
+    } else {
+      return null;
+    }
   }
 
 }
