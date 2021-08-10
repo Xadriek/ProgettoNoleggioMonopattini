@@ -43,105 +43,63 @@
           </b-card-group>
         </div>
 
-        <div class="mt-3">
-          <b-card-group deck>
-            <b-card
-              bg-variant="info"
-              text-variant="white"
-              header="Lista Clienti"
-              class="text-center"
-            >
-              <b-card-text
-                >Qui puoi visualizzare la lista dei clienti</b-card-text
-              >
-              <b-button v-b-modal.modalListaClienti>Lista Clienti</b-button>
-
-              <b-modal id="modalListaClienti" title="Lista Clienti" ok-only>
+        <div>
+          <b-card no-body>
+            <b-tabs card>
+              <b-tab no-body title="Clienti">
                 <b-table
-                      striped
-                      hover
-                      :items="listaswappoint"
-                      :fields="campibusy"
-                    ></b-table>
-              </b-modal>
-            </b-card>
+                  striped
+                  hover
+                  :items="listaswappoint"
+                  :fields="campibusy"
+                ></b-table>
+              </b-tab>
 
-            <b-card
-              bg-variant="warning"
-              text-variant="white"
-              header="Lista Partner"
-              class="text-center"
-            >
-              <b-card-text>Qui visualizzi la lista dei partner</b-card-text>
-              <b-button v-b-modal.modalListaPartner>Lista Partner</b-button>
-
-              <b-modal id="modalListaPartner" title="Lista Partner" ok-only>
+              <b-tab no-body title="Partner">
                 <b-table
-                      striped
-                      hover
-                      :items="listaswappoint"
-                      :fields="campibusy"
-                    ></b-table>
-              </b-modal>
-            </b-card>
+                  striped
+                  hover
+                  :items="listaswappoint"
+                  :fields="campibusy"
+                ></b-table>
+              </b-tab>
 
-            <b-card
-              bg-variant="danger"
-              text-variant="white"
-              header="Lista Noleggi"
-              class="text-center"
-            >
-              <b-card-text
-                >Qui vengono visualizzati i noleggi effttuati.</b-card-text
-              >
-              <b-button v-b-modal.modalListaNoleggi>Lista Noleggi</b-button>
+              <b-tab no-body title="Noleggi">
+                <b-table
+                  striped
+                  hover
+                  :items="listaswappoint"
+                  :fields="campibusy"
+                ></b-table>
+              </b-tab>
+              <b-tab no-body title="Swap">
+                <b-table
+                  striped
+                  hover
+                  :items="listaswappoint"
+                  :fields="campibusy"
+                ></b-table>
+              </b-tab>
+              <b-tab no-body title="scooter">
+                <b-table
+                  striped
+                  hover
+                  :items="listaswappoint"
+                  :fields="campibusy"
+                ></b-table>
+              </b-tab>
 
-              <b-modal id="modalListaNoleggi" title="Lista Noleggi" ok-only>
-                 <b-table
-                      striped
-                      hover
-                      :items="listaswappoint"
-                      :fields="campibusy"
-                    ></b-table>
-              </b-modal>
-            </b-card>
-          </b-card-group>
+              <b-tab title="Aiuto">
+                <b-card-text>
+                  Qui scriviamo un minimo di spiegazione che può essere utile se
+                  vuoi
+                </b-card-text>
+              </b-tab>
+            </b-tabs>
+          </b-card>
         </div>
-        <div class="mt-3">
-          <b-card-group deck class="mb-3">
-            <b-card
-              border-variant="dark"
-              header="Lista Swap"
-              class="text-center"
-            >
-              <b-card-text>Qui vengono visualizzati gli Swap</b-card-text>
-              <b-button v-b-modal.modalListaSwap>Lista Swap</b-button>
 
-              <b-modal id="modalListaSwap" title="Lista Swap" ok-only>
-                    <b-table
-                      striped
-                      hover
-                      :items="listaswappoint"
-                      :fields="campibusy"
-                    ></b-table>
-              </b-modal>
-            </b-card>
-
-            <b-card border-variant="dark" header="Lista Scooter" align="center">
-              <b-card-text>Qui vengono visualizzati gli Scooter</b-card-text>
-              <b-button v-b-modal.modalListaScooter>Lista Scooter</b-button>
-
-              <b-modal id="modalListaScooter" title="Lista Scooter" ok-only>
-                 <b-table
-                      striped
-                      hover
-                      :items="listaswappoint"
-                      :fields="campibusy"
-                    ></b-table>
-              </b-modal>
-            </b-card>
-          </b-card-group>
-        </div>
+        
       </div>
     </div>
   </div>

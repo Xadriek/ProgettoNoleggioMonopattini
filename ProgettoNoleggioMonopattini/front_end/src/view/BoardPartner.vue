@@ -31,71 +31,31 @@
         </b-card-group>
       </div>
 
-      <div class="mt-3">
-        <b-card-group deck>
-          <b-card
-            bg-variant="info"
-            text-variant="white"
-            header="Lista Swap Arrivo"
-            class="text-center"
-          >
-            <b-card-text
-              >Qui puoi visualizzare la lista dei Swap in Arrivo</b-card-text
-            >
-            <b-button v-b-modal.modalListaSwapArrivo>Lista Swap</b-button>
+      <div>
+        <b-card no-body>
+          <b-tabs card>
+            <b-tab no-body title="Swap in Arrivo">
+              Qui va la lista degli swap in Arrivo
+              <b-card-footer>Swap in Arrivo</b-card-footer>
+            </b-tab>
 
-            <b-modal id="modalListaSwapArrivo" title="Lista Swap" ok-only>
-              <b-table
-                striped
-                hover
-                :items="listaswappoint"
-                :fields="campibusy"
-              ></b-table>
-            </b-modal>
-          </b-card>
+            <b-tab no-body title="Swap Terminati">
+              Qui va la lista degli swap Terminati
+              <b-card-footer>Swap Terminati</b-card-footer>
+            </b-tab>
 
-          <b-card
-            bg-variant="warning"
-            text-variant="white"
-            header="Lista Swap Terminati"
-            class="text-center"
-          >
-            <b-card-text
-              >Qui puoi visualizzare la lista dei Swap Terminati</b-card-text
-            >
-            <b-button v-b-modal.modalListSwapTerm>Lista Swap</b-button>
-
-            <b-modal id="modalListSwapTerm" title="Lista Swap" ok-only>
-              <b-table
-                striped
-                hover
-                :items="listaswappoint"
-                :fields="campibusy"
-              ></b-table>
-            </b-modal>
-          </b-card>
-
-          <b-card
-            bg-variant="danger"
-            text-variant="white"
-            header="Lista Batterie"
-            class="text-center"
-          >
-            <b-card-text
-              >Qui vengono visualizzati la lista Batterie</b-card-text
-            >
-            <b-button v-b-modal.modalListaNoleggi>Lista Batterie</b-button>
-
-            <b-modal id="modalListaNoleggi" title="Lista Batterie" ok-only>
-              <b-table
-                striped
-                hover
-                :items="listaswappoint"
-                :fields="campibusy"
-              ></b-table>
-            </b-modal>
-          </b-card>
-        </b-card-group>
+            <b-tab no-body title="Batterie">
+              Qui va la lista delle Batterie
+              <b-card-footer>Lista Batterie</b-card-footer>
+            </b-tab>
+            <b-tab title="Aiuto">
+              
+              <b-card-text>
+                Qui scriviamo un minimo di spiegazione che può essere utile se vuoi
+              </b-card-text>
+            </b-tab>
+          </b-tabs>
+        </b-card>
       </div>
     </div>
   </div>
