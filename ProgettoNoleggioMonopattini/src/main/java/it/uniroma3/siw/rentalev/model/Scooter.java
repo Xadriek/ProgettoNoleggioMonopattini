@@ -46,6 +46,11 @@ public class Scooter {
 	}
 
 
+	public Scooter() {
+		super();
+	}
+
+
 	public Long getId() {
 		return id;
 	}

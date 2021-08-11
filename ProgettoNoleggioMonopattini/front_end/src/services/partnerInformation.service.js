@@ -7,6 +7,11 @@ class PartnerInformationService{
 
     getAllPartnerInformations() {
         return axios.get(API_URL + 'partnerInformations', {headers: authHeader() })}
+
+    getPartnerByEmail(email){
+        return axios.get(API_URL +'partnerInformation'+ '/'+ email, {headers: authHeader() })
+             
+          }
 }
 
 export default new PartnerInformationService();

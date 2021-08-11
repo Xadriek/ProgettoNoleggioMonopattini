@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import it.uniroma3.siw.rentalev.model.CoinTransation;
 import it.uniroma3.siw.rentalev.model.PartnerInformation;
-
+import it.uniroma3.siw.rentalev.payload.response.UserInformationProfile;
 import it.uniroma3.siw.rentalev.repository.PartnerInformationRepository;
+import it.uniroma3.siw.rentalev.repository.RentRepository;
 
 
 @CrossOrigin(origins = "*")
@@ -31,6 +33,9 @@ public class PartnerInformationController {
 
   @Autowired
   PartnerInformationRepository partnerInformationRepository;
+  
+  @Autowired
+  RentRepository rentRepository;
 
   @GetMapping("/partnerInformations")
   public ResponseEntity<List<PartnerInformation>> getAllPartnerInformations() {
@@ -119,6 +124,23 @@ public class PartnerInformationController {
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
- 
+ @GetMapping("/partnerInformation/{email}")
+ public ResponseEntity<UserInformationProfile> getPartnerInformationByEmail(@PathVariable("email") String emailRequest) {
+   PartnerInformation partnerInformationData = partnerInformationRepository.findByEmail(emailRequest);
+   UserInformationProfile userProfile=new UserInformationProfile();
+   userProfile.setName(partnerInformationData.getName());
+   userProfile.setSurname(partnerInformationData.getpIva());
+   userProfile.setTelephon(partnerInformationData.getTelephon());
+   userProfile.setIsActive(partnerInformationData.isActive());
+   userProfile.setStartPartnership(partnerInformationData.getStartPartnership());
+   userProfile.setWalletCoin(partnerInformationData.getPartnerWallet().getCoin());
+   List<CoinTransation> listTransation=partnerInformationData.getCoinTransactions();
+   userProfile.setTransationNumber(listTransation.size());
+   if (userProfile.getName()!=null) {
+       return new ResponseEntity<>(userProfile, HttpStatus.OK);
+     } else {
+       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+     }
+ }
 
 }

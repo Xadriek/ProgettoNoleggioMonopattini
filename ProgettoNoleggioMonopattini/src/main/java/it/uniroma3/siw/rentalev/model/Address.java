@@ -48,6 +48,11 @@ public class Address {
 	}
 
 
+	public Address() {
+		super();
+	}
+
+
 	public Long getId() {
 		return id;
 	}

@@ -44,6 +44,12 @@ public class CoinTransation {
 		this.swap = swap;
 	}
 	
+	
+	public CoinTransation() {
+		super();
+	}
+
+
 	public Long getId() {
 		return id;
 	}

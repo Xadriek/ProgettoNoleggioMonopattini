@@ -30,6 +30,8 @@ public interface RentRepository extends JpaRepository<Rent, Long> {
 	Boolean existsByCustomer(CustomerInformation customer);
 
 	List<Rent> findByCustomer(CustomerInformation customer);
+
+	
 	
 	
 }

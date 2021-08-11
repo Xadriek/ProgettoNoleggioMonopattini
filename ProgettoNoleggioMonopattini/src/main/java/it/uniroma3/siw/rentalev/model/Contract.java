@@ -30,6 +30,12 @@ public class Contract {
 		this.plan = plan;
 	}
 
+	
+	public Contract() {
+		super();
+	}
+
+
 	public Long getId() {
 		return id;
 	}

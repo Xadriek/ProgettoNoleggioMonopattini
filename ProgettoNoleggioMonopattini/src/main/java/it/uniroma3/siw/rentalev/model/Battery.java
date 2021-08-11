@@ -59,6 +59,12 @@ public class Battery {
 		this.state = EBattery.CARICA;
 		this.hub =hub;
 	}
+	
+
+	public Battery() {
+		super();
+	}
+
 
 	public Long getId() {
 		return id;
