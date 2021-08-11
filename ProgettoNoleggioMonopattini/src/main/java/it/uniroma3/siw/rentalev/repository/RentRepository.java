@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 
 import it.uniroma3.siw.rentalev.model.Contract;
 import it.uniroma3.siw.rentalev.model.CustomerInformation;
-import it.uniroma3.siw.rentalev.model.PartnerInformation;
 import it.uniroma3.siw.rentalev.model.Rent;
 import it.uniroma3.siw.rentalev.model.Scooter;
 
