@@ -1,5 +1,7 @@
 package it.uniroma3.siw.rentalev.payload.response;
 
+import java.util.Date;
+
 public class UserInformationProfile {
 	
 	private String name;
@@ -15,6 +17,10 @@ public class UserInformationProfile {
 	private Long rentId;
 	
 	private int transationNumber;
+	
+	private String pIva;
+	
+	private Date StartPartnership;
 
 	public String getName() {
 		return name;
@@ -70,6 +76,22 @@ public class UserInformationProfile {
 
 	public void setTransationNumber(int transationNumber) {
 		this.transationNumber = transationNumber;
+	}
+
+	public String getpIva() {
+		return pIva;
+	}
+
+	public void setpIva(String pIva) {
+		this.pIva = pIva;
+	}
+
+	public Date getStartPartnership() {
+		return StartPartnership;
+	}
+
+	public void setStartPartnership(Date startPartnership) {
+		StartPartnership = startPartnership;
 	}
 	
 	

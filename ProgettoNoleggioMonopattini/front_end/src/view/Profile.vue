@@ -56,6 +56,7 @@
 
 <script>
 import customerInformationService from "../services/customerInformation.service"
+import partnerInformationService from "../services/partnerInformation.service"
 import UserProfile from '../model/userProfile';
 export default {
   name: 'Profile',
@@ -73,12 +74,21 @@ export default {
       
       this.$router.push('/login');
     }
+    if(this.currentUser.roles.includes('ROLE_CUSTOMER')){
   customerInformationService.getCustomerByEmail(this.currentUser.email)
     .then(response=>{
-      this.userProfile=response.data;
-    }
+      this.userProfile=response.data;}
     )
     
   }
-};
+  if(this.currentUser.roles.includes('ROLE_PARTNER')){
+  partnerInformationService.getPartnerByEmail(this.currentUser.email)
+    .then(response=>{
+      this.userProfile=response.data;}
+    )
+    
+  }
+  
+}
+}
 </script>
