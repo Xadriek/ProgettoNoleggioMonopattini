@@ -52,6 +52,11 @@ public class Swap {
 	}
 
 
+	public Swap() {
+		super();
+	}
+
+
 	public Long getId() {
 		return id;
 	}

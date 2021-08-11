@@ -131,7 +131,7 @@ public class CustomerInformationController {
 
   }
   
-  @GetMapping("/customer/{email}")
+  @GetMapping("/customerInformation/{email}")
   public ResponseEntity<UserInformationProfile> getCustomerInformationByEmail(@PathVariable("email") String emailRequest) {
     CustomerInformation customerInformationData = customerInformationRepository.findByEmail(emailRequest);
     UserInformationProfile userProfile=new UserInformationProfile();
@@ -149,7 +149,11 @@ public class CustomerInformationController {
     List<CoinTransation> listTransation=customerInformationData.getCoinTransactions();
     userProfile.setTransationNumber(listTransation.size());
     
-    return new ResponseEntity<>(userProfile, HttpStatus.OK); 
+    if (userProfile.getName()!=null) {
+        return new ResponseEntity<>(userProfile, HttpStatus.OK);
+      } else {
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      }
   }
 
 }

@@ -50,6 +50,14 @@ public class Rent {
 		this.contract = contract;
 		this.numberPolicy=initNP();
 	}
+	
+	
+
+	public Rent() {
+		super();
+	}
+
+
 
 	private Double initNP() {
 		

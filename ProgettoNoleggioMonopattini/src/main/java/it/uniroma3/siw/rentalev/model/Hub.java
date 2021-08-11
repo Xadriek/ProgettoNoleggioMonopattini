@@ -31,6 +31,13 @@ public class Hub {
 		this.swapCompleted = new ArrayList<Swap>();
 		this.stokedBattery = initStock();
 	}
+	
+	
+	public Hub() {
+	super();
+}
+
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

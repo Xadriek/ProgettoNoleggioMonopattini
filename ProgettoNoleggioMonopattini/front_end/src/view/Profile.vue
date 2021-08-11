@@ -15,25 +15,31 @@
     </p>
     <p>
     <strong>Nome:</strong>
-    </p>
     {{userProfile.name}}
+    </p>
     <p>
     <strong>Cognome:</strong>
+    {{userProfile.surname}}
     </p>
     <p>
     <strong>Telefono:</strong>
+    {{userProfile.telephon}}
     </p>
     <p>
     <strong>Stato Attivo/Disattivo</strong>
+    {{userProfile.isActive}}
     </p>        
     <p>
     <strong>Monete nel Wallet</strong>
+    {{userProfile.walletCoin}}
     </p>
     <p>
     <strong>ID Noleggio</strong>
+    {{userProfile.rentId}}
     </p>    
     <p>
     <strong>Numero Transazioni</strong>
+    {{userProfile.transationNumber}}
     </p>   
 
 

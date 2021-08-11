@@ -54,6 +54,10 @@ public class CustomerInformation implements UserInformation{
 
 	
 
+	public CustomerInformation() {
+		super();
+	}
+
 	public CustomerInformation(String name, String surname, Long telephon, Address address,String email ) {
 		super();
 

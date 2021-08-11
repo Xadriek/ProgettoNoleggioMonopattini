@@ -79,6 +79,13 @@ public class PartnerInformation implements UserInformation {
 		this.coinTransations = new ArrayList<CoinTransation>();
 		this.email=email;
 	}
+	
+
+
+	public PartnerInformation() {
+		super();
+	}
+
 
 
 	public Long getId() {
