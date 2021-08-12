@@ -144,12 +144,11 @@ public class CustomerInformationController {
     userProfile.setIsActive(customerInformationData.isActive());
     userProfile.setWalletCoin(customerInformationData.getCustomerWallet().getCoin());
     List<Rent> rentsList= rentRepository.findByCustomerInformation(customerInformationData);
-    userProfile.setRentId(rentsList.stream()
-    		.filter(x ->x.getOngoing()==true)
-    		.findFirst()
-    		.get()
-    		.getId());
-    
+    for(Rent rent:rentsList) {
+    	if(rent.getOngoing()==true) {
+    		userProfile.setRentId(rent.getId());
+    	}
+    }
     List<CoinTransation> listTransation=customerInformationData.getCoinTransactions();
     userProfile.setTransationNumber(listTransation.size());
     
