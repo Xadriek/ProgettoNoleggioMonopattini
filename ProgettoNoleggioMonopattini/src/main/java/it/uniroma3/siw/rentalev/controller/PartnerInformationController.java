@@ -16,14 +16,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.uniroma3.siw.rentalev.model.CoinTransation;
 import it.uniroma3.siw.rentalev.model.PartnerInformation;
 import it.uniroma3.siw.rentalev.payload.response.UserInformationProfile;
+
 import it.uniroma3.siw.rentalev.repository.PartnerInformationRepository;
-import it.uniroma3.siw.rentalev.repository.RentRepository;
+
 
 
 @CrossOrigin(origins = "*")
@@ -34,16 +35,19 @@ public class PartnerInformationController {
   @Autowired
   PartnerInformationRepository partnerInformationRepository;
   
-  @Autowired
-  RentRepository rentRepository;
+
 
   @GetMapping("/partnerInformations")
-  public ResponseEntity<List<PartnerInformation>> getAllPartnerInformations() {
+  public ResponseEntity<List<PartnerInformation>> getAllPartnerInformations(@RequestParam(required = false) Boolean isActive) {
     try {
       List<PartnerInformation> partnerInformations = new ArrayList<PartnerInformation>();
 
       
-     partnerInformationRepository.findAll().forEach(partnerInformations::add);
+      if (isActive == null) {
+    	  partnerInformationRepository.findAll().forEach(partnerInformations::add);
+      }else  if(isActive) { 
+    	  partnerInformationRepository.findByIsActive(isActive).forEach(partnerInformations::add);
+        }
    
 
       if (partnerInformations.isEmpty()) {
@@ -70,7 +74,7 @@ public class PartnerInformationController {
   @PostMapping("/partnerInformations")
   public ResponseEntity<PartnerInformation> createPartnerInformation(@RequestBody PartnerInformation partnerInformation) {
     try {
-      PartnerInformation _partnerInformation = partnerInformationRepository.save(new PartnerInformation( partnerInformation.getName(), partnerInformation.getpIva(),partnerInformation.getTelephon(),partnerInformation.getAddress(),new Date(),partnerInformation.getEmail()));
+      PartnerInformation _partnerInformation = partnerInformationRepository.save(new PartnerInformation( partnerInformation.getName(), partnerInformation.getpIva(),partnerInformation.getTelephon(),partnerInformation.getAddress(),new Date(),partnerInformation.getEmail(),partnerInformation.getUsername()));
       return new ResponseEntity<>(_partnerInformation, HttpStatus.CREATED);
     } catch (Exception e) {
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -134,7 +138,7 @@ public class PartnerInformationController {
    userProfile.setIsActive(partnerInformationData.isActive());
    userProfile.setStartPartnership(partnerInformationData.getStartPartnership());
    userProfile.setWalletCoin(partnerInformationData.getPartnerWallet().getCoin());
-   List<CoinTransation> listTransation=partnerInformationData.getCoinTransactions();
+   List<CoinTransation> listTransation=partnerInformationData.getCoinTransations();
    userProfile.setTransationNumber(listTransation.size());
    if (userProfile.getName()!=null) {
        return new ResponseEntity<>(userProfile, HttpStatus.OK);

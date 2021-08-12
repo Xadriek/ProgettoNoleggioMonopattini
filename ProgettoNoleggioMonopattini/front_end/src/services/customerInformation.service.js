@@ -15,7 +15,8 @@ class CustomerInformationService{
             surname: customerInformation.surname,
             telephon: customerInformation.telephon,
             address: customerInformation.address,
-            user: customerInformation.user
+            email: customerInformation.email,
+            username:customerInformation.username
 
         }, {headers: authHeader() })
         .then((response) => {

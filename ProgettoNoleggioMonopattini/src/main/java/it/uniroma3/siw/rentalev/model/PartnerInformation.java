@@ -53,9 +53,10 @@ public class PartnerInformation implements UserInformation {
 	
 	@Column
 	private boolean isActive;
-	
+	@Column
 	private String email;
-	
+	@Column
+	private String username;
 
 	@OneToMany(mappedBy="toPartner",cascade = CascadeType.ALL)
 	private List<CoinTransation> coinTransations;
@@ -65,7 +66,7 @@ public class PartnerInformation implements UserInformation {
 
 
 	public PartnerInformation( String name, String pIva,Long telephon, Address address, 
-			Date startPartnership, String email
+			Date startPartnership, String email, String username
 			) {
 		super();
 
@@ -78,6 +79,7 @@ public class PartnerInformation implements UserInformation {
 		this.isActive = false;
 		this.coinTransations = new ArrayList<CoinTransation>();
 		this.email=email;
+		this.username=username;
 	}
 	
 
@@ -175,16 +177,6 @@ public class PartnerInformation implements UserInformation {
 	}
 
 
-	public List<CoinTransation> getCoinTransactions() {
-		return coinTransations;
-	}
-
-
-	public void setCoinTransactions(List<CoinTransation> coinTransations) {
-		this.coinTransations = coinTransations;
-	}
-
-
 	public boolean isActive() {
 		return isActive;
 	}
@@ -200,6 +192,30 @@ public class PartnerInformation implements UserInformation {
 
 	public void setEmail(String userEmail) {
 		this.email = userEmail;
+	}
+
+
+
+	public String getUsername() {
+		return username;
+	}
+
+
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+
+
+	public List<CoinTransation> getCoinTransations() {
+		return coinTransations;
+	}
+
+
+
+	public void setCoinTransations(List<CoinTransation> coinTransations) {
+		this.coinTransations = coinTransations;
 	}
 	
 

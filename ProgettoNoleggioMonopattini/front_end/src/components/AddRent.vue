@@ -157,7 +157,7 @@ export default {
   methods: {
     createRent() {
       
-      return rentService.saveRent(this.customerInformation,this.address,this.contract,this.currentUser.email).then(
+      return rentService.saveRent(this.customerInformation,this.address,this.contract,this.currentUser.email,this.currentUser.username).then(
         response=> {
          if(response!=null)return alert('Noleggio creato con successo, attendere per la verifica');
           

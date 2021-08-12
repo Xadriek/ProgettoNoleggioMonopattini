@@ -129,7 +129,7 @@ export default {
   methods: {
     createHub() {
       
-      return hubService.saveHub(this.partnerInformation,this.address,this.currentUser.email).then(
+      return hubService.saveHub(this.partnerInformation,this.address,this.currentUser.email,this.currentUser.username).then(
         response=> {
          if(response!=null)return alert('Hub creato con successo, attendere per la verifica');
           

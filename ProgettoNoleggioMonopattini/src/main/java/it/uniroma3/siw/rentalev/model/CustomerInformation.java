@@ -43,14 +43,17 @@ public class CustomerInformation implements UserInformation{
 	@OneToOne(cascade = CascadeType.ALL)
 	private Wallet customerWallet;
 	
-	@OneToMany(mappedBy="customer",cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="customerInformation",cascade = CascadeType.ALL)
 	private List<Rent> rents;
 	
 	@OneToMany(mappedBy="fromCustomer",cascade = CascadeType.ALL)
 	private List<CoinTransation> coinTransactions;
 
-	
+	@Column
 	private String email;
+	
+	@Column
+	private String username;
 
 	
 
@@ -58,7 +61,7 @@ public class CustomerInformation implements UserInformation{
 		super();
 	}
 
-	public CustomerInformation(String name, String surname, Long telephon, Address address,String email ) {
+	public CustomerInformation(String name, String surname, Long telephon, Address address,String email,String username ) {
 		super();
 
 		this.name = name;
@@ -70,6 +73,7 @@ public class CustomerInformation implements UserInformation{
 		this.rents = new ArrayList<Rent>();
 		this.coinTransactions = new ArrayList<CoinTransation>();
 		this.email=email;
+		this.username=username;
 	}
 
 	public Long getId() {
@@ -150,6 +154,14 @@ public class CustomerInformation implements UserInformation{
 
 	public void setEmail(String userEmail) {
 		this.email = userEmail;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	

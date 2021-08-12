@@ -30,7 +30,7 @@ public class Rent {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Double numberPolicy;
 	@ManyToOne(cascade = CascadeType.ALL)
-	private CustomerInformation customer;
+	private CustomerInformation customerInformation;
 	@OneToOne(cascade = CascadeType.ALL)
 	private Scooter scooter;
 	@Column
@@ -38,13 +38,13 @@ public class Rent {
 	@OneToOne(cascade = CascadeType.ALL)
 	private Contract contract;
 	
-	public Rent(Date startRent, CustomerInformation customer,
+	public Rent(Date startRent, CustomerInformation customerInformation,
 			Scooter scooter, Contract contract) {
 		super();
 
 		this.startRent = startRent;
 
-		this.customer = customer;
+		this.customerInformation = customerInformation;
 		this.scooter = scooter;
 		this.ongoing = false;
 		this.contract = contract;
@@ -97,11 +97,11 @@ public class Rent {
 	}
 
 	public CustomerInformation getCustomer() {
-		return customer;
+		return customerInformation;
 	}
 
 	public void setCustomer(CustomerInformation customer) {
-		this.customer = customer;
+		this.customerInformation = customer;
 	}
 
 	public Scooter getScooter() {

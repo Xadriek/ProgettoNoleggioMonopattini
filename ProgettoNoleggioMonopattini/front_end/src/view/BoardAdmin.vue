@@ -13,7 +13,7 @@
               class="text-center"
             >
               <b-button variant="primary">
-                I Noleggi Attivi sono: <b-badge variant="light">4</b-badge>
+                I Noleggi Attivi sono: <b-badge variant="light">{{countRentOngoing}}</b-badge>
               </b-button>
             </b-card>
 
@@ -24,7 +24,7 @@
               class="text-center"
             >
               <b-button variant="secondary">
-                Il Numero di Hub Attivi: <b-badge variant="light">18</b-badge>
+                Il Numero di Hub Attivi: <b-badge variant="light">{{numHubActive}}</b-badge>
               </b-button>
             </b-card>
 
@@ -35,25 +35,25 @@
               class="text-center"
             >
               <b-button variant="info">
-                Il Numero Transazioni: <b-badge variant="light">9</b-badge>
+                Il Numero Transazioni: <b-badge variant="light">{{countTransation}}</b-badge>
               </b-button>
             </b-card>
           </b-card-group>
         </div>
 
-        <div>
+      <!--  <div>
           <b-card no-body>
             <b-tabs card>
               <b-tab no-body title="Clienti">
                 <b-table
                   striped
                   hover
-                  :items="listaswappoint"
+                  :items="customers"
                   :fields="campibusy"
                 ></b-table>
               </b-tab>
 
-              <b-tab no-body title="Partner">
+            <b-tab no-body title="Partner">
                 <b-table
                   striped
                   hover
@@ -95,7 +95,7 @@
               </b-tab>
             </b-tabs>
           </b-card>
-        </div>
+        </div>-->
 
         
       </div>
@@ -104,27 +104,77 @@
 </template>
 
 <script>
-import UserService from "../services/user.service";
+import CustomerInformationService from '../services/customerInformation.service';
+import PartnerInformationService from '../services/partnerInformation.service';
+import RentService from '../services/rent.service';
+import CoinTransationService from '../services/coinTransation.service';
+import ScooterService from '../services/scooter.service';
+
 
 export default {
   name: "admin",
   data() {
     return {
-      content: "",
+
       text: "This is some text.\nIt is read only and doesn't look like an input.",
-      campibusy: ["name", "indirizzo", "distanza"],
+      campibusy: ["name", "address"],
       listaswappoint: [
         { distanza: 40, name: "Dickerson", indirizzo: "Via Roma" },
         { distanza: 21, name: "Larsen", indirizzo: "Viale Marconi" },
         { distanza: 89, name: "Geneva", indirizzo: "Piazza Verdi" },
         { distanza: 38, name: "Jami", indirizzo: "Colosseo" },
       ],
+      customers:[],
+      partners:[],
+      rents:[],
+      coinTransations:[],
+      scooters:[],
+      numHubActive:0,
+      countTransation:0,
+      countRentOngoing:0,
+      count:0
     };
   },
   mounted() {
-    UserService.getAdminBoard().then(
-      (response) => {
-        this.content = response.data;
+    
+    
+    this.allCustomers();
+    this.allPartners();
+    this.allCounters();
+    this.allRents();
+    this.allScooters();
+    this.allCoinTransation();
+    
+  },
+  methods:{
+    rentOutgoing(){
+      var rent;
+      this.count=0;
+      for(rent in this.rents){
+        if(rent.outgoing==true){
+          this.count++;
+        }
+      }
+      return this.count;
+    },
+    activeHub(){
+      this.count=0;
+       var partner;
+      for(partner in this.partners){
+        
+        if(partner.isActive==true){
+          this.count++;
+        }
+    }
+    return this.count;
+  },
+  
+  allCustomers(){
+    console.log('customers');
+    CustomerInformationService.getAllCustomerInformations().then(
+      (response)=>{
+        console.log(response.data);
+        this.customers=response.data;
       },
       (error) => {
         this.content =
@@ -134,5 +184,72 @@ export default {
       }
     );
   },
+  allScooters(){
+    console.log('scooter')
+    ScooterService.getAllScooters().then(
+      (response)=>{
+        console.log(response.data);
+        this.scooters=response.data;
+      },
+      (error) => {
+        this.content =
+          
+          (error.response && error.response.data) ||
+          error.message ||
+          error.toString();
+      }
+    );
+  },
+  allCoinTransation(){
+    console.log('coinTransation');
+    CoinTransationService.getAllCoinTransations().then(
+      (response)=>{
+        console.log(response.data);
+        this.coinTransations=response.data;
+      },
+      (error) => {
+        this.content =
+          (error.response && error.response.data) ||
+          error.message ||
+          error.toString();
+      }
+    );
+    },
+  allRents(){
+    console.log('rents');
+    RentService.getAllRents().then(
+      (response)=>{
+        console.log(response.data);
+        this.rents=response.data;
+      },
+      (error) => {
+        this.content =
+          (error.response && error.response.data) ||
+          error.message ||
+          error.toString();
+      }
+    );
+  },
+  allPartners(){
+    console.log('partners');
+    PartnerInformationService.getAllPartnerInformations().then(
+      (response)=>{
+        console.log(response.data);
+        this.partners=response.data;
+      },
+      (error) => {
+        this.content =
+          (error.response && error.response.data) ||
+          error.message ||
+          error.toString();
+      }
+    );
+  },
+  allCounters(){
+    this.countTransation=this.coinTransations.length;
+    this.countRentOngoing=this.rentOutgoing();
+    this.numHubActive=this.activeHub();
+  }
+  }
 };
 </script>

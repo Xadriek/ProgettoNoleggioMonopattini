@@ -73,7 +73,7 @@ public class RentController {
   public ResponseEntity<Rent> createRent(@RequestBody RentRequest rentRequest) {
     try {
     	Address _address= new Address(rentRequest.getStreet(), rentRequest.getCap(), rentRequest.getNumberStreet(), rentRequest.getMunicipality(), rentRequest.getCity(), rentRequest.getCountry());
-    	CustomerInformation _customer=new CustomerInformation(rentRequest.getName(), rentRequest.getSurname(), rentRequest.getTelephon(),_address, rentRequest.getUserEmail());
+    	CustomerInformation _customer=new CustomerInformation(rentRequest.getName(), rentRequest.getSurname(), rentRequest.getTelephon(),_address, rentRequest.getUserEmail(),rentRequest.getUsername());
     	Contract _contract=new Contract(rentRequest.getPlan());
       Rent _rent = rentRepository.save(new Rent(new Date(),_customer,new Scooter(new Date()),_contract));
       return new ResponseEntity<>(_rent, HttpStatus.CREATED);

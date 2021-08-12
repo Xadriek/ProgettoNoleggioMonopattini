@@ -32,7 +32,7 @@ public class CoinTransationController {
   @Autowired
   CoinTransationRepository coinTransactionRepository;
 
-  @GetMapping("/coinTransactions")
+  @GetMapping("/coinTransations")
   public ResponseEntity<List<CoinTransation>> getAllCoinTransations() {
     try {
       List<CoinTransation> coinTransactions = new ArrayList<CoinTransation>();

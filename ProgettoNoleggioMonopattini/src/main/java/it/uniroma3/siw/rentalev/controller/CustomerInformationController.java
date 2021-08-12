@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.uniroma3.siw.rentalev.model.CoinTransation;
@@ -41,13 +41,16 @@ public class CustomerInformationController {
   RentRepository rentRepository;
 
   @GetMapping("/customerInformations")
-  public ResponseEntity<List<CustomerInformation>> getAllCustomerInformations() {
+  public ResponseEntity<List<CustomerInformation>> getAllCustomerInformations(@RequestParam(required = false) Boolean isActive) {
     try {
       List<CustomerInformation> customerInformations = new ArrayList<CustomerInformation>();
 
       
-     customerInformationRepository.findAll().forEach(customerInformations::add);
-   
+      if (isActive == null) {
+    	  customerInformationRepository.findAll().forEach(customerInformations::add);
+      }else  if(isActive) { 
+    	  customerInformationRepository.findByIsActive(isActive).forEach(customerInformations::add);
+        }
 
       if (customerInformations.isEmpty()) {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -73,7 +76,7 @@ public class CustomerInformationController {
   @PostMapping("/customerInformations")
   public ResponseEntity<CustomerInformation> createCustomerInformation(@RequestBody CustomerInformation customerInformation) {
     try {
-      CustomerInformation _customerInformation = customerInformationRepository.save(new CustomerInformation( customerInformation.getName(),customerInformation.getSurname(),customerInformation.getTelephon(),customerInformation.getAddress(),customerInformation.getEmail()));
+      CustomerInformation _customerInformation = customerInformationRepository.save(new CustomerInformation( customerInformation.getName(),customerInformation.getSurname(),customerInformation.getTelephon(),customerInformation.getAddress(),customerInformation.getEmail(),customerInformation.getUsername()));
       return new ResponseEntity<>(_customerInformation, HttpStatus.CREATED);
     } catch (Exception e) {
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -140,12 +143,13 @@ public class CustomerInformationController {
     userProfile.setTelephon(customerInformationData.getTelephon());
     userProfile.setIsActive(customerInformationData.isActive());
     userProfile.setWalletCoin(customerInformationData.getCustomerWallet().getCoin());
-    List<Rent> rentsList= rentRepository.findByCustomer(customerInformationData);
-    for(Rent rent:rentsList) {
-    	if(rent.getOngoing()==true) {
-    		userProfile.setRentId(rent.getId());
-    	}
-    }
+    List<Rent> rentsList= rentRepository.findByCustomerInformation(customerInformationData);
+    userProfile.setRentId(rentsList.stream()
+    		.filter(x ->x.getOngoing()==true)
+    		.findFirst()
+    		.get()
+    		.getId());
+    
     List<CoinTransation> listTransation=customerInformationData.getCoinTransactions();
     userProfile.setTransationNumber(listTransation.size());
     

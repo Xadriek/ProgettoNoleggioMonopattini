@@ -68,7 +68,7 @@ public class HubController {
   public ResponseEntity<Hub> createHub(@RequestBody HubRequest hubRequest) {
     try {
     	Address _address= new Address(hubRequest.getStreet(), hubRequest.getCap(), hubRequest.getNumberStreet(), hubRequest.getMunicipality(), hubRequest.getCity(), hubRequest.getCountry());
-    	PartnerInformation _partner=new PartnerInformation(hubRequest.getName(), hubRequest.getpIva(), hubRequest.getTelephon(),_address,new Date(), hubRequest.getUserEmail());
+    	PartnerInformation _partner=new PartnerInformation(hubRequest.getName(), hubRequest.getpIva(), hubRequest.getTelephon(),_address,new Date(), hubRequest.getUserEmail(),hubRequest.getUsername());
     	Hub _hub=new Hub(_partner);
     	_partner.setHub(_hub);
     	Hub hub = hubRepository.save(_hub);

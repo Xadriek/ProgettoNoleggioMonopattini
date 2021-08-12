@@ -26,6 +26,8 @@ public class RentRequest {
 	private EContract plan;
 	
 	private String userEmail;
+	
+	private String username;
 
 	public String getName() {
 		return name;
@@ -113,6 +115,14 @@ public class RentRequest {
 
 	public void setUserEmail(String userEmail) {
 		this.userEmail = userEmail;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	

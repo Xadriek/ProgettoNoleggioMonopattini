@@ -23,6 +23,8 @@ public class HubRequest {
 	private String country;
 	
 	private String userEmail;
+	
+	private String username;
 
 	public String getName() {
 		return name;
@@ -102,6 +104,14 @@ public class HubRequest {
 
 	public void setUserEmail(String userEmail) {
 		this.userEmail = userEmail;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	
 	

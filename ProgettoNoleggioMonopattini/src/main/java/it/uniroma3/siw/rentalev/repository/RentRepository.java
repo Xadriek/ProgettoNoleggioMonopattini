@@ -27,9 +27,9 @@ public interface RentRepository extends JpaRepository<Rent, Long> {
 	
 	Boolean existsByScooter(Scooter scooter);
 	
-	Boolean existsByCustomer(CustomerInformation customer);
+	Boolean existsByCustomerInformation(CustomerInformation customerInformation);
 
-	List<Rent> findByCustomer(CustomerInformation customer);
+	List<Rent> findByCustomerInformation(CustomerInformation customerInformation);
 
 	
 	

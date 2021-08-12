@@ -77,6 +77,7 @@ export default {
     if(this.currentUser.roles.includes('ROLE_CUSTOMER')){
   customerInformationService.getCustomerByEmail(this.currentUser.email)
     .then(response=>{
+      console.log(response.data);
       this.userProfile=response.data;}
     )
     
@@ -84,6 +85,7 @@ export default {
   if(this.currentUser.roles.includes('ROLE_PARTNER')){
   partnerInformationService.getPartnerByEmail(this.currentUser.email)
     .then(response=>{
+      console.log(response.data);
       this.userProfile=response.data;}
     )
     
