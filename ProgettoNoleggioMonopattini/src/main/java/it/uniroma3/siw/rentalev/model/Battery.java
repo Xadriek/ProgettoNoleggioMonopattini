@@ -49,21 +49,19 @@ public class Battery {
 	
 	
 
-	public Battery(Date dateOfBirth, Scooter scooter, Hub hub) {
+	public Battery() {
 		super();
 		this.voltage = 48;
 		this.capacity = 13;
-		this.dateOfBirth = dateOfBirth;
+		this.dateOfBirth = new Date();
 		this.swapList = new ArrayList<>();
-		this.scooter = scooter;
+	
 		this.state = EBattery.CARICA;
-		this.hub =hub;
+	
 	}
 	
 
-	public Battery() {
-		super();
-	}
+	
 
 
 	public Long getId() {

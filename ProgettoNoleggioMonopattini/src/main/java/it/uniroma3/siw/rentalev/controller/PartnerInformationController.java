@@ -74,7 +74,7 @@ public class PartnerInformationController {
   @PostMapping("/partnerInformations")
   public ResponseEntity<PartnerInformation> createPartnerInformation(@RequestBody PartnerInformation partnerInformation) {
     try {
-      PartnerInformation _partnerInformation = partnerInformationRepository.save(new PartnerInformation( partnerInformation.getName(), partnerInformation.getpIva(),partnerInformation.getTelephon(),partnerInformation.getAddress(),new Date(),partnerInformation.getEmail(),partnerInformation.getUsername()));
+      PartnerInformation _partnerInformation = partnerInformationRepository.save(new PartnerInformation( partnerInformation.getName(), partnerInformation.getpIva(),partnerInformation.getTelephon(),partnerInformation.getAddress(),partnerInformation.getEmail(),partnerInformation.getUsername()));
       return new ResponseEntity<>(_partnerInformation, HttpStatus.CREATED);
     } catch (Exception e) {
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

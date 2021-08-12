@@ -92,12 +92,12 @@ public class Hub {
 	
 	public List<Battery> initStock(){
 		List<Battery> aux=new ArrayList<>();
-		aux.add(new Battery(new Date(),null,this));
-		aux.add(new Battery(new Date(),null,this));
-		aux.add(new Battery(new Date(),null,this));
-		aux.add(new Battery(new Date(),null,this));
-		aux.add(new Battery(new Date(),null,this));
-		aux.add(new Battery(new Date(),null,this));
+		aux.add(new Battery());
+		aux.add(new Battery());
+		aux.add(new Battery());
+		aux.add(new Battery());
+		aux.add(new Battery());
+		aux.add(new Battery());
 	
 		
 		return aux;

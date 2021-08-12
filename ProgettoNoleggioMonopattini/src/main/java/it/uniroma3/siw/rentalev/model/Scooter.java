@@ -35,20 +35,17 @@ public class Scooter {
 	private List<Swap> swapList;
 	
 	
-	public Scooter(Date dateOfBirth
-			) {
+	public Scooter() {
 		super();
 
 
-		this.battery = new Battery(dateOfBirth,this,null);
-		this.dateOfBirth = dateOfBirth;
+		this.battery = new Battery();
+		this.dateOfBirth = new Date();
 		this.swapList = new ArrayList<Swap>();
 	}
 
 
-	public Scooter() {
-		super();
-	}
+	
 
 
 	public Long getId() {

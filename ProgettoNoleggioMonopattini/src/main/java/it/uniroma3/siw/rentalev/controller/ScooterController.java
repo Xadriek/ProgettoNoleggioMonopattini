@@ -66,7 +66,7 @@ public class ScooterController {
   @PostMapping("/scooters")
   public ResponseEntity<Scooter> createScooter(@RequestBody Scooter scooter) {
     try {
-      Scooter _scooter = scooterRepository.save(new Scooter(scooter.getDateOfBirth()));
+      Scooter _scooter = scooterRepository.save(new Scooter());
       return new ResponseEntity<>(_scooter, HttpStatus.CREATED);
     } catch (Exception e) {
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

@@ -34,12 +34,12 @@ public class CoinTransation {
 	
 	
 	public CoinTransation(CustomerInformation fromCustomer, PartnerInformation toPartner,
-			Date logTransition, int coin, Swap swap) {
+			 int coin, Swap swap) {
 		super();
 
 		this.fromCustomer = fromCustomer;
 		this.toPartner = toPartner;
-		this.logTransition = logTransition;
+		this.logTransition = new Date();
 		this.coin = coin;
 		this.swap = swap;
 	}

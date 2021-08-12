@@ -41,10 +41,10 @@ public class Swap {
 
 
 
-	public Swap( Date eventLog, Hub hub, Battery battery, Scooter scooter
+	public Swap(Hub hub, Battery battery, Scooter scooter
 			 ) {
 		super();
-		this.eventLog = eventLog;
+		this.eventLog = new Date();
 		this.hub = hub;
 		this.battery = battery;
 		this.scooter = scooter;

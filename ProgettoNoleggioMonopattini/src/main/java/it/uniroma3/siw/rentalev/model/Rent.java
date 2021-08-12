@@ -38,16 +38,15 @@ public class Rent {
 	@OneToOne(cascade = CascadeType.ALL)
 	private Contract contract;
 	
-	public Rent(Date startRent, CustomerInformation customerInformation,
-			Scooter scooter, Contract contract) {
+	public Rent(CustomerInformation customerInformation, EContract plan) {
 		super();
 
-		this.startRent = startRent;
+		this.startRent = new Date();
 
 		this.customerInformation = customerInformation;
-		this.scooter = scooter;
+		this.scooter = new Scooter();
 		this.ongoing = false;
-		this.contract = contract;
+		this.contract =new Contract(plan);
 		this.numberPolicy=initNP();
 	}
 	

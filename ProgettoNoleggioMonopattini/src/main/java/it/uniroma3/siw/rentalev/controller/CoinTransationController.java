@@ -65,7 +65,7 @@ public class CoinTransationController {
   @PostMapping("/coinTransactions")
   public ResponseEntity<CoinTransation> createCoinTransation(@RequestBody CoinTransation coinTransaction) {
     try {
-      CoinTransation _coinTransaction = coinTransactionRepository.save(new CoinTransation( coinTransaction.getFromCustomer(),coinTransaction.getToPartner(),new Date(),coinTransaction.getCoin(),coinTransaction.getSwap()));
+      CoinTransation _coinTransaction = coinTransactionRepository.save(new CoinTransation( coinTransaction.getFromCustomer(),coinTransaction.getToPartner(),coinTransaction.getCoin(),coinTransaction.getSwap()));
       return new ResponseEntity<>(_coinTransaction, HttpStatus.CREATED);
     } catch (Exception e) {
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
