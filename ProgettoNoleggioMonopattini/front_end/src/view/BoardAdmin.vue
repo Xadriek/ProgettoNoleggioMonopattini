@@ -41,7 +41,7 @@
           </b-card-group>
         </div>
 
-      <!--  <div>
+       <div>
           <b-card no-body>
             <b-tabs card>
               <b-tab no-body title="Clienti">
@@ -49,7 +49,7 @@
                   striped
                   hover
                   :items="customers"
-                  :fields="campibusy"
+                  
                 ></b-table>
               </b-tab>
 
@@ -58,34 +58,20 @@
                   striped
                   hover
                   :items="listaswappoint"
-                  :fields="campibusy"
+                  
                 ></b-table>
               </b-tab>
 
-              <b-tab no-body title="Noleggi">
-                <b-table
-                  striped
-                  hover
-                  :items="listaswappoint"
-                  :fields="campibusy"
-                ></b-table>
-              </b-tab>
+              
               <b-tab no-body title="Swap">
                 <b-table
                   striped
                   hover
                   :items="listaswappoint"
-                  :fields="campibusy"
+                  
                 ></b-table>
               </b-tab>
-              <b-tab no-body title="Scooter">
-                <b-table
-                  striped
-                  hover
-                  :items="listaswappoint"
-                  :fields="campibusy"
-                ></b-table>
-              </b-tab>
+              
 
               <b-tab title="Aiuto">
                 <b-card-text>
@@ -95,7 +81,7 @@
               </b-tab>
             </b-tabs>
           </b-card>
-        </div>-->
+        </div>
 
         
       </div>
@@ -106,9 +92,9 @@
 <script>
 import CustomerInformationService from '../services/customerInformation.service';
 import PartnerInformationService from '../services/partnerInformation.service';
-import RentService from '../services/rent.service';
+
 import CoinTransationService from '../services/coinTransation.service';
-import ScooterService from '../services/scooter.service';
+
 
 
 export default {
@@ -117,7 +103,6 @@ export default {
     return {
 
       text: "This is some text.\nIt is read only and doesn't look like an input.",
-      campibusy: ["name", "address"],
       listaswappoint: [
         { distanza: 40, name: "Dickerson", indirizzo: "Via Roma" },
         { distanza: 21, name: "Larsen", indirizzo: "Viale Marconi" },
@@ -126,9 +111,7 @@ export default {
       ],
       customers:[],
       partners:[],
-      rents:[],
       coinTransations:[],
-      scooters:[],
       numHubActive:0,
       countTransation:0,
       countRentOngoing:0,
@@ -141,8 +124,6 @@ export default {
     this.allCustomers();
     this.allPartners();
     this.allCounters();
-    this.allRents();
-    this.allScooters();
     this.allCoinTransation();
     
   },
@@ -184,22 +165,7 @@ export default {
       }
     );
   },
-  allScooters(){
-    console.log('scooter')
-    ScooterService.getAllScooters().then(
-      (response)=>{
-        console.log(response.data);
-        this.scooters=response.data;
-      },
-      (error) => {
-        this.content =
-          
-          (error.response && error.response.data) ||
-          error.message ||
-          error.toString();
-      }
-    );
-  },
+  
   allCoinTransation(){
     console.log('coinTransation');
     CoinTransationService.getAllCoinTransations().then(
@@ -215,21 +181,7 @@ export default {
       }
     );
     },
-  allRents(){
-    console.log('rents');
-    RentService.getAllRents().then(
-      (response)=>{
-        console.log(response.data);
-        this.rents=response.data;
-      },
-      (error) => {
-        this.content =
-          (error.response && error.response.data) ||
-          error.message ||
-          error.toString();
-      }
-    );
-  },
+  
   allPartners(){
     console.log('partners');
     PartnerInformationService.getAllPartnerInformations().then(

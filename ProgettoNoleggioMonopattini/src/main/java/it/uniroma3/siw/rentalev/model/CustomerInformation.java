@@ -64,7 +64,7 @@ public class CustomerInformation implements UserInformation{
 		super();
 		this.isActive = false;
 		this.customerWallet = new Wallet(0);
-		this.rent = new Rent(this);
+		this.rent = new Rent();
 		this.coinTransactions = new ArrayList<CoinTransation>();
 	}
 
@@ -77,7 +77,7 @@ public class CustomerInformation implements UserInformation{
 		this.address = address;
 		this.isActive = false;
 		this.customerWallet = new Wallet(0);
-		this.rent = new Rent(this);
+		this.rent = new Rent();
 		this.coinTransactions = new ArrayList<CoinTransation>();
 		this.email=email;
 		this.username=username;
