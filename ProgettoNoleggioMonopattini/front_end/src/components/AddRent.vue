@@ -159,7 +159,7 @@ export default {
       
       return rentService.saveRent(this.customerInformation,this.address,this.contract,this.currentUser.email,this.currentUser.username).then(
         response=> {
-         if(response!=null)return alert('Noleggio creato con successo, attendere per la verifica');
+         console.log(response.data);
           
 
         },

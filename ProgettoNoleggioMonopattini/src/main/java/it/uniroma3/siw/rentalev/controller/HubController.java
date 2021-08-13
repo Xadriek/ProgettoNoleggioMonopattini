@@ -12,17 +12,17 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import it.uniroma3.siw.rentalev.model.Address;
+
 import it.uniroma3.siw.rentalev.model.Hub;
 import it.uniroma3.siw.rentalev.model.PartnerInformation;
-import it.uniroma3.siw.rentalev.payload.request.HubRequest;
+
 import it.uniroma3.siw.rentalev.repository.HubRepository;
 
 
@@ -64,19 +64,19 @@ public class HubController {
     }
   }
 
-  @PostMapping("/hubs")
+ /* @PostMapping("/hubs")
   public ResponseEntity<Hub> createHub(@RequestBody HubRequest hubRequest) {
     try {
     	Address _address= new Address(hubRequest.getStreet(), hubRequest.getCap(), hubRequest.getNumberStreet(), hubRequest.getMunicipality(), hubRequest.getCity(), hubRequest.getCountry());
     	PartnerInformation _partner=new PartnerInformation(hubRequest.getName(), hubRequest.getpIva(), hubRequest.getTelephon(),_address, hubRequest.getUserEmail(),hubRequest.getUsername());
-    	Hub _hub=new Hub(_partner);
+    	
     	_partner.setHub(_hub);
     	Hub hub = hubRepository.save(_hub);
       return new ResponseEntity<>(hub, HttpStatus.CREATED);
     } catch (Exception e) {
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
-  }
+  }*/
   @PutMapping("/hubs/{id}")
   public ResponseEntity<Hub> updateHub(@PathVariable("id") long id, @RequestBody Hub hub) {
     Optional<Hub> hubData = hubRepository.findById(id);

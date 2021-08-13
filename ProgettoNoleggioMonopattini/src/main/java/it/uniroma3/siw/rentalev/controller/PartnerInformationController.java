@@ -1,7 +1,7 @@
 package it.uniroma3.siw.rentalev.controller;
 
 import java.util.ArrayList;
-import java.util.Date;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -19,8 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import it.uniroma3.siw.rentalev.model.Address;
 import it.uniroma3.siw.rentalev.model.CoinTransation;
 import it.uniroma3.siw.rentalev.model.PartnerInformation;
+import it.uniroma3.siw.rentalev.payload.request.HubRequest;
 import it.uniroma3.siw.rentalev.payload.response.UserInformationProfile;
 
 import it.uniroma3.siw.rentalev.repository.PartnerInformationRepository;
@@ -72,9 +74,10 @@ public class PartnerInformationController {
   }
 
   @PostMapping("/partnerInformations")
-  public ResponseEntity<PartnerInformation> createPartnerInformation(@RequestBody PartnerInformation partnerInformation) {
+  public ResponseEntity<PartnerInformation> createPartnerInformation(@RequestBody HubRequest hubRequest) {
     try {
-      PartnerInformation _partnerInformation = partnerInformationRepository.save(new PartnerInformation( partnerInformation.getName(), partnerInformation.getpIva(),partnerInformation.getTelephon(),partnerInformation.getAddress(),partnerInformation.getEmail(),partnerInformation.getUsername()));
+      Address _address= new Address(hubRequest.getStreet(), hubRequest.getCap(), hubRequest.getNumberStreet(), hubRequest.getMunicipality(), hubRequest.getCity(), hubRequest.getCountry());
+      PartnerInformation _partnerInformation = partnerInformationRepository.save(new PartnerInformation( hubRequest.getName(), hubRequest.getpIva(),hubRequest.getTelephon(),_address,hubRequest.getUserEmail(),hubRequest.getUsername()));
       return new ResponseEntity<>(_partnerInformation, HttpStatus.CREATED);
     } catch (Exception e) {
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

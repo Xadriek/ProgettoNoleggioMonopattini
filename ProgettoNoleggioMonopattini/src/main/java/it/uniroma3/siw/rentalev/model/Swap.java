@@ -4,14 +4,14 @@ package it.uniroma3.siw.rentalev.model;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+
 
 
 @Entity
@@ -31,8 +31,7 @@ public class Swap {
 	private Battery battery;
 	@ManyToOne
 	private Scooter scooter;
-	@OneToOne(cascade = CascadeType.ALL)
-	private CoinTransation coinTransation;
+	
 	
 
 	
@@ -107,14 +106,7 @@ public class Swap {
 	}
 
 
-	public CoinTransation getCoinTransation() {
-		return coinTransation;
-	}
-
-
-	public void setCoinTransation(CoinTransation coinTransation) {
-		this.coinTransation = coinTransation;
-	}
+	
 
 	
 

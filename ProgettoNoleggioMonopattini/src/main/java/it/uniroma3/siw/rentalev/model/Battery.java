@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -36,11 +36,11 @@ public class Battery {
 	private Date dateOfBirth;
 	@Column(nullable=true)
 	private Date dateOfDismiss;
-	@OneToMany(mappedBy="battery",cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="battery")
 	private List<Swap> swapList;
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	private Hub hub;
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne
 	private Scooter scooter;
 	
 	@Enumerated(EnumType.STRING)
@@ -49,8 +49,10 @@ public class Battery {
 	
 	
 
-	public Battery() {
+	public Battery(Hub hub,Scooter scooter) {
 		super();
+		this.hub=hub;
+		this.scooter=scooter;
 		this.voltage = 48;
 		this.capacity = 13;
 		this.dateOfBirth = new Date();
@@ -62,6 +64,14 @@ public class Battery {
 	
 
 	
+
+
+	public Battery() {
+		super();
+	}
+
+
+
 
 
 	public Long getId() {

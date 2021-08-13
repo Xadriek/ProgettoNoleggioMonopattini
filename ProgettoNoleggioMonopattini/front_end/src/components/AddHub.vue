@@ -131,7 +131,7 @@ export default {
       
       return hubService.saveHub(this.partnerInformation,this.address,this.currentUser.email,this.currentUser.username).then(
         response=> {
-         if(response!=null)return alert('Hub creato con successo, attendere per la verifica');
+         console.log(response.data);
           
 
         },

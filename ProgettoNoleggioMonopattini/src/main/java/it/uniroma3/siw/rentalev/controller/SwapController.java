@@ -1,7 +1,7 @@
 package it.uniroma3.siw.rentalev.controller;
 
 import java.util.ArrayList;
-import java.util.Date;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -77,7 +77,7 @@ public class SwapController {
 
     if (swapData.isPresent()) {
     	Swap _swap = swapData.get();
-    	_swap.setCoinTransation(swap.getCoinTransation());
+    	
 
       return new ResponseEntity<>(swapRepository.save(_swap), HttpStatus.OK);
     } else {

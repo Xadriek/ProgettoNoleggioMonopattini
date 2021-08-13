@@ -20,13 +20,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
+import it.uniroma3.siw.rentalev.model.Address;
 import it.uniroma3.siw.rentalev.model.CoinTransation;
 import it.uniroma3.siw.rentalev.model.CustomerInformation;
-import it.uniroma3.siw.rentalev.model.Rent;
+import it.uniroma3.siw.rentalev.payload.request.RentRequest;
 import it.uniroma3.siw.rentalev.payload.response.UserInformationProfile;
 import it.uniroma3.siw.rentalev.repository.CustomerInformationRepository;
-import it.uniroma3.siw.rentalev.repository.RentRepository;
+
 
 
 @CrossOrigin(origins = "*")
@@ -37,8 +37,7 @@ public class CustomerInformationController {
   @Autowired
   CustomerInformationRepository customerInformationRepository;
   
-  @Autowired
-  RentRepository rentRepository;
+
 
   @GetMapping("/customerInformations")
   public ResponseEntity<List<CustomerInformation>> getAllCustomerInformations(@RequestParam(required = false) Boolean isActive) {
@@ -74,10 +73,13 @@ public class CustomerInformationController {
   }
 
   @PostMapping("/customerInformations")
-  public ResponseEntity<CustomerInformation> createCustomerInformation(@RequestBody CustomerInformation customerInformation) {
+  public ResponseEntity<CustomerInformation> createCustomerInformation(@RequestBody RentRequest rentRequest) {
     try {
-      CustomerInformation _customerInformation = customerInformationRepository.save(new CustomerInformation( customerInformation.getName(),customerInformation.getSurname(),customerInformation.getTelephon(),customerInformation.getAddress(),customerInformation.getEmail(),customerInformation.getUsername()));
-      return new ResponseEntity<>(_customerInformation, HttpStatus.CREATED);
+    Address _address= new Address(rentRequest.getStreet(), rentRequest.getCap(), rentRequest.getNumberStreet(), rentRequest.getMunicipality(), rentRequest.getCity(), rentRequest.getCountry());
+      CustomerInformation _customerInformation =new CustomerInformation( rentRequest.getName(),rentRequest.getSurname(),rentRequest.getTelephon(),_address,rentRequest.getUserEmail(),rentRequest.getUsername());
+      _customerInformation.getRent().getContract().setPlan(rentRequest.getPlan());
+      CustomerInformation customerInformation =customerInformationRepository.save(_customerInformation);
+      return new ResponseEntity<>(customerInformation, HttpStatus.CREATED);
     } catch (Exception e) {
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -143,12 +145,7 @@ public class CustomerInformationController {
     userProfile.setTelephon(customerInformationData.getTelephon());
     userProfile.setIsActive(customerInformationData.isActive());
     userProfile.setWalletCoin(customerInformationData.getCustomerWallet().getCoin());
-    List<Rent> rentsList= rentRepository.findByCustomerInformation(customerInformationData);
-    for(Rent rent:rentsList) {
-    	if(rent.getOngoing()==true) {
-    		userProfile.setRentId(rent.getId());
-    	}
-    }
+    userProfile.setRentId(customerInformationData.getRent().getId());
     List<CoinTransation> listTransation=customerInformationData.getCoinTransactions();
     userProfile.setTransationNumber(listTransation.size());
     

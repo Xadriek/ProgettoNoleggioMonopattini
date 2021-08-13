@@ -10,7 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+
 import javax.persistence.OneToOne;
 
 
@@ -27,26 +27,24 @@ public class Rent {
 	@Column(nullable=true)
 	private Date finishRent;
 	@Column(unique=true)
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	
 	private Double numberPolicy;
-	@ManyToOne(cascade = CascadeType.ALL)
+	@OneToOne
 	private CustomerInformation customerInformation;
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.PERSIST)
 	private Scooter scooter;
-	@Column
+	
 	private Boolean ongoing;
 	@OneToOne(cascade = CascadeType.ALL)
 	private Contract contract;
 	
-	public Rent(CustomerInformation customerInformation, EContract plan) {
+	public Rent(CustomerInformation customerInformation) {
 		super();
-
+		this.customerInformation=customerInformation;
 		this.startRent = new Date();
-
-		this.customerInformation = customerInformation;
 		this.scooter = new Scooter();
 		this.ongoing = false;
-		this.contract =new Contract(plan);
+		this.contract =new Contract(null);
 		this.numberPolicy=initNP();
 	}
 	

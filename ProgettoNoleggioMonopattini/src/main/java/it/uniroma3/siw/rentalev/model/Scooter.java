@@ -25,13 +25,13 @@ public class Scooter {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.PERSIST)
 	private Battery battery;
 	@Column(nullable=false)
 	private Date dateOfBirth;
 	@Column(nullable=true)
 	private Date dateOfDismiss;
-	@OneToMany(mappedBy="scooter", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="scooter")
 	private List<Swap> swapList;
 	
 	
@@ -39,7 +39,7 @@ public class Scooter {
 		super();
 
 
-		this.battery = new Battery();
+		this.battery = new Battery(null,this);
 		this.dateOfBirth = new Date();
 		this.swapList = new ArrayList<Swap>();
 	}

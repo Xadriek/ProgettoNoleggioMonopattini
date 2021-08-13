@@ -1,7 +1,7 @@
 package it.uniroma3.siw.rentalev.controller;
 
 import java.util.ArrayList;
-import java.util.Date;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -12,19 +12,18 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import it.uniroma3.siw.rentalev.model.Address;
-import it.uniroma3.siw.rentalev.model.Contract;
-import it.uniroma3.siw.rentalev.model.CustomerInformation;
+
+
+
 import it.uniroma3.siw.rentalev.model.Rent;
-import it.uniroma3.siw.rentalev.model.Scooter;
-import it.uniroma3.siw.rentalev.payload.request.RentRequest;
+
+
 import it.uniroma3.siw.rentalev.repository.RentRepository;
 
 
@@ -69,7 +68,7 @@ public class RentController {
     }
   }
 
-  @PostMapping("/rents")
+ /* @PostMapping("/rents")
   public ResponseEntity<Rent> createRent(@RequestBody RentRequest rentRequest) {
     try {
     	Address _address= new Address(rentRequest.getStreet(), rentRequest.getCap(), rentRequest.getNumberStreet(), rentRequest.getMunicipality(), rentRequest.getCity(), rentRequest.getCountry());
@@ -80,7 +79,7 @@ public class RentController {
     } catch (Exception e) {
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
-  }
+  }*/
   @PutMapping("/rents/{id}")
   public ResponseEntity<Rent> updateRent(@PathVariable("id") long id, @RequestBody Rent rent) {
     Optional<Rent> rentData = rentRepository.findById(id);

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,34 +23,38 @@ public class Hub {
 	
 //INSERIRE GEOCODE
 	
-	public Hub( PartnerInformation partnerInformation) {
+	public Hub(PartnerInformation partnerInformation2) {
 		super();
 
-		this.partnerInformation = partnerInformation;
+		this.partnerInformation=partnerInformation2;
 		this.dateOfAssembly = new Date();
 		this.swapCompleted = new ArrayList<Swap>();
 		this.stokedBattery = initStock();
 	}
 	
-	
+
+
+
 	public Hub() {
-	super();
-}
+		super();
+	}
+
+
 
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@OneToOne(cascade=CascadeType.ALL)
+	@OneToOne
 	private PartnerInformation partnerInformation;
-	@Column(nullable=false)
+	@Column
 	private Date dateOfAssembly;
 	@Column(nullable=true)
 	private Date dateOfDismiss;
-	@OneToMany(mappedBy="hub",cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="hub")
 	private List<Swap> swapCompleted;
 	
-	@OneToMany(mappedBy="hub",cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="hub")
 	private List<Battery> stokedBattery;
 	
 	public Long getId() {
@@ -92,12 +96,12 @@ public class Hub {
 	
 	public List<Battery> initStock(){
 		List<Battery> aux=new ArrayList<>();
-		aux.add(new Battery());
-		aux.add(new Battery());
-		aux.add(new Battery());
-		aux.add(new Battery());
-		aux.add(new Battery());
-		aux.add(new Battery());
+		aux.add(new Battery(this,null));
+		aux.add(new Battery(this,null));
+		aux.add(new Battery(this,null));
+		aux.add(new Battery(this,null));
+		aux.add(new Battery(this,null));
+		aux.add(new Battery(this,null));
 	
 		
 		return aux;

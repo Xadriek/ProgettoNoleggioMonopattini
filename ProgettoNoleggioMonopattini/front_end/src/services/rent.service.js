@@ -10,7 +10,7 @@ class RentService{
         return axios.get(API_URL + 'rents', {headers: authHeader() })}
 
     saveRent(customerInformation,address,contract,currentUserEmail,currentUsername) {
-            return axios.post(API_URL + 'rents',{
+            return axios.post(API_URL + 'customerInformations',{
               name: customerInformation.name,
               surname: customerInformation.surname,
               telephon: customerInformation.telephon,

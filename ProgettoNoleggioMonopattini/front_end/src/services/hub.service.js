@@ -9,7 +9,7 @@ class HubService{
         return axios.get(API_URL + 'hubs', {headers: authHeader() })}
     
     saveHub(partnerInformation,address,currentUserEmail,currentUsername) {
-            return axios.post(API_URL + 'hubs',{
+            return axios.post(API_URL + 'partnerInformations',{
               name: partnerInformation.name,
               pIva: partnerInformation.pIva,
               telephon: partnerInformation.telephon,
