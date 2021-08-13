@@ -87,6 +87,11 @@ public class PartnerInformation implements UserInformation {
 
 	public PartnerInformation() {
 		super();
+		this.partnerWallet = new Wallet(0);
+		this.hub=new Hub();
+		this.startPartnership = new Date();
+		this.isActive = false;
+		this.coinTransations = new ArrayList<CoinTransation>();
 	}
 
 
@@ -219,7 +224,8 @@ public class PartnerInformation implements UserInformation {
 		this.coinTransations = coinTransations;
 	}
 	
-
+	
+	
 	
 	
 	

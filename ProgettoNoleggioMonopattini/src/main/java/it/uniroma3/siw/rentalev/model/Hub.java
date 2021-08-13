@@ -23,20 +23,17 @@ public class Hub {
 	
 //INSERIRE GEOCODE
 	
-	public Hub(PartnerInformation partnerInformation2) {
-		super();
 
-		this.partnerInformation=partnerInformation2;
-		this.dateOfAssembly = new Date();
-		this.swapCompleted = new ArrayList<Swap>();
-		this.stokedBattery = initStock();
-	}
 	
 
 
 
 	public Hub() {
 		super();
+		this.dateOfAssembly = new Date();
+		this.swapCompleted = new ArrayList<Swap>();
+		this.stokedBattery = new ArrayList<Battery>();
+		this.initStock();
 	}
 
 
@@ -45,8 +42,7 @@ public class Hub {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@OneToOne
-	private PartnerInformation partnerInformation;
+
 	@Column
 	private Date dateOfAssembly;
 	@Column(nullable=true)
@@ -63,12 +59,7 @@ public class Hub {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public PartnerInformation getPartnerInformation() {
-		return partnerInformation;
-	}
-	public void setPartnerInformation(PartnerInformation partnerInformation) {
-		this.partnerInformation = partnerInformation;
-	}
+	
 	public Date getDateOfAssembly() {
 		return dateOfAssembly;
 	}
@@ -94,17 +85,15 @@ public class Hub {
 		this.stokedBattery = stokedBattery;
 	}
 	
-	public List<Battery> initStock(){
-		List<Battery> aux=new ArrayList<>();
-		aux.add(new Battery(this,null));
-		aux.add(new Battery(this,null));
-		aux.add(new Battery(this,null));
-		aux.add(new Battery(this,null));
-		aux.add(new Battery(this,null));
-		aux.add(new Battery(this,null));
-	
+	public void initStock(){
 		
-		return aux;
+		new Battery(this,null);
+		new Battery(this,null);
+		new Battery(this,null);
+		new Battery(this,null);
+		new Battery(this,null);
+		new Battery(this,null);
+		new Battery(this,null);
 	}
 	
 	

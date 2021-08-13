@@ -53,6 +53,7 @@ public class Swap {
 
 	public Swap() {
 		super();
+		this.eventLog = new Date();
 	}
 
 

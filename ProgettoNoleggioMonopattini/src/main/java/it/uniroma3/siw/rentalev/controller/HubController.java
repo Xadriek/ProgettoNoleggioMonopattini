@@ -83,7 +83,6 @@ public class HubController {
 
     if (hubData.isPresent()) {
     	Hub _hub = hubData.get();
-    	_hub.setPartnerInformation(hub.getPartnerInformation());
     	_hub.setDateOfDismiss(new Date());
       return new ResponseEntity<>(hubRepository.save(_hub), HttpStatus.OK);
     } else {
@@ -112,19 +111,7 @@ public class HubController {
 
   }
 
-  @GetMapping("/hubs/custodial")
-  public ResponseEntity<Hub> findByPartnerInformation(@RequestBody PartnerInformation partnerInformation) {
-    try {
-      Hub hub = hubRepository.findByPartnerInformation(partnerInformation);
-
-      if (hub==null) {
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-      }
-      return new ResponseEntity<>(hub, HttpStatus.OK);
-    } catch (Exception e) {
-      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-  }
+  
   
 
 }

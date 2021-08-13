@@ -68,6 +68,11 @@ public class Battery {
 
 	public Battery() {
 		super();
+		this.voltage = 48;
+		this.capacity = 13;
+		this.dateOfBirth = new Date();
+		this.swapList = new ArrayList<>();
+		
 	}
 
 

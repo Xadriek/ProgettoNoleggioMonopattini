@@ -13,6 +13,5 @@ import it.uniroma3.siw.rentalev.model.PartnerInformation;
 @Repository
 public interface HubRepository extends JpaRepository<Hub, Long>{
 	
-	Hub findByPartnerInformation(PartnerInformation partnerInformation);
 
 }

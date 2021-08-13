@@ -62,6 +62,10 @@ public class CustomerInformation implements UserInformation{
 
 	public CustomerInformation() {
 		super();
+		this.isActive = false;
+		this.customerWallet = new Wallet(0);
+		this.rent = new Rent(this);
+		this.coinTransactions = new ArrayList<CoinTransation>();
 	}
 
 	public CustomerInformation(String name, String surname, Long telephon, Address address,String email,String username ) {
