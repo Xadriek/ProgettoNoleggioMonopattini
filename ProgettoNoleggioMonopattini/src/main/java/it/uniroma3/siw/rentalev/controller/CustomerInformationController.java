@@ -137,20 +137,12 @@ public class CustomerInformationController {
   }
   
   @GetMapping("/customerInformation/{email}")
-  public ResponseEntity<UserInformationProfile> getCustomerInformationByEmail(@PathVariable("email") String emailRequest) {
+  public ResponseEntity<CustomerInformation> getCustomerInformationByEmail(@PathVariable("email") String emailRequest) {
     CustomerInformation customerInformationData = customerInformationRepository.findByEmail(emailRequest);
-    UserInformationProfile userProfile=new UserInformationProfile();
-    userProfile.setName(customerInformationData.getName());
-    userProfile.setSurname(customerInformationData.getSurname());
-    userProfile.setTelephon(customerInformationData.getTelephon());
-    userProfile.setIsActive(customerInformationData.isActive());
-    userProfile.setWalletCoin(customerInformationData.getCustomerWallet().getCoin());
-    userProfile.setRentId(customerInformationData.getRent().getId());
-    List<CoinTransation> listTransation=customerInformationData.getCoinTransactions();
-    userProfile.setTransationNumber(listTransation.size());
     
-    if (userProfile.getName()!=null) {
-        return new ResponseEntity<>(userProfile, HttpStatus.OK);
+    
+    if (customerInformationData.getName()!=null) {
+        return new ResponseEntity<>(customerInformationData, HttpStatus.OK);
       } else {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
       }

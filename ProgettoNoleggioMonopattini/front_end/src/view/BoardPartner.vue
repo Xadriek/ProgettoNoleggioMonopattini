@@ -53,6 +53,10 @@
               Qui va la lista delle Batterie
               <b-card-footer>Lista Batterie</b-card-footer>
             </b-tab>
+            <div>{{currentPartner}}</div>
+            <div>{{batteries}}</div>
+            <div>{{swaps}}</div>
+            <div>{{coinTransation}}</div>
             <b-tab title="Aiuto">
               
               <b-card-text>
@@ -69,29 +73,38 @@
 <script>
 
 import AddHub from '../components/AddHub.vue';
-import UserService from "../services/user.service";
+import partnerInformationService from "../services/partnerInformation.service"
+
 
 export default {
   components: { AddHub },
   name: "partner",
+  computed: {
+    currentUser() {
+      return this.$store.state.auth.user;
+    }
+  },
   data() {
     return {
       show: true,
+      currentPartner:{},
+      batteries:[],
+      swaps:[],
+      coinTransation:[]
+
     };
   },
 
   mounted() {
-    UserService.getPartnerBoard().then(
-      (response) => {
-        this.content = response.data;
-      },
-      (error) => {
-        this.content =
-          (error.response && error.response.data) ||
-          error.message ||
-          error.toString();
-      }
-    );
-  },
+    partnerInformationService.getPartnerByEmail(this.currentUser.email)
+    .then(response=>{
+      console.log(response.data);
+      this.currentPartner=response.data;
+      this.batteries=this.currentPartner.hub.stokedBattery;
+      this.swaps=this.currentPartner.hub.swapCompleted;
+      this.coinTransation=this.currentPartner.coinTransation;
+      })
+  
+  }
 };
 </script>

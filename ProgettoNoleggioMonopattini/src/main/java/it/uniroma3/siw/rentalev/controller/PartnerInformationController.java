@@ -133,19 +133,11 @@ public class PartnerInformationController {
     }
   }
  @GetMapping("/partnerInformation/{email}")
- public ResponseEntity<UserInformationProfile> getPartnerInformationByEmail(@PathVariable("email") String emailRequest) {
+ public ResponseEntity<PartnerInformation> getPartnerInformationByEmail(@PathVariable("email") String emailRequest) {
    PartnerInformation partnerInformationData = partnerInformationRepository.findByEmail(emailRequest);
-   UserInformationProfile userProfile=new UserInformationProfile();
-   userProfile.setName(partnerInformationData.getName());
-   userProfile.setSurname(partnerInformationData.getpIva());
-   userProfile.setTelephon(partnerInformationData.getTelephon());
-   userProfile.setIsActive(partnerInformationData.isActive());
-   userProfile.setStartPartnership(partnerInformationData.getStartPartnership());
-   userProfile.setWalletCoin(partnerInformationData.getPartnerWallet().getCoin());
-   List<CoinTransation> listTransation=partnerInformationData.getCoinTransations();
-   userProfile.setTransationNumber(listTransation.size());
-   if (userProfile.getName()!=null) {
-       return new ResponseEntity<>(userProfile, HttpStatus.OK);
+   
+   if (partnerInformationData.getName()!=null) {
+       return new ResponseEntity<>(partnerInformationData, HttpStatus.OK);
      } else {
        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
      }

@@ -57,7 +57,7 @@
 <script>
 import customerInformationService from "../services/customerInformation.service"
 import partnerInformationService from "../services/partnerInformation.service"
-import UserProfile from '../model/userProfile';
+
 export default {
   name: 'Profile',
   computed: {
@@ -66,7 +66,7 @@ export default {
     }
   },
   data(){return{
-      userProfile: new UserProfile()
+      userProfile:{}
   }
   },
   mounted() {
