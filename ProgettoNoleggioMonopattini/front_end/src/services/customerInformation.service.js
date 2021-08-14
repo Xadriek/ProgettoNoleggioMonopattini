@@ -31,6 +31,8 @@ class CustomerInformationService{
       return axios.get(API_URL +'customerInformation'+ '/'+ email, {headers: authHeader() })
        
     }
+    updateCustomerInformation(customerInformation){
+      return axios.put(API_URL + 'customerInformations' + '/'+ customerInformation.id ,{customerInformations:customerInformation} ,{headers: authHeader() })}
 }
     
 

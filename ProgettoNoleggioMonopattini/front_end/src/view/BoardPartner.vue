@@ -90,7 +90,12 @@ export default {
       currentPartner:{},
       batteries:[],
       swaps:[],
-      coinTransation:[]
+      coinTransation:[],
+      center: {
+        lat:null,
+        lng:null
+      },
+      dismissedHub:false
 
     };
   },
@@ -103,8 +108,23 @@ export default {
       this.batteries=this.currentPartner.hub.stokedBattery;
       this.swaps=this.currentPartner.hub.swapCompleted;
       this.coinTransation=this.currentPartner.coinTransation;
-      })
-  
+      }),
+      this.locateGeoLocation();
+
+  },
+  updated(){
+    this.currentPartner.hub.coordinate=this.center;
+    partnerInformationService.updatePartnerInformation(this.currentPartner);
+  },
+  methods:{
+    locateGeoLocation: function () {
+      navigator.geolocation.getCurrentPosition((res) => {
+        this.center = {
+          lat: res.coords.latitude,
+          lng: res.coords.longitude,
+        };
+      });
+    },
   }
 };
 </script>

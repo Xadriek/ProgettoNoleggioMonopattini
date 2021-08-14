@@ -8,24 +8,9 @@ class HubService{
     getAllHubs() {
         return axios.get(API_URL + 'hubs', {headers: authHeader() })}
     
-    saveHub(partnerInformation,address,currentUserEmail,currentUsername) {
-            return axios.post(API_URL + 'partnerInformations',{
-              name: partnerInformation.name,
-              pIva: partnerInformation.pIva,
-              telephon: partnerInformation.telephon,
-              street:address.street,
-              cap:address.cap,
-              numberStreet:address.numberStreet,
-              municipality: address.municipality,
-              city:address.city,
-              country:address.country,
-              userEmail: currentUserEmail,
-              username:currentUsername
-              
-                
-            }, {headers: authHeader() })
-            ;
-        }
+    updateHub(hub,hubId){
+      return axios.put(API_URL + 'hubs' + '/'+ hubId ,{hub} ,{headers: authHeader() })}
+    
 }
 
 export default new HubService();

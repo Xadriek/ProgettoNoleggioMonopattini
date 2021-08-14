@@ -34,6 +34,7 @@ public class Hub {
 		this.swapCompleted = new ArrayList<Swap>();
 		this.stokedBattery = new ArrayList<Battery>();
 		this.dateOfDismiss=null;
+		this.coordinate=new Geocode(null,null);
 		
 	}
 

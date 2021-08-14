@@ -7,6 +7,10 @@ class CoinTransationService{
 
     getAllCoinTransations() {
         return axios.get(API_URL + 'coinTransations', {headers: authHeader() })}
+
+    updateCoinTransations(coinTransation){
+        return axios.put(API_URL + 'coinTransations' + '/'+ coinTransation.id ,{coinTransation:coinTransation} ,{headers: authHeader() })}
+         
 }
 
 export default new CoinTransationService();

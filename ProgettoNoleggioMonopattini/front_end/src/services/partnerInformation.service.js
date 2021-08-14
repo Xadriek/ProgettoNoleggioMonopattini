@@ -12,6 +12,9 @@ class PartnerInformationService{
         return axios.get(API_URL +'partnerInformation'+ '/'+ email, {headers: authHeader() })
              
           }
+    updatePartnerInformation(partnerInformation){
+        return axios.put(API_URL + 'partnerInformations' + '/'+ partnerInformation.id ,{partnerInformation:partnerInformation} ,{headers: authHeader() })}
+      
 }
 
 export default new PartnerInformationService();

@@ -88,6 +88,7 @@ public class PartnerInformationController {
     if (partnerInformationData.isPresent()) {
     	PartnerInformation _partnerInformation = partnerInformationData.get();
     	_partnerInformation.setAddress(partnerInformation.getAddress());
+    	_partnerInformation.setHub(partnerInformation.getHub());
     	_partnerInformation.setPartnerWallet(partnerInformation.getPartnerWallet());
     	_partnerInformation.setTelephon(partnerInformation.getTelephon());
     	_partnerInformation.setActive(partnerInformation.isActive());
