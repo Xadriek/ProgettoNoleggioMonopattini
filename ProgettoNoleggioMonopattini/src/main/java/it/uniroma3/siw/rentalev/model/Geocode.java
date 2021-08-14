@@ -14,13 +14,13 @@ public class Geocode {
 	
 	private Double latitude;
 	
-	private Double langitude;
+	private Double longitude;
 
-	public Geocode(Double latitude, Double langitude) {
+	public Geocode(Double latitude, Double longitude) {
 		super();
 
 		this.latitude = latitude;
-		this.langitude = langitude;
+		this.longitude = longitude;
 	}
 
 	public Geocode() {
@@ -43,12 +43,12 @@ public class Geocode {
 		this.latitude = latitude;
 	}
 
-	public Double getLangitude() {
-		return langitude;
+	public Double getLongitude() {
+		return longitude;
 	}
 
-	public void setLangitude(Double langitude) {
-		this.langitude = langitude;
+	public void setLongitude(Double longitude) {
+		this.longitude = longitude;
 	}
 	
 	

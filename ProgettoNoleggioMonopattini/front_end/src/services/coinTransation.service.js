@@ -10,7 +10,11 @@ class CoinTransationService{
 
     updateCoinTransations(coinTransation){
         return axios.put(API_URL + 'coinTransations' + '/'+ coinTransation.id ,{coinTransation:coinTransation} ,{headers: authHeader() })}
-         
+    
+    saveCoinTransaction(/*mettere parametri*/){
+        return axios.post(API_URL + 'coinTransactions',{/*mettere parametri*/},{headers: authHeader() })
+        }     
 }
+
 
 export default new CoinTransationService();

@@ -103,7 +103,7 @@
 import PartnerInformation from "../model/partnerInformation";
 import Address from "../model/address";
 
-import hubService from "../services/hub.service.js";
+import partnerInformationService from "../services/partnerInformation.service.js";
 
 export default {
   name: "AddHub",
@@ -129,7 +129,7 @@ export default {
   methods: {
     createHub() {
       
-      return hubService.saveHub(this.partnerInformation,this.address,this.currentUser.email,this.currentUser.username).then(
+      return partnerInformationService.savePartner(this.partnerInformation,this.address,this.currentUser.email,this.currentUser.username).then(
         response=> {
          console.log(response.data);
           

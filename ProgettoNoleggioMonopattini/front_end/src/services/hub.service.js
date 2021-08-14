@@ -9,8 +9,7 @@ class HubService{
         return axios.get(API_URL + 'hubs', {headers: authHeader() })}
     
     updateHub(hub,hubId){
-      return axios.put(API_URL + 'hubs' + '/'+ hubId ,{hub} ,{headers: authHeader() })}
-    
+            return axios.put(API_URL + 'hubs' + '/'+ hubId ,{hub} ,{headers: authHeader() })}
 }
 
 export default new HubService();

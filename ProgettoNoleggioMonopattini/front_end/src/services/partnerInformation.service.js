@@ -13,8 +13,26 @@ class PartnerInformationService{
              
           }
     updatePartnerInformation(partnerInformation){
-        return axios.put(API_URL + 'partnerInformations' + '/'+ partnerInformation.id ,{partnerInformation:partnerInformation} ,{headers: authHeader() })}
+        return axios.put(API_URL + 'partnerInformations' + '/'+ partnerInformation.id ,{partnerInformation} ,{headers: authHeader() })}
       
+    savePartner(partnerInformation,address,currentUserEmail,currentUsername) {
+            return axios.post(API_URL + 'partnerInformations',{
+              name: partnerInformation.name,
+              pIva: partnerInformation.pIva,
+              telephon: partnerInformation.telephon,
+              street:address.street,
+              cap:address.cap,
+              numberStreet:address.numberStreet,
+              municipality: address.municipality,
+              city:address.city,
+              country:address.country,
+              userEmail: currentUserEmail,
+              username:currentUsername
+              
+                
+            }, {headers: authHeader() })
+            ;
+        }
 }
 
 export default new PartnerInformationService();
