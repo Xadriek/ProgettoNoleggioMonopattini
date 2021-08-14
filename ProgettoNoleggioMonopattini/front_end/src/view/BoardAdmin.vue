@@ -101,14 +101,6 @@ export default {
   name: "admin",
   data() {
     return {
-
-      text: "This is some text.\nIt is read only and doesn't look like an input.",
-      listaswappoint: [
-        { distanza: 40, name: "Dickerson", indirizzo: "Via Roma" },
-        { distanza: 21, name: "Larsen", indirizzo: "Viale Marconi" },
-        { distanza: 89, name: "Geneva", indirizzo: "Piazza Verdi" },
-        { distanza: 38, name: "Jami", indirizzo: "Colosseo" },
-      ],
       customers:[],
       partners:[],
       rents:[],

@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <header class="jumbotron">
-      <h3>{{ content }}</h3>
+      
     </header>
     <div>
       <div class="mb-3">
@@ -37,28 +37,33 @@
 import AddRent from "../components/AddRent.vue";
 //import SwapPoint from "../components/SwapPoint.vue";
 //import SwapPoints from "../components/SwapPoints.vue";
-import UserService from "../services/user.service";
+import customerInformationService from "../services/customerInformation.service"
+
 
 export default {
   components: { AddRent },//, SwapPoint, SwapPoints },
   name: "customer",
+  computed: {
+    currentUser() {
+      return this.$store.state.auth.user;
+    }
+  },
   data() {
     return {
-      content: "",
+      currentCustomer:{},
+      coinTransations:[],
+      rent:[]
     };
   },
   mounted() {
-    UserService.getCustomerBoard().then(
-      (response) => {
-        this.content = response.data;
-      },
-      (error) => {
-        this.content =
-          (error.response && error.response.data) ||
-          error.message ||
-          error.toString();
+   customerInformationService.getCustomerByEmail(this.currentUser.email)
+    .then(response=>{
+      console.log(response.data);
+      this.currentCustomer=response.data
+      this.coinTransations=this.currentCustomer.coinTransations;
+      this.rent=this.currentCustomer.rent;
       }
-    );
+    )
   },
 
   
