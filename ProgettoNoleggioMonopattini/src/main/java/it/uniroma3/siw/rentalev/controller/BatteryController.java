@@ -72,18 +72,21 @@ public class BatteryController {
   @PutMapping("/batteries/{id}")
   public ResponseEntity<Battery> updateBattery(@PathVariable("id") long id, @RequestBody Battery battery) {
     Optional<Battery> batteryData = batteryRepository.findById(id);
-    if ((batteryData.isPresent()) && (battery.getHub()!=null)) {
-    	Battery _battery = batteryData.get();
+    Battery _battery = batteryData.get();
+    
+    if ((batteryData.isPresent()) && (battery.getHub()!=null) && (_battery.getHub()!=battery.getHub() && (_battery.getScooter()!=battery.getScooter()))) {
     	_battery.setHub(null);
     	_battery.setScooter(battery.getScooter());
     	_battery.setState(battery.getState());
       return new ResponseEntity<>(batteryRepository.save(_battery), HttpStatus.OK);
     } else 
-    	if (batteryData.isPresent()&& (battery.getScooter()!=null)) {
-    	Battery _battery = batteryData.get();
+    	if (batteryData.isPresent()&& ((battery.getScooter()!=null) && (_battery.getHub()!=battery.getHub()) && (_battery.getScooter()!=battery.getScooter()))) {
     	_battery.setHub(battery.getHub());
     	_battery.setScooter(null);
     	_battery.setState(battery.getState());
+    	if(battery.getDateOfDismiss()!=null) {
+    		_battery.setDateOfDismiss(new Date());
+    	}
       return new ResponseEntity<>(batteryRepository.save(_battery), HttpStatus.OK);
     }else{
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);

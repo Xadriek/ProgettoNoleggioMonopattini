@@ -1,7 +1,7 @@
 package it.uniroma3.siw.rentalev.controller;
 
 import java.util.ArrayList;
-
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -83,10 +83,12 @@ public class RentController {
 
 		if (rentData.isPresent()) {
 			Rent _rent = rentData.get();
-			_rent.setFinishRent(rent.getFinishRent());
-			_rent.setScooter(rent.getScooter());
+			if(rent.getFinishRent()!=null) {
+			_rent.setFinishRent(new Date());
+			}
+			_rent.setCustomer(rent.getCustomer());
 			_rent.setOngoing(rent.getOngoing());
-			_rent.setContract(rent.getContract());
+			
 			return new ResponseEntity<>(rentRepository.save(_rent), HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);

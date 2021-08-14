@@ -30,18 +30,24 @@ public class CoinTransation {
 	@Column(nullable=false)
 	private int coin;
 	@OneToOne
-	private Swap swap;
+	private Swap entrySwap;
+	@OneToOne
+	private Swap exitSwap;
+	
+	private Boolean isComplete;
 	
 	
 	public CoinTransation(CustomerInformation fromCustomer, PartnerInformation toPartner,
-			 int coin, Swap swap) {
+			 int coin, Swap entrySwap) {
 		super();
 
 		this.fromCustomer = fromCustomer;
 		this.toPartner = toPartner;
 		this.logTransition = new Date();
 		this.coin = coin;
-		this.swap = swap;
+		this.entrySwap = entrySwap;
+		this.exitSwap= null;
+		this.isComplete=false;
 	}
 	
 	
@@ -81,11 +87,27 @@ public class CoinTransation {
 	public void setCoin(int coin) {
 		this.coin = coin;
 	}
-	public Swap getSwap() {
-		return swap;
+	public Swap getEntrySwap() {
+		return entrySwap;
 	}
-	public void setSwap(Swap swap) {
-		this.swap = swap;
+	public void setEntrySwap(Swap entrySwap) {
+		this.entrySwap = entrySwap;
+	}
+	public Swap getExitSwap() {
+		return exitSwap;
+	}
+	public void setExitSwap(Swap exitSwap) {
+		this.exitSwap = exitSwap;
+	}
+
+
+	public Boolean getIsComplete() {
+		return isComplete;
+	}
+
+
+	public void setIsComplete(Boolean isComplete) {
+		this.isComplete = isComplete;
 	}
 	
 

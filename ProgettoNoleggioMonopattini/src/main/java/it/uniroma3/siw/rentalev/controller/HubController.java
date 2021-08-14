@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
 
-
+import it.uniroma3.siw.rentalev.model.Battery;
 import it.uniroma3.siw.rentalev.model.Hub;
-import it.uniroma3.siw.rentalev.model.PartnerInformation;
+
 
 import it.uniroma3.siw.rentalev.repository.HubRepository;
 
@@ -80,10 +80,28 @@ public class HubController {
   @PutMapping("/hubs/{id}")
   public ResponseEntity<Hub> updateHub(@PathVariable("id") long id, @RequestBody Hub hub) {
     Optional<Hub> hubData = hubRepository.findById(id);
-
+    Hub _hub = hubData.get();
+    
     if (hubData.isPresent()) {
-    	Hub _hub = hubData.get();
+    	
+    	_hub.setCoordinate(hub.getCoordinate());
+    	
+    if(_hub.getStokedBattery().isEmpty()) {
+    	
+    	_hub.getStokedBattery().add(new Battery(_hub,null));
+    	_hub.getStokedBattery().add(new Battery(_hub,null));
+    	_hub.getStokedBattery().add(new Battery(_hub,null));
+    	_hub.getStokedBattery().add(new Battery(_hub,null));
+    	_hub.getStokedBattery().add(new Battery(_hub,null));
+    	_hub.getStokedBattery().add(new Battery(_hub,null));
+    }
+    
+    if(hub.getDateOfDismiss()!=null) {
+    
     	_hub.setDateOfDismiss(new Date());
+    	_hub.getStokedBattery().add(new Battery(_hub,null));
+    }
+    
       return new ResponseEntity<>(hubRepository.save(_hub), HttpStatus.OK);
     } else {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);

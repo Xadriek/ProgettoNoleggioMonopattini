@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -33,9 +33,9 @@ public class Hub {
 		this.dateOfAssembly = new Date();
 		this.swapCompleted = new ArrayList<Swap>();
 		this.stokedBattery = new ArrayList<Battery>();
-		this.initStock();
+		this.dateOfDismiss=null;
+		
 	}
-
 
 
 
@@ -52,6 +52,10 @@ public class Hub {
 	
 	@OneToMany(mappedBy="hub")
 	private List<Battery> stokedBattery;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	private Geocode coordinate;
+	
 	
 	public Long getId() {
 		return id;
@@ -94,6 +98,12 @@ public class Hub {
 		new Battery(this,null);
 		new Battery(this,null);
 		new Battery(this,null);
+	}
+	public Geocode getCoordinate() {
+		return coordinate;
+	}
+	public void setCoordinate(Geocode coordinate) {
+		this.coordinate = coordinate;
 	}
 	
 	

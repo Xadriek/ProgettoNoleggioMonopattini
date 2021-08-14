@@ -20,12 +20,12 @@
         
         <b-collapse id="cercaswappoint">
           <b-card title="Cerca Swap Point">
-           
+           <swap-point />
           </b-card>
         </b-collapse>
         <b-collapse id="listaswappoint">
           <b-card title="Lista Swap Point">
-           
+           <swap-points />
           </b-card>
         </b-collapse>
       </div>
@@ -35,13 +35,13 @@
 
 <script>
 import AddRent from "../components/AddRent.vue";
-//import SwapPoint from "../components/SwapPoint.vue";
-//import SwapPoints from "../components/SwapPoints.vue";
+import SwapPoint from "../components/SwapPoint.vue";
+import SwapPoints from "../components/SwapPoints.vue";
 import customerInformationService from "../services/customerInformation.service"
 
 
 export default {
-  components: { AddRent },//, SwapPoint, SwapPoints },
+  components: { AddRent, SwapPoint, SwapPoints },
   name: "customer",
   computed: {
     currentUser() {

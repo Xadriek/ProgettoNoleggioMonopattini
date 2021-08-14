@@ -20,11 +20,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.uniroma3.siw.rentalev.model.Address;
-import it.uniroma3.siw.rentalev.model.CoinTransation;
 import it.uniroma3.siw.rentalev.model.PartnerInformation;
 import it.uniroma3.siw.rentalev.payload.request.HubRequest;
-import it.uniroma3.siw.rentalev.payload.response.UserInformationProfile;
-
 import it.uniroma3.siw.rentalev.repository.PartnerInformationRepository;
 
 
@@ -91,8 +88,14 @@ public class PartnerInformationController {
     if (partnerInformationData.isPresent()) {
     	PartnerInformation _partnerInformation = partnerInformationData.get();
     	_partnerInformation.setAddress(partnerInformation.getAddress());
+    	_partnerInformation.setPartnerWallet(partnerInformation.getPartnerWallet());
+    	_partnerInformation.setTelephon(partnerInformation.getTelephon());
+    	_partnerInformation.setActive(partnerInformation.isActive());
+    	if(partnerInformation.getClosurePartnership()!=null) {
+    		
     	_partnerInformation.setClosurePartnership(partnerInformation.getClosurePartnership());
-      return new ResponseEntity<>(partnerInformationRepository.save(_partnerInformation), HttpStatus.OK);
+    	}
+    	return new ResponseEntity<>(partnerInformationRepository.save(_partnerInformation), HttpStatus.OK);
     } else {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }

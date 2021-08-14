@@ -1,7 +1,7 @@
 package it.uniroma3.siw.rentalev.controller;
 
 import java.util.ArrayList;
-
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -79,8 +79,10 @@ public class ScooterController {
     if (scooterData.isPresent()) {
     	Scooter _scooter = scooterData.get();
     	_scooter.setBattery(scooter.getBattery());
-    	_scooter.setDateOfDismiss(scooter.getDateOfDismiss());
-    	_scooter.setSwapList(scooter.getSwapList());
+    	if(scooter.getDateOfDismiss()!=null) {
+    	_scooter.setDateOfDismiss(new Date());
+    	_scooter.getBattery().setDateOfDismiss(new Date());
+    	}
       return new ResponseEntity<>(scooterRepository.save(_scooter), HttpStatus.OK);
     } else {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);

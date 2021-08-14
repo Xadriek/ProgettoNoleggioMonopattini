@@ -21,10 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import it.uniroma3.siw.rentalev.model.Address;
-import it.uniroma3.siw.rentalev.model.CoinTransation;
 import it.uniroma3.siw.rentalev.model.CustomerInformation;
 import it.uniroma3.siw.rentalev.payload.request.RentRequest;
-import it.uniroma3.siw.rentalev.payload.response.UserInformationProfile;
 import it.uniroma3.siw.rentalev.repository.CustomerInformationRepository;
 
 
@@ -93,7 +91,8 @@ public class CustomerInformationController {
     	_customerInformation.setAddress(customerInformation.getAddress());
     	_customerInformation.setActive(customerInformation.isActive());
     	_customerInformation.setTelephon(customerInformation.getTelephon());
-
+    	_customerInformation.setCustomerWallet(customerInformation.getCustomerWallet());
+    	
       return new ResponseEntity<>(customerInformationRepository.save(_customerInformation), HttpStatus.OK);
     } else {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
