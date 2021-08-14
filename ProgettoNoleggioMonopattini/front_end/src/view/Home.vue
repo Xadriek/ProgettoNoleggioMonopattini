@@ -57,7 +57,7 @@
       <b-container fluid class="text-center">
         <h3 class="display-2">Noleggia un Monopattino</h3>
         
-         IL MIGLIOR MODO DI MUOVERSI IN CITTÀ
+         IL MIGLIOR MODO DI MUOVERSI IN CITTÀ<br>
        
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
             eros felis, tincidunt a tincidunt eget, convallis vel est. Ut
@@ -85,7 +85,7 @@
                   the bulk of the card's content.
                 </b-card-text>
 
-                <b-button href="#" variant="dark">Go somewhere</b-button>
+                <b-button href="/infobatteries" variant="dark">Go somewhere</b-button>
               </b-card>
             </div>
           </b-col>
