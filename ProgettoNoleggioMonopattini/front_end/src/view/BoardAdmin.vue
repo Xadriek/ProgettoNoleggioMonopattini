@@ -57,7 +57,7 @@
                 <b-table
                   striped
                   hover
-                  :items="listaswappoint"
+                  :items="partners"
                   
                 ></b-table>
               </b-tab>
@@ -67,7 +67,7 @@
                 <b-table
                   striped
                   hover
-                  :items="listaswappoint"
+                  :items="rents"
                   
                 ></b-table>
               </b-tab>
@@ -92,7 +92,7 @@
 <script>
 import CustomerInformationService from '../services/customerInformation.service';
 import PartnerInformationService from '../services/partnerInformation.service';
-
+import RentService from '../services/rent.service';
 import CoinTransationService from '../services/coinTransation.service';
 
 
@@ -111,6 +111,7 @@ export default {
       ],
       customers:[],
       partners:[],
+      rents:[],
       coinTransations:[],
       numHubActive:0,
       countTransation:0,
@@ -125,7 +126,7 @@ export default {
     this.allPartners();
     this.allCounters();
     this.allCoinTransation();
-    
+    this.allRents();
   },
   methods:{
     rentOutgoing(){
@@ -181,7 +182,21 @@ export default {
       }
     );
     },
-  
+   allRents(){
+    console.log('rents');
+    RentService.getAllRents().then(
+      (response)=>{
+        console.log(response.data);
+        this.rents=response.data;
+      },
+      (error) => {
+        this.content =
+          (error.response && error.response.data) ||
+          error.message ||
+          error.toString();
+      }
+    );
+    },
   allPartners(){
     console.log('partners');
     PartnerInformationService.getAllPartnerInformations().then(

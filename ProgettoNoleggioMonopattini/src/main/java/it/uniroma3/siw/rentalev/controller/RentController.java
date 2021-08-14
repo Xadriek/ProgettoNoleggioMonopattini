@@ -15,15 +15,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
-
-
 import it.uniroma3.siw.rentalev.model.Rent;
-
-
 import it.uniroma3.siw.rentalev.repository.RentRepository;
 
 
@@ -33,103 +28,105 @@ import it.uniroma3.siw.rentalev.repository.RentRepository;
 @RequestMapping("/api/rest")
 public class RentController {
 
-  @Autowired
-  RentRepository rentRepository;
-  
+	@Autowired
+	RentRepository rentRepository;
 
 
-  @GetMapping("/rents")
-  public ResponseEntity<List<Rent>> getAllRents() {
-    try {
-      List<Rent> rents = new ArrayList<Rent>();
 
-      
-     rentRepository.findAll().forEach(rents::add);
-   
+	@GetMapping("/rents")
+	public ResponseEntity<List<Rent>> getAllRents(@RequestParam(required = false) Boolean ongoing) {
+		try {
+			List<Rent> rents = new ArrayList<Rent>();
 
-      if (rents.isEmpty()) {
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-      }
+			if(ongoing== null) {
+				rentRepository.findAll().forEach(rents::add);
+			}else if(ongoing) {
+				rentRepository.findByOngoing(ongoing).forEach(rents::add);
+			}
 
-      return new ResponseEntity<>(rents, HttpStatus.OK);
-    } catch (Exception e) {
-      return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-  }
+			if (rents.isEmpty()) {
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			}
 
-  @GetMapping("/rents/{id}")
-  public ResponseEntity<Rent> getRentById(@PathVariable("id") long id) {
-    Optional<Rent> rentData = rentRepository.findById(id);
+			return new ResponseEntity<>(rents, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 
-    if (rentData.isPresent()) {
-      return new ResponseEntity<>(rentData.get(), HttpStatus.OK);
-    } else {
-      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-  }
+	@GetMapping("/rents/{id}")
+	public ResponseEntity<Rent> getRentById(@PathVariable("id") long id) {
+		Optional<Rent> rentData = rentRepository.findById(id);
 
- /* @PostMapping("/rents")
+		if (rentData.isPresent()) {
+			return new ResponseEntity<>(rentData.get(), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+
+	/* @PostMapping("/rents")
   public ResponseEntity<Rent> createRent(@RequestBody RentRequest rentRequest) {
     try {
     	Address _address= new Address(rentRequest.getStreet(), rentRequest.getCap(), rentRequest.getNumberStreet(), rentRequest.getMunicipality(), rentRequest.getCity(), rentRequest.getCountry());
     	CustomerInformation _customer=new CustomerInformation(rentRequest.getName(), rentRequest.getSurname(), rentRequest.getTelephon(),_address, rentRequest.getUserEmail(),rentRequest.getUsername());
-    	
+
       Rent _rent = rentRepository.save(new Rent(_customer,rentRequest.getPlan()));
       return new ResponseEntity<>(_rent, HttpStatus.CREATED);
     } catch (Exception e) {
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }*/
-  @PutMapping("/rents/{id}")
-  public ResponseEntity<Rent> updateRent(@PathVariable("id") long id, @RequestBody Rent rent) {
-    Optional<Rent> rentData = rentRepository.findById(id);
+	@PutMapping("/rents/{id}")
+	public ResponseEntity<Rent> updateRent(@PathVariable("id") long id, @RequestBody Rent rent) {
+		Optional<Rent> rentData = rentRepository.findById(id);
 
-    if (rentData.isPresent()) {
-    	Rent _rent = rentData.get();
-    	_rent.setFinishRent(rent.getFinishRent());
-    	_rent.setScooter(rent.getScooter());
-    	_rent.setOngoing(rent.getOngoing());
-    	_rent.setContract(rent.getContract());
-      return new ResponseEntity<>(rentRepository.save(_rent), HttpStatus.OK);
-    } else {
-      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-  }
+		if (rentData.isPresent()) {
+			Rent _rent = rentData.get();
+			_rent.setFinishRent(rent.getFinishRent());
+			_rent.setScooter(rent.getScooter());
+			_rent.setOngoing(rent.getOngoing());
+			_rent.setContract(rent.getContract());
+			return new ResponseEntity<>(rentRepository.save(_rent), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
 
-  @DeleteMapping("/rents/{id}")
-  public ResponseEntity<HttpStatus> deleteRent(@PathVariable("id") long id) {
-    try {
-    	rentRepository.deleteById(id);
-      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    } catch (Exception e) {
-      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-  }
+	@DeleteMapping("/rents/{id}")
+	public ResponseEntity<HttpStatus> deleteRent(@PathVariable("id") long id) {
+		try {
+			rentRepository.deleteById(id);
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 
-  @DeleteMapping("/rents")
-  public ResponseEntity<HttpStatus> deleteAllRents() {
-    try {
-    	rentRepository.deleteAll();
-      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    } catch (Exception e) {
-      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+	@DeleteMapping("/rents")
+	public ResponseEntity<HttpStatus> deleteAllRents() {
+		try {
+			rentRepository.deleteAll();
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 
-  }
+	}
 
-  @GetMapping("/rents/ongoing")
-  public ResponseEntity<List<Rent>> findByOngoing() {
-    try {
-      List<Rent> rent = rentRepository.findByOngoing(true);
+	@GetMapping("/rents/ongoing")
+	public ResponseEntity<List<Rent>> findByOngoing() {
+		try {
+			List<Rent> rent = rentRepository.findByOngoing(true);
 
-      if (rent.isEmpty()) {
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-      }
-      return new ResponseEntity<>(rent, HttpStatus.OK);
-    } catch (Exception e) {
-      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-  }
-  
+			if (rent.isEmpty()) {
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			}
+			return new ResponseEntity<>(rent, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
 
 }
