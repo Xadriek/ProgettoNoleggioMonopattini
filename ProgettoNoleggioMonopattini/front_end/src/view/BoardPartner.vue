@@ -74,7 +74,8 @@
 
 import AddHub from '../components/AddHub.vue';
 import partnerInformationService from "../services/partnerInformation.service"
-import geocodeService from "../services/geocode.service"
+
+
 
 
 export default {
@@ -93,7 +94,6 @@ export default {
       swaps:[],
       coinTransation:[],
       geocode:{
-        id:null,
         latitude:null,
         longitude:null
       }
@@ -107,28 +107,9 @@ export default {
     .then(response=>{
       console.log(response.data);
       this.currentPartner=response.data;
-      this.geocode.id=this.currentPartner.hub.geocode.id;
-      this.batteries=this.currentPartner.hub.stokedBattery;
-      this.swaps=this.currentPartner.hub.swapCompleted;
-      this.coinTransation=this.currentPartner.coinTransation;
-      this.locateGeoLocation();
-      console.log(this.currentPartner.hub.coordinate);
-      alert();
-      geocodeService.updateGeocode(this.geocode);
-      this.currentPartner.hub.coordinate=this.geocode;
-      partnerInformationService.updatePartnerInformation(this.currentPartner);
+      
       })
-  },
-    
-  methods:{
-    locateGeoLocation: function () {
-      navigator.geolocation.getCurrentPosition((res) => {
-        this.geocode.cordinate.latitude=res.coords.latitude;
-        this.geocode.cordinate.longitude=res.coords.longitude;
-        
-        
-      });
-    },
+      
   }
 };
 </script>

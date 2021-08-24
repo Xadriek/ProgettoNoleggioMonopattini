@@ -123,13 +123,21 @@ export default {
       ),
       address: new Address("", "", "", "", "",""),
       show: true,
-      
+      geocode: {
+        lat: 44.90213186634812,
+        lng: 1.499183107482672,
+      },
     };
   },
+   mounted() {
+    this.locateGeoLocation();
+   },
   methods: {
     createHub() {
-      
-      return partnerInformationService.savePartner(this.partnerInformation,this.address,this.currentUser.email,this.currentUser.username).then(
+      console.log(this.geocode);
+      alert(this.geocode.lat);
+      alert(this.geocode.lng);
+      return partnerInformationService.savePartner(this.partnerInformation,this.address,this.currentUser.email,this.currentUser.username,this.geocode).then(
         response=> {
          console.log(response.data);
           
@@ -142,6 +150,14 @@ export default {
       );
       
    },
+   locateGeoLocation: function () {
+      navigator.geolocation.getCurrentPosition((res) => {
+        this.geocode = {
+          lat: res.coords.latitude,
+          lng: res.coords.longitude,
+        };
+      });
+    },
     
     
     

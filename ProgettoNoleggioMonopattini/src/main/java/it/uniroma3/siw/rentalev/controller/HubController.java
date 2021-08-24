@@ -88,18 +88,18 @@ public class HubController {
     	
     if(_hub.getStokedBattery().isEmpty()) {
     	
-    	_hub.getStokedBattery().add(new Battery(_hub,null));
-    	_hub.getStokedBattery().add(new Battery(_hub,null));
-    	_hub.getStokedBattery().add(new Battery(_hub,null));
-    	_hub.getStokedBattery().add(new Battery(_hub,null));
-    	_hub.getStokedBattery().add(new Battery(_hub,null));
-    	_hub.getStokedBattery().add(new Battery(_hub,null));
+    	_hub.getStokedBattery().add(new Battery());
+    	_hub.getStokedBattery().add(new Battery());
+    	_hub.getStokedBattery().add(new Battery());
+    	_hub.getStokedBattery().add(new Battery());
+    	_hub.getStokedBattery().add(new Battery());
+    	_hub.getStokedBattery().add(new Battery());
     }
     
     if(hub.getDateOfDismiss()!=null) {
     
     	_hub.setDateOfDismiss(new Date());
-    	_hub.getStokedBattery().add(new Battery(_hub,null));
+    	_hub.getStokedBattery().add(new Battery());
     }
     
       return new ResponseEntity<>(hubRepository.save(_hub), HttpStatus.OK);

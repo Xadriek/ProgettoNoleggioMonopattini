@@ -25,6 +25,12 @@ public class HubRequest {
 	private String userEmail;
 	
 	private String username;
+	
+	private String latitude;
+	
+	private String longitude;
+	
+	
 
 	public String getName() {
 		return name;
@@ -113,6 +119,24 @@ public class HubRequest {
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
+	public String getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
+	}
+
+	public String getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
+	}
+
+	
 	
 	
 }

@@ -1,5 +1,6 @@
 package it.uniroma3.siw.rentalev.controller;
 
+
 import java.util.ArrayList;
 
 import java.util.List;
@@ -20,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.uniroma3.siw.rentalev.model.Address;
+import it.uniroma3.siw.rentalev.model.Geocode;
+import it.uniroma3.siw.rentalev.model.Hub;
 import it.uniroma3.siw.rentalev.model.PartnerInformation;
 import it.uniroma3.siw.rentalev.payload.request.HubRequest;
 import it.uniroma3.siw.rentalev.repository.PartnerInformationRepository;
@@ -73,8 +76,12 @@ public class PartnerInformationController {
   @PostMapping("/partnerInformations")
   public ResponseEntity<PartnerInformation> createPartnerInformation(@RequestBody HubRequest hubRequest) {
     try {
-      Address _address= new Address(hubRequest.getStreet(), hubRequest.getCap(), hubRequest.getNumberStreet(), hubRequest.getMunicipality(), hubRequest.getCity(), hubRequest.getCountry());
-      PartnerInformation _partnerInformation = new PartnerInformation( hubRequest.getName(), hubRequest.getpIva(),hubRequest.getTelephon(),_address,hubRequest.getUserEmail(),hubRequest.getUsername());
+      
+    Address _address= new Address(hubRequest.getStreet(), hubRequest.getCap(), hubRequest.getNumberStreet(), hubRequest.getMunicipality(), hubRequest.getCity(), hubRequest.getCountry());
+    Geocode _geocode=new Geocode(hubRequest.getLatitude(),hubRequest.getLongitude());
+    Hub _hub= new Hub(_geocode);
+    
+    PartnerInformation _partnerInformation = new PartnerInformation( hubRequest.getName(), hubRequest.getpIva(),hubRequest.getTelephon(),_address,_hub,hubRequest.getUserEmail(),hubRequest.getUsername());
       PartnerInformation partnerInformation =partnerInformationRepository.save(_partnerInformation);
       return new ResponseEntity<>(partnerInformation, HttpStatus.CREATED);
     } catch (Exception e) {

@@ -29,8 +29,7 @@ public class Rent {
 	@Column(unique=true)
 	
 	private Double numberPolicy;
-	@OneToOne
-	private CustomerInformation customerInformation;
+	
 	@OneToOne(cascade = CascadeType.PERSIST)
 	private Scooter scooter;
 	
@@ -38,15 +37,7 @@ public class Rent {
 	@OneToOne(cascade = CascadeType.ALL)
 	private Contract contract;
 	
-	public Rent(CustomerInformation customerInformation) {
-		super();
-		this.customerInformation=customerInformation;
-		this.startRent = new Date();
-		this.scooter = new Scooter();
-		this.ongoing = false;
-		this.contract =new Contract(null);
-		this.numberPolicy=initNP();
-	}
+
 	
 	
 
@@ -98,13 +89,7 @@ public class Rent {
 		this.numberPolicy = numberPolicy;
 	}
 
-	public CustomerInformation getCustomer() {
-		return customerInformation;
-	}
-
-	public void setCustomer(CustomerInformation customer) {
-		this.customerInformation = customer;
-	}
+	
 
 	public Scooter getScooter() {
 		return scooter;

@@ -65,7 +65,7 @@ public class PartnerInformation implements UserInformation {
 	
 
 
-	public PartnerInformation( String name, String pIva,Long telephon, Address address, 
+	public PartnerInformation( String name, String pIva,Long telephon, Address address,Hub hub, 
 			 String email, String username
 			) {
 		super();
@@ -75,7 +75,7 @@ public class PartnerInformation implements UserInformation {
 		this.telephon = telephon;
 		this.address = address;
 		this.partnerWallet = new Wallet(0);
-		this.hub=new Hub();
+		this.hub=hub;
 		this.startPartnership = new Date();
 		this.isActive = false;
 		this.coinTransations = new ArrayList<CoinTransation>();
@@ -88,7 +88,6 @@ public class PartnerInformation implements UserInformation {
 	public PartnerInformation() {
 		super();
 		this.partnerWallet = new Wallet(0);
-		this.hub=new Hub();
 		this.startPartnership = new Date();
 		this.isActive = false;
 		this.coinTransations = new ArrayList<CoinTransation>();

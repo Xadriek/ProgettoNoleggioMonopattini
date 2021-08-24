@@ -12,11 +12,11 @@ public class Geocode {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private Double latitude;
+	private String latitude;
 	
-	private Double longitude;
+	private String longitude;
 
-	public Geocode(Double latitude, Double longitude) {
+	public Geocode(String latitude, String longitude) {
 		super();
 
 		this.latitude = latitude;
@@ -35,19 +35,19 @@ public class Geocode {
 		this.id = id;
 	}
 
-	public Double getLatitude() {
+	public String getLatitude() {
 		return latitude;
 	}
 
-	public void setLatitude(Double latitude) {
+	public void setLatitude(String latitude) {
 		this.latitude = latitude;
 	}
 
-	public Double getLongitude() {
+	public String getLongitude() {
 		return longitude;
 	}
 
-	public void setLongitude(Double longitude) {
+	public void setLongitude(String longitude) {
 		this.longitude = longitude;
 	}
 	

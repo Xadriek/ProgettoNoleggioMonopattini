@@ -16,7 +16,7 @@ import javax.persistence.Id;
 
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+
 
 
 
@@ -40,8 +40,7 @@ public class Battery {
 	private List<Swap> swapList;
 	@ManyToOne
 	private Hub hub;
-	@OneToOne
-	private Scooter scooter;
+	
 	
 	@Enumerated(EnumType.STRING)
 	@Column(length = 20)
@@ -49,18 +48,7 @@ public class Battery {
 	
 	
 
-	public Battery(Hub hub,Scooter scooter) {
-		super();
-		this.hub=hub;
-		this.scooter=scooter;
-		this.voltage = 48;
-		this.capacity = 13;
-		this.dateOfBirth = new Date();
-		this.swapList = new ArrayList<>();
-	
-		this.state = EBattery.CARICA;
-	
-	}
+
 	
 
 	
@@ -72,6 +60,8 @@ public class Battery {
 		this.capacity = 13;
 		this.dateOfBirth = new Date();
 		this.swapList = new ArrayList<>();
+		
+		this.state = EBattery.CARICA;
 		
 	}
 
@@ -127,21 +117,7 @@ public class Battery {
 		this.swapList = swapList;
 	}
 
-	public Hub getHub() {
-		return hub;
-	}
-
-	public void setHub(Hub hub) {
-		this.hub = hub;
-	}
-
-	public Scooter getScooter() {
-		return scooter;
-	}
-
-	public void setScooter(Scooter scooter) {
-		this.scooter = scooter;
-	}
+	
 
 	public EBattery getState() {
 		return state;

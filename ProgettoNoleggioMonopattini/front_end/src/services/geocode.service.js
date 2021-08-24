@@ -7,7 +7,7 @@ class GeocodeService{
 
     getAllGeocodes() {
         return axios.get(API_URL + 'geocodes', {headers: authHeader() })}
-    updateGeocode(geocode){
+    updatePosition(geocode){
         return axios.put(API_URL + 'geocodes' + '/'+ geocode.id ,{geocode} ,{headers: authHeader() })}
 }
 

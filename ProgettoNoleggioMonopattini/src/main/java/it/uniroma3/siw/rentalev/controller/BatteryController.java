@@ -69,7 +69,7 @@ public class BatteryController {
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
-  @PutMapping("/batteries/{id}")
+ /* @PutMapping("/batteries/{id}")
   public ResponseEntity<Battery> updateBattery(@PathVariable("id") long id, @RequestBody Battery battery) {
     Optional<Battery> batteryData = batteryRepository.findById(id);
     Battery _battery = batteryData.get();
@@ -91,7 +91,7 @@ public class BatteryController {
     }else{
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-  }
+  }*/
 
   @DeleteMapping("/batteries/{id}")
   public ResponseEntity<HttpStatus> deleteBattery(@PathVariable("id") long id) {

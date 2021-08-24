@@ -86,7 +86,7 @@ public class RentController {
 			if(rent.getFinishRent()!=null) {
 			_rent.setFinishRent(new Date());
 			}
-			_rent.setCustomer(rent.getCustomer());
+
 			_rent.setOngoing(rent.getOngoing());
 			
 			return new ResponseEntity<>(rentRepository.save(_rent), HttpStatus.OK);

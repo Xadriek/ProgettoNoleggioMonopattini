@@ -23,7 +23,15 @@ public class Hub {
 	
 //INSERIRE GEOCODE
 	
-
+	public Hub(Geocode geocode) {
+		super();
+		this.dateOfAssembly = new Date();
+		this.swapCompleted = new ArrayList<Swap>();
+		this.stokedBattery = new ArrayList<Battery>();
+		this.dateOfDismiss=null;
+		this.coordinate=geocode;
+		
+	}
 	
 
 
@@ -34,7 +42,7 @@ public class Hub {
 		this.swapCompleted = new ArrayList<Swap>();
 		this.stokedBattery = new ArrayList<Battery>();
 		this.dateOfDismiss=null;
-		this.coordinate=new Geocode(null,null);
+		
 		
 	}
 
@@ -90,16 +98,7 @@ public class Hub {
 		this.stokedBattery = stokedBattery;
 	}
 	
-	public void initStock(){
-		
-		new Battery(this,null);
-		new Battery(this,null);
-		new Battery(this,null);
-		new Battery(this,null);
-		new Battery(this,null);
-		new Battery(this,null);
-		new Battery(this,null);
-	}
+	
 	public Geocode getCoordinate() {
 		return coordinate;
 	}

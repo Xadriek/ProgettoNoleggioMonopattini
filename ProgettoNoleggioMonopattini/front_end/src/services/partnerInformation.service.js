@@ -15,7 +15,7 @@ class PartnerInformationService{
     updatePartnerInformation(partnerInformation){
         return axios.put(API_URL + 'partnerInformations' + '/'+ partnerInformation.id ,{partnerInformation} ,{headers: authHeader() })}
       
-    savePartner(partnerInformation,address,currentUserEmail,currentUsername) {
+    savePartner(partnerInformation,address,currentUserEmail,currentUsername,geocode) {
             return axios.post(API_URL + 'partnerInformations',{
               name: partnerInformation.name,
               pIva: partnerInformation.pIva,
@@ -27,8 +27,9 @@ class PartnerInformationService{
               city:address.city,
               country:address.country,
               userEmail: currentUserEmail,
-              username:currentUsername
-              
+              username:currentUsername,
+              latitude:geocode.lat,
+              longitude:geocode.lng
                 
             }, {headers: authHeader() })
             ;
