@@ -14,43 +14,28 @@
       >
         <!-- Text slides with image -->
         <b-carousel-slide
-          caption="First slide"
-          text="Nulla vitae elit libero, a pharetra augue mollis interdum."
-          img-src="https://picsum.photos/1024/350/?image=52"
+          caption="Noleggio a Roma"
+          text="A Roma i monopattini in sharing possono circolare nelle Zone 30, con limite a 30 chilometri orari, e nelle aree pedonali, tranne dove espressamente vietato."
+          img-src="images\52-1024x350.png"
         ></b-carousel-slide>
 
         <!-- Slides with custom text -->
-        <b-carousel-slide img-src="https://picsum.photos/1024/350/?image=54">
-          <h1>Hello world!</h1>
+        <b-carousel-slide 
+        caption="Sostituzione Batterie"
+        text="Nei punti forniti da questa applicazione potete trovare tutte le informazioni sui nostri Partner"
+        img-src="images\51-1024x350.png">
+          
         </b-carousel-slide>
 
         <!-- Slides with image only -->
         <b-carousel-slide
-          img-src="https://picsum.photos/1024/350/?image=58"
-        ></b-carousel-slide>
-
-        <!-- Slides with img slot -->
-        <!-- Note the classes .d-block and .img-fluid to prevent browser default image alignment -->
-        <b-carousel-slide>
-          <template #img>
-            <img
-              class="d-block img-fluid w-100"
-              width="1024"
-              height="350"
-              src="https://picsum.photos/1024/350/?image=55"
-              alt="image slot"
-            />
-          </template>
+          caption="I nostri Modelli"
+        text="Pronti e veloci per affrontare le strade cittadine"
+        img-src="images\53-1024x350.png">
         </b-carousel-slide>
 
-        <!-- Slide with blank fluid image to maintain slide aspect ratio -->
-        <b-carousel-slide caption="Blank Image" img-blank img-alt="Blank image">
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            eros felis, tincidunt a tincidunt eget, convallis vel est. Ut
-            pellentesque ut lacus vel interdum.
-          </p>
-        </b-carousel-slide>
+        
+        
       </b-carousel>
     </div>
     <div>
@@ -59,9 +44,10 @@
         
          IL MIGLIOR MODO DI MUOVERSI IN CITTÀ<br>
        
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            eros felis, tincidunt a tincidunt eget, convallis vel est. Ut
-            pellentesque ut lacus vel interdum.
+            Con i nostri modelli muoverti in città sarà molto semplice, 
+            in assoluta libertà e quando ne hai di bisogno. 
+            I nostri Partner ti consentiranno di avere sempre le batterie cariche,
+            senza preoccuparti di ricariche.
           
          </b-container>
     </div>
@@ -72,8 +58,8 @@
             >1 of 3
             <div>
               <b-card
-                title="Card Title"
-                img-src="https://picsum.photos/600/300/?image=25"
+                title="Partner"
+                img-src="images\25-600x300.png"
                 img-alt="Image"
                 img-top
                 tag="article"
@@ -81,11 +67,10 @@
                 class="mb-2"
               >
                 <b-card-text>
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card's content.
+                  Qui potrai avere tutte le informazioni sui nostri partner ed accedere alla nostra rete.
                 </b-card-text>
 
-                <b-button href="/infobatteries" variant="dark">Go somewhere</b-button>
+                <b-button href="/infopartner" variant="dark">Approfondisci</b-button>
               </b-card>
             </div>
           </b-col>
@@ -93,8 +78,8 @@
             >2 of 3
             <div>
               <b-card
-                title="Card Title"
-                img-src="https://picsum.photos/600/300/?image=25"
+                title="Scooter"
+                img-src="images\26-600x300.png"
                 img-alt="Image"
                 img-top
                 tag="article"
@@ -102,11 +87,10 @@
                 class="mb-2"
               >
                 <b-card-text>
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card's content.
+                  Qui puoi vedere i nostri modelli e scegliere quelli che soddisfano le tue esigenze di mobilità.
                 </b-card-text>
 
-                <b-button href="#" variant="dark">Go somewhere</b-button>
+                <b-button href="/infoscooter" variant="dark">Approfondisci</b-button>
               </b-card>
             </div>
           </b-col>
@@ -114,8 +98,8 @@
             >3 of 3
             <div>
               <b-card
-                title="Card Title"
-                img-src="https://picsum.photos/600/300/?image=25"
+                title="Batterie"
+                img-src="images\27-600x300.png"
                 img-alt="Image"
                 img-top
                 tag="article"
@@ -123,11 +107,10 @@
                 class="mb-2"
               >
                 <b-card-text>
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card's content.
+                  Qui le batterie di ricambio che puoi agevolmente sostituire tramnite i nostri partner.
                 </b-card-text>
 
-                <b-button href="#" variant="dark">Go somewhere</b-button>
+                <b-button href="/infobatteries" variant="dark">Approfondisci</b-button>
               </b-card>
             </div>
           </b-col>
@@ -137,9 +120,7 @@
       <b-container fluid class="text-center">
         <h3 class="display-2">I NOSTRI PARTNER</h3>
         <p class="h3">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            eros felis, tincidunt a tincidunt eget, convallis vel est. Ut
-            pellentesque ut lacus vel interdum.
+           La mappa con l'elenco dei partner dove potrai cambiare le batterie del tuo Monopattino
           </p>
          </b-container>
     </div>
