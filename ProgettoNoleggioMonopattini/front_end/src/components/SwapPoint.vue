@@ -7,30 +7,19 @@
           class="mb-2"
           style="max-heght: 200px"
         >
-          <AddGoogleMap />
+          <AddGoogleMap @hubPosition="hubPosition" />
         </b-card>
       </div>
-      <b-card title="Lista Swap Points nei dintorni" class="mb-2">
+      <b-card title="Swap Point scelto" class="mb-2">
         <b-list-group>
-          <b-list-group-item button>Button item</b-list-group-item>
-          <b-list-group-item button>I am a button</b-list-group-item>
-          <b-list-group-item button> button</b-list-group-item>
-          <b-list-group-item button>This is a button too</b-list-group-item>
+          <b-list-group-item >Nome {{selectedPartner.name}}</b-list-group-item>
+          <b-list-group-item >Via</b-list-group-item>
+          <b-list-group-item > Numero batterie disponibili</b-list-group-item>
+          <b-list-group-item >telefono</b-list-group-item>
         </b-list-group>
       </b-card>
 
-      <div>
-        <b-form-group
-          id="fieldset-horizontal"
-          label-cols-sm="4"
-          label-cols-lg="3"
-          content-cols-sm
-          content-cols-lg="7"
-          label="Seleziona lo Swap"
-          label-for="input-horizontal">
-          <b-form-select v-model="selected" :options="options"></b-form-select>
-        </b-form-group>
-      </div>
+      
 
       <b-button type="submit" variant="primary" class="m-1">Conferma</b-button>
       <b-button type="reset" variant="danger" class="m-1">Annulla</b-button>
@@ -40,21 +29,18 @@
 
 <script>
 import AddGoogleMap from "../components/AddGoogleMap";
-
+import partnerInformationService from "../services/partnerInformation.service"
 export default {
   name: "SwapPoint",
   data() {
     return {
       form: {},
       show: true,
-      selected: null,
-      options: [
-        { value: null, text: "Please select an option" },
-        { value: "a", text: "This is First option" },
-        { value: "b", text: "Selected Option" },
-        { value: { C: "3PO" }, text: "This is an option with object value" },
-        { value: "d", text: "This one is disabled", disabled: true },
-      ],
+      selectedPartner:{},
+      position:{
+        lat:0,
+        lng:0
+      }
     };
   },
   components: { AddGoogleMap },
@@ -72,6 +58,18 @@ export default {
         this.show = true;
       });
     },
+    hubPosition(position){
+      this.position=position;
+      console.log(this.position);
+      partnerInformationService.getPartnerByPosition(this.position).then(
+        response=>{
+          alert(response.data);
+          this.selectedPartner=response.data;
+          console.log(this.selectedPartner);
+        }
+      )
+    }
+    
   },
 };
 </script>

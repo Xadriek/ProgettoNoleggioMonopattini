@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +27,8 @@ import it.uniroma3.siw.rentalev.model.Geocode;
 import it.uniroma3.siw.rentalev.model.Hub;
 import it.uniroma3.siw.rentalev.model.PartnerInformation;
 import it.uniroma3.siw.rentalev.payload.request.HubRequest;
+import it.uniroma3.siw.rentalev.repository.GeocodeRepository;
+import it.uniroma3.siw.rentalev.repository.HubRepository;
 import it.uniroma3.siw.rentalev.repository.PartnerInformationRepository;
 
 
@@ -36,8 +40,12 @@ public class PartnerInformationController {
 
   @Autowired
   PartnerInformationRepository partnerInformationRepository;
-  
+  @Autowired
+  HubRepository hubRepository;
+  @Autowired
+  GeocodeRepository geocodeRepository;
 
+  private static final Logger logger = LogManager.getLogger();
 
   @GetMapping("/partnerInformations")
   public ResponseEntity<List<PartnerInformation>> getAllPartnerInformations(@RequestParam(required = false) Boolean isActive) {
@@ -66,6 +74,22 @@ public class PartnerInformationController {
   public ResponseEntity<PartnerInformation> getPartnerInformationById(@PathVariable("id") long id) {
     Optional<PartnerInformation> partnerInformationData = partnerInformationRepository.findById(id);
 
+    if (partnerInformationData.isPresent()) {
+      return new ResponseEntity<>(partnerInformationData.get(), HttpStatus.OK);
+    } else {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+  }
+  
+  @GetMapping("/partnersPosition")
+  public ResponseEntity<PartnerInformation> getPartnerInformationByLatAndLng(@RequestParam String lat,
+		  																	 @RequestParam String lng) {
+	  Geocode _geocode=geocodeRepository.findByLatitudeAndLongitude(lat,lng);
+	  logger.info(_geocode);
+	  Hub _hub=hubRepository.findByCoordinate(_geocode);
+	  logger.info(_hub);
+	  Optional<PartnerInformation> partnerInformationData = partnerInformationRepository.findByHub(_hub);
+	  logger.info(partnerInformationData.get());
     if (partnerInformationData.isPresent()) {
       return new ResponseEntity<>(partnerInformationData.get(), HttpStatus.OK);
     } else {

@@ -10,13 +10,14 @@
     <gmap-map
         :zoom="14"    
         :center="center"
+        :selectedHub="selectedHub"
         style="width:100%;  height: 600px;"
       >
       <gmap-marker
         :key="index"
         v-for="(m, index) in locationMarkers"
         :position="m.position"
-        @click="center=m.position"
+        @click="replyPosition(m.position)" 
       ></gmap-marker>
     </gmap-map>
   </div>
@@ -34,7 +35,10 @@ export default {
       },
       geocodes:[],
       locationMarkers: [],
-
+      selectedHub:{
+        lat: 0,
+        lng: 0
+      }
       
     };
   },
@@ -52,6 +56,11 @@ export default {
   },
  
   methods: {
+    replyPosition(position){
+      this.selectedHub=position;
+      console.log(this.selectedHub);
+      this.$emit("hubPosition",this.selectedHub);
+    },
     
     addLocationMarker() {
       console.log(this.geocodes);

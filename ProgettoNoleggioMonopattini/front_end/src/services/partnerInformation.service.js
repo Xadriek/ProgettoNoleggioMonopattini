@@ -34,6 +34,14 @@ class PartnerInformationService{
             }, {headers: authHeader() })
             ;
         }
+    getPartnerByPosition(position){
+        return axios.get('http://localhost:8080/api/test/' + 'partnersPosition',{
+            params:{
+                lat:position.lat,
+                lng:position.lng
+            }
+        ,header: authHeader()});
+    }
 }
 
 export default new PartnerInformationService();

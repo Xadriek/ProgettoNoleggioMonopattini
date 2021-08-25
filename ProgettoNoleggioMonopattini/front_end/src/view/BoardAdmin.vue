@@ -63,7 +63,7 @@
               </b-tab>
 
               
-              <b-tab no-body title="Swap">
+              <b-tab no-body title="Rents">
                 <b-table
                   striped
                   hover

@@ -11,6 +11,6 @@ import it.uniroma3.siw.rentalev.model.Geocode;
 @Repository
 public interface GeocodeRepository extends JpaRepository<Geocode, Long>{
 	
-	
+	Geocode findByLatitudeAndLongitude(String latitude, String longitude);
 
 }
