@@ -40,8 +40,12 @@
         <b-card no-body>
           <b-tabs card>
             <b-tab no-body title="Swap in Arrivo">
-              Qui va la lista degli swap in Arrivo
-              <b-card-footer>Swap in Arrivo</b-card-footer>
+              
+             
+              <b-table striped hover :items="items" :fields="fields"></b-table>
+
+
+
             </b-tab>
 
             <b-tab no-body title="Swap Terminati">
@@ -89,10 +93,15 @@ export default {
   data() {
     return {
       show: true,
-      currentPartner:{},
-      batteries:[],
-      swaps:[],
-      coinTransation:[],
+      fields: ['Partner', 'Batterie', 'swaps','Gettoni'],
+      items: [
+        {
+          currentPartner:{},
+          batteries:[],
+          swaps:[],
+          coinTransation:[],
+        }
+      ],
       geocode:{
         latitude:null,
         longitude:null
