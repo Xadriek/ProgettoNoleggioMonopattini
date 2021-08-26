@@ -12,10 +12,10 @@
       </div>
       <b-card title="Swap Point scelto" class="mb-2">
         <b-list-group>
-          <b-list-group-item >Nome {{selectedPartner.name}}</b-list-group-item>
-          <b-list-group-item >Via</b-list-group-item>
-          <b-list-group-item > Numero batterie disponibili</b-list-group-item>
-          <b-list-group-item >telefono</b-list-group-item>
+          <b-list-group-item >{{selectedPartner.name}}</b-list-group-item>
+          <b-list-group-item >{{address.street}} {{address.numberStreet}} {{address.cap}} {{address.municipality}} {{address.city}}</b-list-group-item>
+          <b-list-group-item > Numero batterie disponibili{{numBatteries}}</b-list-group-item>
+          <b-list-group-item >{{selectedPartner.telephon}}</b-list-group-item>
         </b-list-group>
       </b-card>
 
@@ -37,6 +37,9 @@ export default {
       form: {},
       show: true,
       selectedPartner:{},
+      address:{},
+      numBatteries:5,
+      hub:{},
       position:{
         lat:0,
         lng:0
@@ -63,9 +66,14 @@ export default {
       console.log(this.position);
       partnerInformationService.getPartnerByPosition(this.position).then(
         response=>{
-          alert(response.data);
+          console.log(response.data);
           this.selectedPartner=response.data;
-          console.log(this.selectedPartner);
+          this.address=this.selectedPartner.address;
+          this.hub=this.selectedPartner.hub;
+          console.log(this.hub);
+          this.numBatteries=this.hub.stokedBattery.size();
+          console.log(this.numBatteries);
+          
         }
       )
     }

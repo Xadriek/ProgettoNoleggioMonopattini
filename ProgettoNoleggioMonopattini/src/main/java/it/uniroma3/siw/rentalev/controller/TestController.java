@@ -57,7 +57,9 @@ public class TestController {
 	public String adminAccess() {
 		return "Admin Board.";
 	}
+	
 	@GetMapping("/partnersPosition")
+	
 	  public ResponseEntity<PartnerInformation> getPartnerInformationByLatAndLng(@RequestParam String lat,
 			  																	 @RequestParam String lng) {
 		  Geocode _geocode=geocodeRepository.findByLatitudeAndLongitude(lat,lng);
