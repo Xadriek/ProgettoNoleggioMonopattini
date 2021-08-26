@@ -16,12 +16,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.uniroma3.siw.rentalev.model.CoinTransation;
-
-
+import it.uniroma3.siw.rentalev.model.PartnerInformation;
 import it.uniroma3.siw.rentalev.repository.CoinTransationRepository;
+import it.uniroma3.siw.rentalev.repository.PartnerInformationRepository;
 
 
 @CrossOrigin(origins = "*")
@@ -31,6 +32,9 @@ public class CoinTransationController {
 
   @Autowired
   CoinTransationRepository coinTransactionRepository;
+  
+  @Autowired
+  PartnerInformationRepository partnerInformationRepository;
 
   @GetMapping("/coinTransations")
   public ResponseEntity<List<CoinTransation>> getAllCoinTransations() {
@@ -62,6 +66,18 @@ public class CoinTransationController {
     }
   }
 
+  @GetMapping("/coinTransations/toPartner")
+  public ResponseEntity<List<CoinTransation>> getCoinTransationByPartner(@RequestParam long id) {
+	  Optional<PartnerInformation> _partnerInformation= partnerInformationRepository.findById(id);
+    List<CoinTransation> coinTransactionData = coinTransactionRepository.findByToPartner(_partnerInformation);
+
+    if (!coinTransactionData.isEmpty()) {
+      return new ResponseEntity<>(coinTransactionData, HttpStatus.OK);
+    } else {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+  }
+  
   @PostMapping("/coinTransactions")
   public ResponseEntity<CoinTransation> createCoinTransation(@RequestBody CoinTransation coinTransaction) {
     try {

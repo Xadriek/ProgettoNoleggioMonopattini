@@ -77,6 +77,7 @@
 <script>
 
 import AddHub from '../components/AddHub.vue';
+import coinTransationService from '../services/coinTransation.service';
 import partnerInformationService from "../services/partnerInformation.service"
 
 
@@ -102,6 +103,7 @@ export default {
           coinTransation:[],
         }
       ],
+      coinTransations:[],
       geocode:{
         latitude:null,
         longitude:null
@@ -117,7 +119,12 @@ export default {
       console.log(response.data);
       this.currentPartner=response.data;
       
-      })
+      }),
+    coinTransationService.getCoinTransationByPartner(this.currentUser)
+    .then(response=>{
+      console.log(response.message);
+      this.coinTransations=response.data;
+    })
       
   }
 };
