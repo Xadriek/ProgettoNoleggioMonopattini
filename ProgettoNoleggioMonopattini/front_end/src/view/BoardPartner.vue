@@ -42,21 +42,25 @@
             <b-tab no-body title="Swap in Arrivo">
               
              
-              <b-table striped hover :items="items" :fields="fields"></b-table>
+              <b-table striped hover :items="swaps" :ArrivalSwap="fields"></b-table>
 
 
 
             </b-tab>
 
             <b-tab no-body title="Swap Terminati">
-              Qui va la lista degli swap Terminati
-              <b-card-footer>Swap Terminati</b-card-footer>
+
+              <b-table striped hover :items="itemsB" :TerminalSwap="fields"></b-table>
+
             </b-tab>
 
             <b-tab no-body title="Batterie">
-              Qui va la lista delle Batterie
-              <b-card-footer>Lista Batterie</b-card-footer>
+             
+
+              <b-table striped hover :items="itemsC" :Batteriep="fields"></b-table>
+
             </b-tab>
+            
             <div>{{currentPartner}}</div>
             <div>{{batteries}}</div>
             <div>{{swaps}}</div>
@@ -77,9 +81,8 @@
 <script>
 
 import AddHub from '../components/AddHub.vue';
-import coinTransationService from '../services/coinTransation.service';
 import partnerInformationService from "../services/partnerInformation.service"
-
+import swapService from "../services/swap.service"
 
 
 
@@ -94,16 +97,26 @@ export default {
   data() {
     return {
       show: true,
-      fields: ['Partner', 'Batterie', 'swaps','Gettoni'],
-      items: [
+      swaps:[],
+      ArrivalSwap: ['ID', 'Event', 'Scooter','UserName'],
+      itemsA: [
         {
-          currentPartner:{},
-          batteries:[],
-          swaps:[],
-          coinTransation:[],
+          
         }
       ],
-      coinTransations:[],
+      
+      TerminalSwap: ['ID', 'Customer', 'Partner','Log','Coin','IsComplete'],
+      itemsB: [
+        {
+          
+        }
+      ],
+      Batterie: ['ID', 'Voltaggio', 'Capacita','DataImmissione','Stato'],
+      itemsC: [
+        {
+          
+        }
+      ],
       geocode:{
         latitude:null,
         longitude:null
@@ -119,13 +132,27 @@ export default {
       console.log(response.data);
       this.currentPartner=response.data;
       
-      }),
-    coinTransationService.getCoinTransationByPartner(this.currentUser)
-    .then(response=>{
-      console.log(response.message);
-      this.coinTransations=response.data;
-    })
+      })
+
+    this.allSwaps();  
       
-  }
+  },
+
+  allSwaps(){
+    console.log('swaps');
+    swapService.getAllSwaps.then(
+      (response)=>{
+        console.log(response.data);
+        this.allSwaps=response.data;
+      },
+      (error) => {
+        this.content =
+          (error.response && error.response.data) ||
+          error.message ||
+          error.toString();
+      }
+    );
+  },
+
 };
 </script>
