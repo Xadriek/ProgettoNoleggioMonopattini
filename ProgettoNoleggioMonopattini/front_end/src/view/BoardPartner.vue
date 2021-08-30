@@ -1,153 +1,131 @@
 <template>
   <div class="container">
-    <header class="jumbotron">
-      <h3>{{content}}</h3>
-    </header>
-  <div>
-    <nav class="navbar navbar-inverse visible-xs">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>                        
-      </button>
-      <a class="navbar-brand" href="#">Logo</a>
-    </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Dashboard</a></li>
-        <li><a href="#">Age</a></li>
-        <li><a href="#">Gender</a></li>
-        <li><a href="#">Geo</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
-
-<div class="container-fluid">
-  <div class="row content">
-    <div class="col-sm-3 sidenav hidden-xs">
-      <h2>Logo</h2>
-      <ul class="nav nav-pills nav-stacked">
-        <li class="active"><a href="#section1">Dashboard</a></li>
-        <li><a href="#section2">Age</a></li>
-        <li><a href="#section3">Gender</a></li>
-        <li><a href="#section3">Geo</a></li>
-      </ul><br>
-    </div>
-    <br>
     
-    <div class="col-sm-9">
-      <div class="well">
-        <h4>Dashboard</h4>
-        <p>Some text..</p>
+
+    <div>
       </div>
-      <div class="row">
-        <div class="col-sm-3">
-          <div class="well">
-            <h4>Users</h4>
-            <p>1 Million</p> 
-          </div>
-        </div>
-        <div class="col-sm-3">
-          <div class="well">
-            <h4>Pages</h4>
-            <p>100 Million</p> 
-          </div>
-        </div>
-        <div class="col-sm-3">
-          <div class="well">
-            <h4>Sessions</h4>
-            <p>10 Million</p> 
-          </div>
-        </div>
-        <div class="col-sm-3">
-          <div class="well">
-            <h4>Bounce</h4>
-            <p>30%</p> 
-          </div>
-        </div>
+      
+        <b-card title="Inserimento Nuovo Noleggio">
+          <add-hub />
+        </b-card>
+      
+      <div>
+      <div>
+        <b-card-group deck>
+          <b-card
+            bg-variant="primary"
+            text-variant="white"
+            header="Numero Swap"
+            class="text-center"
+          >
+            <b-button variant="primary">
+              I Swap effettuati sono : <b-badge variant="light">4</b-badge>
+            </b-button>
+          </b-card>
+
+          <b-card
+            bg-variant="success"
+            text-variant="white"
+            header="Numero Batterie"
+            class="text-center"
+          >
+            <b-button variant="info">
+              Numero Batterie Cariche: <b-badge variant="light">9</b-badge>
+            </b-button>
+          </b-card>
+        </b-card-group>
       </div>
-      <div class="row">
-        <div class="col-sm-4">
-          <div class="well">
-            <p>Text</p> 
-            <p>Text</p> 
-            <p>Text</p> 
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="well">
-            <p>Text</p> 
-            <p>Text</p> 
-            <p>Text</p> 
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="well">
-            <p>Text</p> 
-            <p>Text</p> 
-            <p>Text</p> 
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-8">
-          <div class="well">
-            <p>Text</p> 
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="well">
-            <p>Text</p> 
-          </div>
-        </div>
+
+      <div>
+        <b-card no-body>
+          <b-tabs card>
+            <b-tab no-body title="Swap in Arrivo">
+              
+             
+              <b-table striped hover :items="items" :fields="fields"></b-table>
+
+
+
+            </b-tab>
+
+            <b-tab no-body title="Swap Terminati">
+              Qui va la lista degli swap Terminati
+              <b-card-footer>Swap Terminati</b-card-footer>
+            </b-tab>
+
+            <b-tab no-body title="Batterie">
+              Qui va la lista delle Batterie
+              <b-card-footer>Lista Batterie</b-card-footer>
+            </b-tab>
+            <div>{{currentPartner}}</div>
+            <div>{{batteries}}</div>
+            <div>{{swaps}}</div>
+            <div>{{coinTransation}}</div>
+            <b-tab title="Aiuto">
+              
+              <b-card-text>
+                Qui scriviamo un minimo di spiegazione che può essere utile se vuoi
+              </b-card-text>
+            </b-tab>
+          </b-tabs>
+        </b-card>
       </div>
     </div>
-  </div>
-</div>
-  </div>
   </div>
 </template>
 
 <script>
-import UserService from '../services/user.service';
+
+import AddHub from '../components/AddHub.vue';
+import coinTransationService from '../services/coinTransation.service';
+import partnerInformationService from "../services/partnerInformation.service"
+
+
+
 
 export default {
-  name: 'partner',
+  components: { AddHub },
+  name: "partner",
+  computed: {
+    currentUser() {
+      return this.$store.state.auth.user;
+    }
+  },
   data() {
     return {
-      content: ''
+      show: true,
+      fields: ['Partner', 'Batterie', 'swaps','Gettoni'],
+      items: [
+        {
+          currentPartner:{},
+          batteries:[],
+          swaps:[],
+          coinTransation:[],
+        }
+      ],
+      coinTransations:[],
+      geocode:{
+        latitude:null,
+        longitude:null
+      }
+      
+
     };
   },
+
   mounted() {
-    UserService.getPartnerBoard().then(
-      response => {
-        this.content = response.data;
-      },
-      error => {
-        this.content =
-          (error.response && error.response.data) ||
-          error.message ||
-          error.toString();
-      }
-    );
+    partnerInformationService.getPartnerByEmail(this.currentUser.email)
+    .then(response=>{
+      console.log(response.data);
+      this.currentPartner=response.data;
+      
+      }),
+    coinTransationService.getCoinTransationByPartner(this.currentUser)
+    .then(response=>{
+      console.log(response.message);
+      this.coinTransations=response.data;
+    })
+      
   }
 };
 </script>
- <style>
-    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
-    .row.content {height: 550px}
-    
-    /* Set gray background color and 100% height */
-    .sidenav {
-      background-color: #f1f1f1;
-      height: 100%;
-    }
-        
-    /* On small screens, set height to 'auto' for the grid */
-    @media screen and (max-width: 767px) {
-      .row.content {height: auto;} 
-    }
-  </style>

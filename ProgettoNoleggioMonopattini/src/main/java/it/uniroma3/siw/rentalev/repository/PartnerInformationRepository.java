@@ -1,6 +1,7 @@
 package it.uniroma3.siw.rentalev.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -18,9 +19,13 @@ public interface PartnerInformationRepository extends JpaRepository<PartnerInfor
 	List<PartnerInformation> findByAddress(Address address);
 	
 	
-	List<PartnerInformation> findByHub(Hub hub);
+	Optional<PartnerInformation> findByHub(Hub hub);
 
 	List<PartnerInformation> findByIsActive(boolean b);
+
+	PartnerInformation findByEmail(String emailRequest);
+
+	PartnerInformation findByUsername(String username);
 	
 
 }

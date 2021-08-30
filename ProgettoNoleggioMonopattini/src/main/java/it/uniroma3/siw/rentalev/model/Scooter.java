@@ -24,27 +24,28 @@ public class Scooter {
 	
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	@OneToOne 
-	private Rent rent;
-	@OneToOne
+	
+	@OneToOne(cascade = CascadeType.PERSIST)
 	private Battery battery;
 	@Column(nullable=false)
 	private Date dateOfBirth;
 	@Column(nullable=true)
 	private Date dateOfDismiss;
-	@OneToMany(mappedBy="scooter", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="scooter")
 	private List<Swap> swapList;
 	
 	
-	public Scooter(Rent rent, Date dateOfBirth
-			) {
+	public Scooter() {
 		super();
 
-		this.rent = rent;
-		this.battery = new Battery(this.dateOfBirth,this);
-		this.dateOfBirth = dateOfBirth;
+
+		this.battery = new Battery();
+		this.dateOfBirth = new Date();
 		this.swapList = new ArrayList<Swap>();
 	}
+
+
+	
 
 
 	public Long getId() {
@@ -57,14 +58,6 @@ public class Scooter {
 	}
 
 
-	public Rent getRent() {
-		return rent;
-	}
-
-
-	public void setRent(Rent rent) {
-		this.rent = rent;
-	}
 
 
 	public Battery getBattery() {

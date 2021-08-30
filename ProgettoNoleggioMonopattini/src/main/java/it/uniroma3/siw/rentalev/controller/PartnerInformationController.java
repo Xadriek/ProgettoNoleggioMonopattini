@@ -1,10 +1,13 @@
 package it.uniroma3.siw.rentalev.controller;
 
+
 import java.util.ArrayList;
-import java.util.Date;
+
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,12 +19,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import it.uniroma3.siw.rentalev.model.Address;
+import it.uniroma3.siw.rentalev.model.Geocode;
+import it.uniroma3.siw.rentalev.model.Hub;
 import it.uniroma3.siw.rentalev.model.PartnerInformation;
-
+import it.uniroma3.siw.rentalev.payload.request.HubRequest;
+import it.uniroma3.siw.rentalev.repository.GeocodeRepository;
+import it.uniroma3.siw.rentalev.repository.HubRepository;
 import it.uniroma3.siw.rentalev.repository.PartnerInformationRepository;
+
 
 
 @CrossOrigin(origins = "*")
@@ -31,14 +40,24 @@ public class PartnerInformationController {
 
   @Autowired
   PartnerInformationRepository partnerInformationRepository;
+  @Autowired
+  HubRepository hubRepository;
+  @Autowired
+  GeocodeRepository geocodeRepository;
+
+  private static final Logger logger = LogManager.getLogger();
 
   @GetMapping("/partnerInformations")
-  public ResponseEntity<List<PartnerInformation>> getAllPartnerInformations() {
+  public ResponseEntity<List<PartnerInformation>> getAllPartnerInformations(@RequestParam(required = false) Boolean isActive) {
     try {
       List<PartnerInformation> partnerInformations = new ArrayList<PartnerInformation>();
 
       
-     partnerInformationRepository.findAll().forEach(partnerInformations::add);
+      if (isActive == null) {
+    	  partnerInformationRepository.findAll().forEach(partnerInformations::add);
+      }else  if(isActive) { 
+    	  partnerInformationRepository.findByIsActive(isActive).forEach(partnerInformations::add);
+        }
    
 
       if (partnerInformations.isEmpty()) {
@@ -61,12 +80,34 @@ public class PartnerInformationController {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
   }
+  
+  @GetMapping("/partnersPosition")
+  public ResponseEntity<PartnerInformation> getPartnerInformationByLatAndLng(@RequestParam String lat,
+		  																	 @RequestParam String lng) {
+	  Geocode _geocode=geocodeRepository.findByLatitudeAndLongitude(lat,lng);
+	  logger.info(_geocode);
+	  Hub _hub=hubRepository.findByCoordinate(_geocode);
+	  logger.info(_hub);
+	  Optional<PartnerInformation> partnerInformationData = partnerInformationRepository.findByHub(_hub);
+	  logger.info(partnerInformationData.get());
+    if (partnerInformationData.isPresent()) {
+      return new ResponseEntity<>(partnerInformationData.get(), HttpStatus.OK);
+    } else {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+  }
 
   @PostMapping("/partnerInformations")
-  public ResponseEntity<PartnerInformation> createPartnerInformation(@RequestBody PartnerInformation partnerInformation) {
+  public ResponseEntity<PartnerInformation> createPartnerInformation(@RequestBody HubRequest hubRequest) {
     try {
-      PartnerInformation _partnerInformation = partnerInformationRepository.save(new PartnerInformation( partnerInformation.getName(), partnerInformation.getpIva(),partnerInformation.getAddress(),new Date()));
-      return new ResponseEntity<>(_partnerInformation, HttpStatus.CREATED);
+      
+    Address _address= new Address(hubRequest.getStreet(), hubRequest.getCap(), hubRequest.getNumberStreet(), hubRequest.getMunicipality(), hubRequest.getCity(), hubRequest.getCountry());
+    Geocode _geocode=new Geocode(hubRequest.getLatitude(),hubRequest.getLongitude());
+    Hub _hub= new Hub(_geocode);
+    
+    PartnerInformation _partnerInformation = new PartnerInformation( hubRequest.getName(), hubRequest.getpIva(),hubRequest.getTelephon(),_address,_hub,hubRequest.getUserEmail(),hubRequest.getUsername());
+      PartnerInformation partnerInformation =partnerInformationRepository.save(_partnerInformation);
+      return new ResponseEntity<>(partnerInformation, HttpStatus.CREATED);
     } catch (Exception e) {
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -77,9 +118,14 @@ public class PartnerInformationController {
 
     if (partnerInformationData.isPresent()) {
     	PartnerInformation _partnerInformation = partnerInformationData.get();
-    	_partnerInformation.setAddress(partnerInformation.getAddress());
+    	_partnerInformation.setHub(partnerInformation.getHub());
+    	_partnerInformation.setPartnerWallet(partnerInformation.getPartnerWallet());
+    	_partnerInformation.setActive(partnerInformation.isActive());
+    	if(partnerInformation.getClosurePartnership()!=null) {
+    		
     	_partnerInformation.setClosurePartnership(partnerInformation.getClosurePartnership());
-      return new ResponseEntity<>(partnerInformationRepository.save(_partnerInformation), HttpStatus.OK);
+    	}
+    	return new ResponseEntity<>(partnerInformationRepository.save(_partnerInformation), HttpStatus.OK);
     } else {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
@@ -119,6 +165,15 @@ public class PartnerInformationController {
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
- 
+ @GetMapping("/partnerInformation/{email}")
+ public ResponseEntity<PartnerInformation> getPartnerInformationByEmail(@PathVariable("email") String emailRequest) {
+   PartnerInformation partnerInformationData = partnerInformationRepository.findByEmail(emailRequest);
+   
+   if (partnerInformationData.getName()!=null) {
+       return new ResponseEntity<>(partnerInformationData, HttpStatus.OK);
+     } else {
+       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+     }
+ }
 
 }

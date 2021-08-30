@@ -63,7 +63,7 @@ public class ContractController {
   @PostMapping("/contracts")
   public ResponseEntity<Contract> createContract(@RequestBody Contract contract) {
     try {
-      Contract _contract = contractRepository.save(new Contract(contract.getRent(),contract.getPlan()));
+      Contract _contract = contractRepository.save(new Contract(contract.getPlan()));
       return new ResponseEntity<>(_contract, HttpStatus.CREATED);
     } catch (Exception e) {
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

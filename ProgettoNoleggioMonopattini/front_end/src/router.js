@@ -4,6 +4,9 @@ import Home from './view/Home.vue';
 import Login from './view/Login.vue';
 import Register from './view/Register.vue';
 
+
+
+
 Vue.use(Router);
 
 export const router = new Router({
@@ -17,6 +20,25 @@ export const router = new Router({
     {
       path: '/home',
       component: Home
+    },
+    {
+      path: '/infobatteries',
+      name: 'infobatteries',
+      // lazy-loaded
+      component: () => import('./view/InfoBatteries.vue')
+    },
+    {
+      path: '/infopartner',
+      name: 'infopartner',
+      // lazy-loaded
+      component: () => import('./view/InfoPartner.vue')      
+      
+    },
+    {
+      path: '/infoscooter',
+      name: 'infoscooter',
+      // lazy-loaded
+      component: () => import('./view/InfoScooter.vue') 
     },
     {
       path: '/login',
@@ -54,7 +76,7 @@ export const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-  const publicPages = ['/login', '/register', '/home'];
+  const publicPages = ['/login', '/register', '/home','/infobatteries','/infopartner','/infoscooter'];
   const authRequired = !publicPages.includes(to.path);
   const loggedIn = localStorage.getItem('user');
 

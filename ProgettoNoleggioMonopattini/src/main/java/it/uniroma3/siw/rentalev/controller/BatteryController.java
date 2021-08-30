@@ -63,33 +63,35 @@ public class BatteryController {
   @PostMapping("/batteries")
   public ResponseEntity<Battery> createBattery(@RequestBody Battery battery) {
     try {
-      Battery _battery = batteryRepository.save(new Battery(new Date(),battery.getScooter()));
+      Battery _battery = batteryRepository.save(new Battery());
       return new ResponseEntity<>(_battery, HttpStatus.CREATED);
     } catch (Exception e) {
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
-  @PutMapping("/batteries/{id}")
+ /* @PutMapping("/batteries/{id}")
   public ResponseEntity<Battery> updateBattery(@PathVariable("id") long id, @RequestBody Battery battery) {
     Optional<Battery> batteryData = batteryRepository.findById(id);
-//fare i casi di scambio PORCO DIO APPENA FINISCI DI CACARE
-    if ((batteryData.isPresent()) && (battery.getHub()!=null)) {
-    	Battery _battery = batteryData.get();
+    Battery _battery = batteryData.get();
+    
+    if ((batteryData.isPresent()) && (battery.getHub()!=null) && (_battery.getHub()!=battery.getHub() && (_battery.getScooter()!=battery.getScooter()))) {
     	_battery.setHub(null);
     	_battery.setScooter(battery.getScooter());
     	_battery.setState(battery.getState());
       return new ResponseEntity<>(batteryRepository.save(_battery), HttpStatus.OK);
     } else 
-    	if (batteryData.isPresent()&& (battery.getScooter()!=null)) {
-    	Battery _battery = batteryData.get();
+    	if (batteryData.isPresent()&& ((battery.getScooter()!=null) && (_battery.getHub()!=battery.getHub()) && (_battery.getScooter()!=battery.getScooter()))) {
     	_battery.setHub(battery.getHub());
     	_battery.setScooter(null);
     	_battery.setState(battery.getState());
+    	if(battery.getDateOfDismiss()!=null) {
+    		_battery.setDateOfDismiss(new Date());
+    	}
       return new ResponseEntity<>(batteryRepository.save(_battery), HttpStatus.OK);
     }else{
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-  }
+  }*/
 
   @DeleteMapping("/batteries/{id}")
   public ResponseEntity<HttpStatus> deleteBattery(@PathVariable("id") long id) {

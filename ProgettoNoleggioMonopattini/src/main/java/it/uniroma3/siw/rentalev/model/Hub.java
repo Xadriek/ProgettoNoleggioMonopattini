@@ -23,28 +23,48 @@ public class Hub {
 	
 //INSERIRE GEOCODE
 	
-	public Hub( PartnerInformation custodial) {
+	public Hub(Geocode geocode) {
 		super();
-
-		this.custodial = custodial;
 		this.dateOfAssembly = new Date();
 		this.swapCompleted = new ArrayList<Swap>();
 		this.stokedBattery = new ArrayList<Battery>();
+		this.dateOfDismiss=null;
+		this.coordinate=geocode;
+		
 	}
+	
+
+
+
+	public Hub() {
+		super();
+		this.dateOfAssembly = new Date();
+		this.swapCompleted = new ArrayList<Swap>();
+		this.stokedBattery = new ArrayList<Battery>();
+		this.dateOfDismiss=null;
+		
+		
+	}
+
+
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@OneToOne
-	private PartnerInformation custodial;
-	@Column(nullable=false)
+
+	@Column
 	private Date dateOfAssembly;
 	@Column(nullable=true)
 	private Date dateOfDismiss;
-	@OneToMany(mappedBy="hub",cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="hub")
 	private List<Swap> swapCompleted;
-	@OneToMany(mappedBy="hub",cascade=CascadeType.ALL)
 	
+	@OneToMany(mappedBy="hub")
 	private List<Battery> stokedBattery;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	private Geocode coordinate;
+	
 	
 	public Long getId() {
 		return id;
@@ -52,12 +72,7 @@ public class Hub {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public PartnerInformation getCustodial() {
-		return custodial;
-	}
-	public void setCustodial(PartnerInformation custodial) {
-		this.custodial = custodial;
-	}
+	
 	public Date getDateOfAssembly() {
 		return dateOfAssembly;
 	}
@@ -82,6 +97,15 @@ public class Hub {
 	public void setStokedBattery(List<Battery> stokedBattery) {
 		this.stokedBattery = stokedBattery;
 	}
+	
+	
+	public Geocode getCoordinate() {
+		return coordinate;
+	}
+	public void setCoordinate(Geocode coordinate) {
+		this.coordinate = coordinate;
+	}
+	
 	
 	
 

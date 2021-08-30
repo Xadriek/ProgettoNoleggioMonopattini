@@ -16,6 +16,7 @@ import javax.persistence.OneToOne;
 
 
 
+
 @Entity
 
 public class CustomerInformation implements UserInformation{
@@ -31,10 +32,10 @@ public class CustomerInformation implements UserInformation{
 	@Column(nullable=false)
 	private String surname;
 	
-	@Column(nullable=false)
+	
 	private Long telephon;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Address address;
 	
 	@Column
@@ -43,17 +44,31 @@ public class CustomerInformation implements UserInformation{
 	@OneToOne(cascade = CascadeType.ALL)
 	private Wallet customerWallet;
 	
-	@OneToMany(mappedBy="customer",cascade = CascadeType.ALL)
-	private List<Rent> rent;
 	
-	@OneToMany(mappedBy="fromCustomer",cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.PERSIST)
+	private Rent rent;
+	
+	
+	@OneToMany(mappedBy="fromCustomer")
 	private List<CoinTransation> coinTransactions;
 
-
+	@Column
+	private String email;
+	
+	@Column
+	private String username;
 
 	
 
-	public CustomerInformation(String name, String surname, Long telephon, Address address ) {
+	public CustomerInformation() {
+		super();
+		this.isActive = false;
+		this.customerWallet = new Wallet(0);
+		this.rent = new Rent();
+		this.coinTransactions = new ArrayList<CoinTransation>();
+	}
+
+	public CustomerInformation(String name, String surname, Long telephon, Address address,String email,String username ) {
 		super();
 
 		this.name = name;
@@ -62,9 +77,12 @@ public class CustomerInformation implements UserInformation{
 		this.address = address;
 		this.isActive = false;
 		this.customerWallet = new Wallet(0);
-		this.rent = new ArrayList<Rent>();
+		this.rent = new Rent();
 		this.coinTransactions = new ArrayList<CoinTransation>();
+		this.email=email;
+		this.username=username;
 	}
+
 
 	public Long getId() {
 		return id;
@@ -114,11 +132,11 @@ public class CustomerInformation implements UserInformation{
 		this.customerWallet = customerWallet;
 	}
 
-	public List<Rent> getRent() {
+	public Rent getRent() {
 		return rent;
 	}
 
-	public void setRent(List<Rent> rent) {
+	public void setRent(Rent rent) {
 		this.rent = rent;
 	}
 
@@ -137,6 +155,27 @@ public class CustomerInformation implements UserInformation{
 	public void setActive(boolean isActive) {
 		this.isActive = isActive;
 	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String userEmail) {
+		this.email = userEmail;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	
+	
+
+	
 	
 
 	

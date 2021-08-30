@@ -1,56 +1,186 @@
 <template>
-     <form name="form" @submit.prevent="handleRegister">
-        <div v-if="!successful">
-          <div class="form-group">
-            <label for="name">nome</label>
-            <input
-              v-model="partner.name"
-              v-validate="'required|min:3|max:20'"
-              type="text"
-              class="form-control"
-              name="name"
-            />
-            <div
-              v-if="submitted && errors.has('name')"
-              class="alert-danger"
-            >{{errors.first('name')}}</div>
-          </div>
-          <div class="form-group">
-            <label for="pIva">P.Iva</label>
-            <input
-              v-model="partner.pIva"
-              v-validate="'required|min:11|max:11'"
-              type="text"
-              class="form-control"
-              name="pIva"
-            />
-            <div
-              v-if="submitted && errors.has('pIva')"
-              class="alert-danger"
-            >{{errors.first('pIva')}}</div>
-          </div>
-          <div class="form-group">
-            <label for="address">Indirizzo</label>
-            <input
-              v-model="partner.address"
-              class="form-control"
-              name="address"
-            />
-            <div
-              v-if="submitted && errors.has('address')"
-              class="alert-danger"
-            >{{errors.first('address')}}</div>
-          </div>
-          <div class="form-group">
-            <button class="btn btn-primary btn-block">Conferma</button>
-          </div>
-        </div>
-      </form>
+  <div>
+    <b-form v-if="show">
+      <b-form-group label="Nome:" >
+        <b-form-input
+          id="input-2"
+          v-model="partnerInformation.name"
+          placeholder="Inserisci il Nome"
+          required
+          name="name"
+        ></b-form-input>
+      </b-form-group>
+      
 
-      <div
-        v-if="message"
-        class="alert"
-        :class="successful ? 'alert-success' : 'alert-danger'"
-      >{{message}}</div>
-    </div>
+      <b-form-group label="P.Iva:" >
+        <b-form-input
+          id="input-2"
+          v-model="partnerInformation.pIva"
+          placeholder="Inserisci la P.Iva"
+          required
+          name="pIva"
+        ></b-form-input>
+      </b-form-group>
+
+      <b-form-group label="Telefono:" >
+        <b-form-input
+          id="input-2"
+          v-model="partnerInformation.telephon"
+          placeholder="Inserisci il telefono"
+          required
+          name="telephon"
+        ></b-form-input>
+      </b-form-group>
+
+      <b-form-group label="Via:" >
+        <b-form-input
+          id="input-2"
+          v-model="address.street"
+          placeholder="Inserisci via/viale/piazza"
+          required
+          name="street"
+        ></b-form-input>
+      </b-form-group>
+
+      <b-form-group label="Civico:" >
+        <b-form-input
+          id="input-2"
+          v-model="address.numberStreet"
+          placeholder="Inserisci il civico"
+          required
+          name="numberStreet"
+        ></b-form-input>
+      </b-form-group>
+
+       <b-form-group label="Cap:" >
+        <b-form-input
+          id="input-2"
+          v-model="address.cap"
+          placeholder="Inserisci il cap"
+          required
+          name="cap"
+        ></b-form-input>
+      </b-form-group>
+
+      <b-form-group label="Comune:" >
+        <b-form-input
+          id="input-2"
+          v-model="address.municipality"
+          placeholder="Inserisci il comune"
+          required
+          name="municipality"
+        ></b-form-input>
+      </b-form-group>
+
+      <b-form-group  label="Citta:" >
+        <b-form-input
+          id="input-2"
+          v-model="address.city"
+          placeholder="Inserisci la Citta"
+          required
+          name="city"
+        ></b-form-input>
+      </b-form-group>
+
+      <b-form-group  label="Nazione:" >
+        <b-form-input
+          id="input-2"
+          v-model="address.country"
+          placeholder="Inserisci la Nazione"
+          required
+          name="country"
+        ></b-form-input>
+      </b-form-group>
+
+
+      <b-button @click="createHub" type="submit" variant="primary">Conferma</b-button>
+      <b-button type="reset" variant="danger">Annulla</b-button>
+    </b-form>
+  </div>
 </template>
+
+<script>
+import PartnerInformation from "../model/partnerInformation";
+import Address from "../model/address";
+
+import partnerInformationService from "../services/partnerInformation.service.js";
+
+export default {
+  name: "AddHub",
+  computed: {
+    currentUser() {
+      return this.$store.state.auth.user;
+    }
+  },
+  data() {
+    return {
+      partnerInformation: new PartnerInformation(
+        "",
+        "",
+        "",
+        "",
+        ""
+      ),
+      address: new Address("", "", "", "", "",""),
+      show: true,
+      geocode: {
+        lat: 44.90213186634812,
+        lng: 1.499183107482672,
+      },
+    };
+  },
+   mounted() {
+    this.locateGeoLocation();
+   },
+  methods: {
+    createHub() {
+      console.log(this.geocode);
+      alert(this.geocode.lat);
+      alert(this.geocode.lng);
+      return partnerInformationService.savePartner(this.partnerInformation,this.address,this.currentUser.email,this.currentUser.username,this.geocode).then(
+        response=> {
+         console.log(response.data);
+          
+
+        },
+        () => {
+          
+          return alert("errore");
+        }
+      );
+      
+   },
+   locateGeoLocation: function () {
+      navigator.geolocation.getCurrentPosition((res) => {
+        this.geocode = {
+          lat: res.coords.latitude,
+          lng: res.coords.longitude,
+        };
+      });
+    },
+    
+    
+    
+    onReset(event) {
+      event.preventDefault();
+      // Reset our form values
+
+      this.form.name = "";
+      this.cognome = "";
+      this.telefono = "";
+      this.indirizzo = "";
+      this.citta = "";
+      this.nazione = "";
+      this.datainizio = "";
+      this.durata = "";
+      this.pianotariffa = "";
+
+      // Trick to reset/clear native browser form validation state
+      this.show = false;
+      this.$nextTick(() => {
+        this.show = true;
+      });
+    },
+  },
+};
+</script>

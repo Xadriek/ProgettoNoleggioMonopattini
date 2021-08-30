@@ -1,6 +1,7 @@
 package it.uniroma3.siw.rentalev.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -17,6 +18,6 @@ public interface CoinTransationRepository extends JpaRepository<CoinTransation, 
 	
 	List<CoinTransation> findByFromCustomer(CustomerInformation customer);
 	
-	List<CoinTransation> findByToPartner(PartnerInformation partner);
+	List<CoinTransation> findByToPartner(Optional<PartnerInformation> _partnerInformation);
 
 }

@@ -3,13 +3,14 @@ package it.uniroma3.siw.rentalev.model;
 
 import java.util.Date;
 
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+
 import javax.persistence.OneToOne;
 
 
@@ -23,30 +24,37 @@ public class Rent {
 	private Long id;
 	@Column(nullable=false)
 	private Date startRent;
-	@Column(nullable=false)
+	@Column(nullable=true)
 	private Date finishRent;
 	@Column(unique=true)
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long numberPolicy;
-	@ManyToOne
-	private CustomerInformation customer;
-	@OneToOne(cascade = CascadeType.ALL)
+	
+	private Double numberPolicy;
+	
+	@OneToOne(cascade = CascadeType.PERSIST)
 	private Scooter scooter;
-	@Column
+	
 	private Boolean ongoing;
 	@OneToOne(cascade = CascadeType.ALL)
 	private Contract contract;
 	
-	public Rent(Date startRent, CustomerInformation customer,
-			Scooter scooter, Contract contract) {
+
+	
+	
+
+	public Rent() {
 		super();
-
-		this.startRent = startRent;
-
-		this.customer = customer;
-		this.scooter = scooter;
+		this.startRent = new Date();
+		this.scooter = new Scooter();
 		this.ongoing = false;
-		this.contract = contract;
+		this.contract =new Contract(null);
+		this.numberPolicy=initNP();
+	}
+
+
+
+	private Double initNP() {
+		
+		return (double)Math.random()*100000;
 	}
 
 	public Long getId() {
@@ -73,21 +81,15 @@ public class Rent {
 		this.finishRent = finishRent;
 	}
 
-	public Long getNumberPolicy() {
+	public Double getNumberPolicy() {
 		return numberPolicy;
 	}
 
-	public void setNumberPolicy(Long numberPolicy) {
+	public void setNumberPolicy(Double numberPolicy) {
 		this.numberPolicy = numberPolicy;
 	}
 
-	public CustomerInformation getCustomer() {
-		return customer;
-	}
-
-	public void setCustomer(CustomerInformation customer) {
-		this.customer = customer;
-	}
+	
 
 	public Scooter getScooter() {
 		return scooter;

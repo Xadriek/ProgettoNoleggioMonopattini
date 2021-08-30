@@ -32,7 +32,10 @@ public class PartnerInformation implements UserInformation {
 	@Column(nullable=false)
 	private String pIva;
 	
-	@ManyToOne
+	@Column
+	private Long telephon;
+	
+	@ManyToOne(cascade=CascadeType.ALL)
 	private Address address;
 	
 	@OneToOne(cascade = CascadeType.ALL)
@@ -50,7 +53,10 @@ public class PartnerInformation implements UserInformation {
 	
 	@Column
 	private boolean isActive;
-	
+	@Column
+	private String email;
+	@Column
+	private String username;
 
 	@OneToMany(mappedBy="toPartner",cascade = CascadeType.ALL)
 	private List<CoinTransation> coinTransations;
@@ -59,20 +65,34 @@ public class PartnerInformation implements UserInformation {
 	
 
 
-	public PartnerInformation( String name, String pIva, Address address, 
-			Date startPartnership 
+	public PartnerInformation( String name, String pIva,Long telephon, Address address,Hub hub, 
+			 String email, String username
 			) {
 		super();
 
 		this.name = name;
 		this.pIva = pIva;
+		this.telephon = telephon;
 		this.address = address;
 		this.partnerWallet = new Wallet(0);
-		this.hub = new Hub(this);
-		this.startPartnership = startPartnership;
+		this.hub=hub;
+		this.startPartnership = new Date();
+		this.isActive = false;
+		this.coinTransations = new ArrayList<CoinTransation>();
+		this.email=email;
+		this.username=username;
+	}
+	
+
+
+	public PartnerInformation() {
+		super();
+		this.partnerWallet = new Wallet(0);
+		this.startPartnership = new Date();
 		this.isActive = false;
 		this.coinTransations = new ArrayList<CoinTransation>();
 	}
+
 
 
 	public Long getId() {
@@ -102,6 +122,13 @@ public class PartnerInformation implements UserInformation {
 
 	public void setpIva(String pIva) {
 		this.pIva = pIva;
+	}
+	public Long getTelephon() {
+		return telephon;
+	}
+
+	public void setTelephon(Long telephon) {
+		this.telephon = telephon;
 	}
 
 
@@ -155,16 +182,6 @@ public class PartnerInformation implements UserInformation {
 	}
 
 
-	public List<CoinTransation> getCoinTransactions() {
-		return coinTransations;
-	}
-
-
-	public void setCoinTransactions(List<CoinTransation> coinTransations) {
-		this.coinTransations = coinTransations;
-	}
-
-
 	public boolean isActive() {
 		return isActive;
 	}
@@ -173,10 +190,41 @@ public class PartnerInformation implements UserInformation {
 	public void setActive(boolean isActive) {
 		this.isActive = isActive;
 	}
-
-
 	
+	public String getEmail() {
+		return email;
+	}
 
+	public void setEmail(String userEmail) {
+		this.email = userEmail;
+	}
+
+
+
+	public String getUsername() {
+		return username;
+	}
+
+
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+
+
+	public List<CoinTransation> getCoinTransations() {
+		return coinTransations;
+	}
+
+
+
+	public void setCoinTransations(List<CoinTransation> coinTransations) {
+		this.coinTransations = coinTransations;
+	}
+	
+	
+	
 	
 	
 	

@@ -30,6 +30,11 @@ public class Wallet {
 	}
 
 
+	public Wallet() {
+		super();
+	}
+
+
 	public Long getId() {
 		return id;
 	}

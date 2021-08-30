@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -16,7 +16,7 @@ import javax.persistence.Id;
 
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+
 
 
 
@@ -36,12 +36,11 @@ public class Battery {
 	private Date dateOfBirth;
 	@Column(nullable=true)
 	private Date dateOfDismiss;
-	@OneToMany(mappedBy="battery",cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="battery")
 	private List<Swap> swapList;
 	@ManyToOne
 	private Hub hub;
-	@OneToOne
-	private Scooter scooter;
+	
 	
 	@Enumerated(EnumType.STRING)
 	@Column(length = 20)
@@ -49,15 +48,26 @@ public class Battery {
 	
 	
 
-	public Battery(Date dateOfBirth, Scooter scooter) {
+
+	
+
+	
+
+
+	public Battery() {
 		super();
 		this.voltage = 48;
 		this.capacity = 13;
-		this.dateOfBirth = dateOfBirth;
+		this.dateOfBirth = new Date();
 		this.swapList = new ArrayList<>();
-		this.scooter = scooter;
+		
 		this.state = EBattery.CARICA;
+		
 	}
+
+
+
+
 
 	public Long getId() {
 		return id;
@@ -107,21 +117,7 @@ public class Battery {
 		this.swapList = swapList;
 	}
 
-	public Hub getHub() {
-		return hub;
-	}
-
-	public void setHub(Hub hub) {
-		this.hub = hub;
-	}
-
-	public Scooter getScooter() {
-		return scooter;
-	}
-
-	public void setScooter(Scooter scooter) {
-		this.scooter = scooter;
-	}
+	
 
 	public EBattery getState() {
 		return state;

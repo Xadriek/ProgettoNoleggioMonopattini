@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import it.uniroma3.siw.rentalev.model.Scooter;
 
+import it.uniroma3.siw.rentalev.model.Scooter;
 import it.uniroma3.siw.rentalev.repository.ScooterRepository;
 
 
@@ -31,6 +31,7 @@ public class ScooterController {
 
   @Autowired
   ScooterRepository scooterRepository;
+
 
   @GetMapping("/scooters")
   public ResponseEntity<List<Scooter>> getAllScooters() {
@@ -65,7 +66,7 @@ public class ScooterController {
   @PostMapping("/scooters")
   public ResponseEntity<Scooter> createScooter(@RequestBody Scooter scooter) {
     try {
-      Scooter _scooter = scooterRepository.save(new Scooter( scooter.getRent(),new Date()));
+      Scooter _scooter = scooterRepository.save(new Scooter());
       return new ResponseEntity<>(_scooter, HttpStatus.CREATED);
     } catch (Exception e) {
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -78,9 +79,10 @@ public class ScooterController {
     if (scooterData.isPresent()) {
     	Scooter _scooter = scooterData.get();
     	_scooter.setBattery(scooter.getBattery());
-    	_scooter.setRent(scooter.getRent());
-    	_scooter.setDateOfDismiss(scooter.getDateOfDismiss());
-    	_scooter.setSwapList(scooter.getSwapList());
+    	if(scooter.getDateOfDismiss()!=null) {
+    	_scooter.setDateOfDismiss(new Date());
+    	_scooter.getBattery().setDateOfDismiss(new Date());
+    	}
       return new ResponseEntity<>(scooterRepository.save(_scooter), HttpStatus.OK);
     } else {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);

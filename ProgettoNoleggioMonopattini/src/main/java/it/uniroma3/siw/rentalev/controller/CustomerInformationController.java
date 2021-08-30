@@ -9,6 +9,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,12 +18,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
+import it.uniroma3.siw.rentalev.model.Address;
 import it.uniroma3.siw.rentalev.model.CustomerInformation;
-
+import it.uniroma3.siw.rentalev.payload.request.RentRequest;
 import it.uniroma3.siw.rentalev.repository.CustomerInformationRepository;
+
 
 
 @CrossOrigin(origins = "*")
@@ -32,15 +34,20 @@ public class CustomerInformationController {
 
   @Autowired
   CustomerInformationRepository customerInformationRepository;
+  
+
 
   @GetMapping("/customerInformations")
-  public ResponseEntity<List<CustomerInformation>> getAllCustomerInformations() {
+  public ResponseEntity<List<CustomerInformation>> getAllCustomerInformations(@RequestParam(required = false) Boolean isActive) {
     try {
       List<CustomerInformation> customerInformations = new ArrayList<CustomerInformation>();
 
       
-     customerInformationRepository.findAll().forEach(customerInformations::add);
-   
+      if (isActive == null) {
+    	  customerInformationRepository.findAll().forEach(customerInformations::add);
+      }else  if(isActive) { 
+    	  customerInformationRepository.findByIsActive(isActive).forEach(customerInformations::add);
+        }
 
       if (customerInformations.isEmpty()) {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -64,10 +71,13 @@ public class CustomerInformationController {
   }
 
   @PostMapping("/customerInformations")
-  public ResponseEntity<CustomerInformation> createCustomerInformation(@RequestBody CustomerInformation customerInformation) {
+  public ResponseEntity<CustomerInformation> createCustomerInformation(@RequestBody RentRequest rentRequest) {
     try {
-      CustomerInformation _customerInformation = customerInformationRepository.save(new CustomerInformation( customerInformation.getName(),customerInformation.getSurname(),customerInformation.getTelephon(),customerInformation.getAddress()));
-      return new ResponseEntity<>(_customerInformation, HttpStatus.CREATED);
+    Address _address= new Address(rentRequest.getStreet(), rentRequest.getCap(), rentRequest.getNumberStreet(), rentRequest.getMunicipality(), rentRequest.getCity(), rentRequest.getCountry());
+      CustomerInformation _customerInformation =new CustomerInformation( rentRequest.getName(),rentRequest.getSurname(),rentRequest.getTelephon(),_address,rentRequest.getUserEmail(),rentRequest.getUsername());
+      _customerInformation.getRent().getContract().setPlan(rentRequest.getPlan());
+      CustomerInformation customerInformation =customerInformationRepository.save(_customerInformation);
+      return new ResponseEntity<>(customerInformation, HttpStatus.CREATED);
     } catch (Exception e) {
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -81,7 +91,8 @@ public class CustomerInformationController {
     	_customerInformation.setAddress(customerInformation.getAddress());
     	_customerInformation.setActive(customerInformation.isActive());
     	_customerInformation.setTelephon(customerInformation.getTelephon());
-
+    	_customerInformation.setCustomerWallet(customerInformation.getCustomerWallet());
+    	
       return new ResponseEntity<>(customerInformationRepository.save(_customerInformation), HttpStatus.OK);
     } else {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -122,6 +133,18 @@ public class CustomerInformationController {
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+  }
+  
+  @GetMapping("/customerInformation/{email}")
+  public ResponseEntity<CustomerInformation> getCustomerInformationByEmail(@PathVariable("email") String emailRequest) {
+    CustomerInformation customerInformationData = customerInformationRepository.findByEmail(emailRequest);
+    
+    
+    if (customerInformationData.getName()!=null) {
+        return new ResponseEntity<>(customerInformationData, HttpStatus.OK);
+      } else {
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      }
   }
 
 }

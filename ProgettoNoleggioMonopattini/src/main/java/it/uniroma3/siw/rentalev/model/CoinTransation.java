@@ -4,7 +4,7 @@ package it.uniroma3.siw.rentalev.model;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,21 +29,34 @@ public class CoinTransation {
 	private Date logTransition;
 	@Column(nullable=false)
 	private int coin;
-	@OneToOne(cascade = CascadeType.ALL)
-	private Swap swap;
+	@OneToOne
+	private Swap entrySwap;
+	@OneToOne
+	private Swap exitSwap;
+	
+	private Boolean isComplete;
 	
 	
 	public CoinTransation(CustomerInformation fromCustomer, PartnerInformation toPartner,
-			Date logTransition, int coin, Swap swap) {
+			 int coin, Swap entrySwap) {
 		super();
 
 		this.fromCustomer = fromCustomer;
 		this.toPartner = toPartner;
-		this.logTransition = logTransition;
+		this.logTransition = new Date();
 		this.coin = coin;
-		this.swap = swap;
+		this.entrySwap = entrySwap;
+		this.exitSwap= null;
+		this.isComplete=false;
 	}
 	
+	
+	public CoinTransation() {
+		super();
+		this.logTransition = new Date();
+	}
+
+
 	public Long getId() {
 		return id;
 	}
@@ -74,11 +87,27 @@ public class CoinTransation {
 	public void setCoin(int coin) {
 		this.coin = coin;
 	}
-	public Swap getSwap() {
-		return swap;
+	public Swap getEntrySwap() {
+		return entrySwap;
 	}
-	public void setSwap(Swap swap) {
-		this.swap = swap;
+	public void setEntrySwap(Swap entrySwap) {
+		this.entrySwap = entrySwap;
+	}
+	public Swap getExitSwap() {
+		return exitSwap;
+	}
+	public void setExitSwap(Swap exitSwap) {
+		this.exitSwap = exitSwap;
+	}
+
+
+	public Boolean getIsComplete() {
+		return isComplete;
+	}
+
+
+	public void setIsComplete(Boolean isComplete) {
+		this.isComplete = isComplete;
 	}
 	
 
