@@ -15,6 +15,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 
 @Entity
@@ -56,9 +58,10 @@ public class Hub {
 	private Date dateOfAssembly;
 	@Column(nullable=true)
 	private Date dateOfDismiss;
+	@JsonIgnore
 	@OneToMany(mappedBy="hub")
 	private List<Swap> swapCompleted;
-	
+	@JsonIgnore
 	@OneToMany(mappedBy="hub")
 	private List<Battery> stokedBattery;
 	

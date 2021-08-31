@@ -8,7 +8,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,7 +34,7 @@ import it.uniroma3.siw.rentalev.repository.CustomerInformationRepository;
 import it.uniroma3.siw.rentalev.repository.HubRepository;
 import it.uniroma3.siw.rentalev.repository.PartnerInformationRepository;
 import it.uniroma3.siw.rentalev.repository.ScooterRepository;
-import it.uniroma3.siw.rentalev.repository.SwapRepository;
+
 
 
 @CrossOrigin(origins = "*")
@@ -103,34 +102,24 @@ public class CoinTransationController {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
   }
-  @PreAuthorize("hasRole('ROLE_CUSTOMER')")
+ 
   @PostMapping("/coinTransations")
   public ResponseEntity<CoinTransation> createCoinTransation(@RequestBody CoinTransationRequest coinTransationRequest) {
 	  Optional<PartnerInformation> _partnerInformation= partnerInformationRepository.findById(Long.parseLong(coinTransationRequest.getIdPartner()));
 	  Optional<CustomerInformation> _customerInformation= customerInformationRepository.findById(Long.parseLong(coinTransationRequest.getIdCustomer()));
-	  PartnerInformation partnerInformation=null;
-	  CustomerInformation customerInformation=null;
-	  Scooter scooter=null;
-	  if(_partnerInformation.isPresent() && _customerInformation.isPresent()) {
-		  partnerInformation=_partnerInformation.get();
-		  customerInformation=_customerInformation.get();
-		  scooter=customerInformation.getRent().getScooter();
+	  
+		  PartnerInformation  partnerInformation=_partnerInformation.get();
+		  CustomerInformation customerInformation=_customerInformation.get();
+		  Scooter scooter=customerInformation.getRent().getScooter();
 	  try {
-      CoinTransation coinTransation = new CoinTransation( customerInformation,partnerInformation,coinTransationRequest.getCoin());
-      Swap entrySwap =coinTransation.getEntrySwap();
-      entrySwap.setHub(partnerInformation.getHub());
-      entrySwap.setBattery(scooter.getBattery());
-      entrySwap.setScooter(scooter);
-      CoinTransation _coinTransation = coinTransactionRepository.save(coinTransation);
+      CoinTransation _coinTransation = coinTransactionRepository.save(new CoinTransation( customerInformation,partnerInformation,coinTransationRequest.getCoin(),new Swap(partnerInformation.getHub(),scooter.getBattery(),scooter)));
+      
 
       return new ResponseEntity<>(_coinTransation, HttpStatus.CREATED);
     } catch (Exception e) {
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
-	  }else{
-		  return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	  }
-  }
+  }  
   @PutMapping("/coinTransactions/{id}")
   public ResponseEntity<CoinTransation> updateCoinTransation(@PathVariable("id") long id, @RequestBody SwapRequest swapRequest) {
    Swap _exitSwap=null;
