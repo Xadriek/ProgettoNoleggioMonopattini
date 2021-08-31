@@ -57,14 +57,11 @@
             <b-tab no-body title="Batterie">
              
 
-              <b-table striped hover :items="itemsC" :Batteriep="fields"></b-table>
+              <b-table striped hover :items="itemsC" :Batterie="fields"></b-table>
 
             </b-tab>
             
-            <div>{{currentPartner}}</div>
-            <div>{{batteries}}</div>
-            <div>{{swaps}}</div>
-            <div>{{coinTransation}}</div>
+            
             <b-tab title="Aiuto">
               
               <b-card-text>
@@ -81,8 +78,7 @@
 <script>
 
 import AddHub from '../components/AddHub.vue';
-import partnerInformationService from "../services/partnerInformation.service"
-import swapService from "../services/swap.service"
+import partnerInformationService from "../services/partnerInformation.service.js"
 
 
 
@@ -120,39 +116,33 @@ export default {
       geocode:{
         latitude:null,
         longitude:null
-      }
+      },
+      
+      batteries:[],
+      coinTransation:{},
+      content:""
       
 
     };
   },
 
   mounted() {
+     
     partnerInformationService.getPartnerByEmail(this.currentUser.email)
     .then(response=>{
       console.log(response.data);
       this.currentPartner=response.data;
-      
+      this.coinTransation=this.currentPartner.coinTransation;
+      console.log(this.coinTransation);
+      this.batteries=this.currentPartner.hub.stokedBattery;
+      console.log(this.batteries);
       })
-
-    this.allSwaps();  
       
   },
+  methods:{
 
-  allSwaps(){
-    console.log('swaps');
-    swapService.getAllSwaps.then(
-      (response)=>{
-        console.log(response.data);
-        this.allSwaps=response.data;
-      },
-      (error) => {
-        this.content =
-          (error.response && error.response.data) ||
-          error.message ||
-          error.toString();
-      }
-    );
-  },
+  
+  }
 
 };
 </script>

@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +31,7 @@ public class BatteryController {
 
   @Autowired
   BatteryRepository batteryRepository;
+  private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
   @GetMapping("/batteries")
   public ResponseEntity<List<Battery>> getAllBatterys() {
@@ -40,9 +43,10 @@ public class BatteryController {
    
 
       if (batterys.isEmpty()) {
+    	  this.logger.debug("non ci sono batterie");
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
       }
-
+      this.logger.debug("arrivano le batterie");
       return new ResponseEntity<>(batterys, HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

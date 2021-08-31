@@ -70,6 +70,16 @@
                   :items="rents"
                   
                 ></b-table>
+                 </b-tab>
+
+              
+              <b-tab no-body title="Swaps">
+                <b-table
+                  striped
+                  hover
+                  :items="coinTransations"
+                  
+                ></b-table>
               </b-tab>
               
 

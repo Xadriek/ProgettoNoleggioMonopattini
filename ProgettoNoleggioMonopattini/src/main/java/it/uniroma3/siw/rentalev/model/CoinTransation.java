@@ -54,6 +54,7 @@ public class CoinTransation {
 	public CoinTransation() {
 		super();
 		this.logTransition = new Date();
+		this.isComplete=false;
 	}
 
 

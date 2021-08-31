@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +33,8 @@ public class SwapController {
 
   @Autowired
   SwapRepository swapRepository;
+  private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
 
   @GetMapping("/swaps")
   public ResponseEntity<List<Swap>> getAllSwaps() {
@@ -42,8 +46,10 @@ public class SwapController {
    
 
       if (swaps.isEmpty()) {
+    	  this.logger.debug("non ci sono swap");
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
       }
+      this.logger.debug("arrivano gli swaps");
 
       return new ResponseEntity<>(swaps, HttpStatus.OK);
     } catch (Exception e) {
