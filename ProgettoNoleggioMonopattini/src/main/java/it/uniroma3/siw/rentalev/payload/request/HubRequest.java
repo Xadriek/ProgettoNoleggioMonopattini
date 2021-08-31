@@ -5,7 +5,7 @@ package it.uniroma3.siw.rentalev.payload.request;
 public class HubRequest {
 
 	private String name;
-	
+		
 	private String pIva;
 	
 	private Long telephon;
