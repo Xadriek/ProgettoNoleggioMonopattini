@@ -93,7 +93,7 @@ public class CoinTransationController {
 
     if (coinTransactionData.isPresent()) {
     	CoinTransation _coinTransaction = coinTransactionData.get();
-    	_coinTransaction.setExitSwap(coinTransaction.getEntrySwap());
+    	_coinTransaction.setExitSwap(coinTransaction.getExitSwap());
     	_coinTransaction.setIsComplete(coinTransaction.getIsComplete());
 
       return new ResponseEntity<>(coinTransactionRepository.save(_coinTransaction), HttpStatus.OK);
