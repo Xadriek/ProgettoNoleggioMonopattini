@@ -1,6 +1,6 @@
 package it.uniroma3.siw.rentalev.model;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 
@@ -65,7 +65,6 @@ public class CustomerInformation implements UserInformation{
 		this.isActive = false;
 		this.customerWallet = new Wallet(0);
 		this.rent = new Rent();
-		this.coinTransactions = new ArrayList<CoinTransation>();
 	}
 
 	public CustomerInformation(String name, String surname, Long telephon, Address address,String email,String username ) {
@@ -78,7 +77,6 @@ public class CustomerInformation implements UserInformation{
 		this.isActive = false;
 		this.customerWallet = new Wallet(0);
 		this.rent = new Rent();
-		this.coinTransactions = new ArrayList<CoinTransation>();
 		this.email=email;
 		this.username=username;
 	}

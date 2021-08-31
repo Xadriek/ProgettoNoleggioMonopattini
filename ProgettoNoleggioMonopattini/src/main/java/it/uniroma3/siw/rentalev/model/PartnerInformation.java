@@ -58,7 +58,7 @@ public class PartnerInformation implements UserInformation {
 	@Column
 	private String username;
 
-	@OneToMany(mappedBy="toPartner",cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="toPartner")
 	private List<CoinTransation> coinTransations;
 
 

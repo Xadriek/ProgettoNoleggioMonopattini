@@ -11,8 +11,13 @@ class CoinTransationService{
     updateCoinTransations(coinTransation){
         return axios.put(API_URL + 'coinTransations' + '/'+ coinTransation.id ,{coinTransation:coinTransation} ,{headers: authHeader() })}
     
-    saveCoinTransaction(/*mettere parametri*/){
-        return axios.post(API_URL + 'coinTransations',{/*mettere parametri*/},{headers: authHeader() })
+    saveCoinTransaction(requestBody){
+        return axios.post(API_URL + 'coinTransations',{
+            idPartner:requestBody.partnerId,
+            idCustomer:requestBody.customerId,
+            coin:requestBody.coin
+            
+        },{headers: authHeader() })
         } 
     getCoinTransationByPartner(partner){
         return axios.get(API_URL + 'coinTransations'+ '/'+ 'toPartner',{
