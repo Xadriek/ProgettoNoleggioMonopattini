@@ -61,7 +61,7 @@ public class Battery {
 		this.dateOfBirth = new Date();
 		this.swapList = new ArrayList<>();
 		
-		this.state = EBattery.CARICA;
+		this.state = EBattery.IN_USO;
 		
 	}
 
@@ -125,6 +125,22 @@ public class Battery {
 
 	public void setState(EBattery state) {
 		this.state = state;
+	}
+
+
+
+
+
+	public Hub getHub() {
+		return hub;
+	}
+
+
+
+
+
+	public void setHub(Hub hub) {
+		this.hub = hub;
 	}
 
 

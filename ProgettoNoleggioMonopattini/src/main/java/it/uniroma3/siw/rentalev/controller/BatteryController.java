@@ -73,29 +73,33 @@ public class BatteryController {
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
- /* @PutMapping("/batteries/{id}")
+  @PutMapping("/batteries/{id}")
   public ResponseEntity<Battery> updateBattery(@PathVariable("id") long id, @RequestBody Battery battery) {
     Optional<Battery> batteryData = batteryRepository.findById(id);
     Battery _battery = batteryData.get();
     
-    if ((batteryData.isPresent()) && (battery.getHub()!=null) && (_battery.getHub()!=battery.getHub() && (_battery.getScooter()!=battery.getScooter()))) {
-    	_battery.setHub(null);
-    	_battery.setScooter(battery.getScooter());
+    if ((batteryData.isPresent()) && (battery.getHub()!=null) && (_battery.getHub()==null)) {
+    	_battery.setHub(battery.getHub());
+
     	_battery.setState(battery.getState());
       return new ResponseEntity<>(batteryRepository.save(_battery), HttpStatus.OK);
     } else 
-    	if (batteryData.isPresent()&& ((battery.getScooter()!=null) && (_battery.getHub()!=battery.getHub()) && (_battery.getScooter()!=battery.getScooter()))) {
-    	_battery.setHub(battery.getHub());
-    	_battery.setScooter(null);
+    	if (batteryData.isPresent() && (_battery.getHub()==battery.getHub())) {
     	_battery.setState(battery.getState());
     	if(battery.getDateOfDismiss()!=null) {
     		_battery.setDateOfDismiss(new Date());
     	}
       return new ResponseEntity<>(batteryRepository.save(_battery), HttpStatus.OK);
-    }else{
+    }else
+    	if(batteryData.isPresent() &&(battery.getHub()==null) && (_battery.getHub()!=null)){
+    		_battery.setHub(null);
+    		_battery.setState(battery.getState());
+    	      return new ResponseEntity<>(batteryRepository.save(_battery), HttpStatus.OK);
+    	}else
+    
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-  }*/
+    
+  }
 
   @DeleteMapping("/batteries/{id}")
   public ResponseEntity<HttpStatus> deleteBattery(@PathVariable("id") long id) {

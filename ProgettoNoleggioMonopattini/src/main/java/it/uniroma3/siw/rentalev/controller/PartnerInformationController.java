@@ -2,7 +2,7 @@ package it.uniroma3.siw.rentalev.controller;
 
 
 import java.util.ArrayList;
-
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -123,7 +123,7 @@ public class PartnerInformationController {
     	_partnerInformation.setActive(partnerInformation.isActive());
     	if(partnerInformation.getClosurePartnership()!=null) {
     		
-    	_partnerInformation.setClosurePartnership(partnerInformation.getClosurePartnership());
+    	_partnerInformation.setClosurePartnership(new Date());
     	}
     	return new ResponseEntity<>(partnerInformationRepository.save(_partnerInformation), HttpStatus.OK);
     } else {

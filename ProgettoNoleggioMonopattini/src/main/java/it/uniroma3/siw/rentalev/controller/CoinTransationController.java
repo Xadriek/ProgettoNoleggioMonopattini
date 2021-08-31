@@ -19,10 +19,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import it.uniroma3.siw.rentalev.model.Battery;
 import it.uniroma3.siw.rentalev.model.CoinTransation;
+import it.uniroma3.siw.rentalev.model.CustomerInformation;
+import it.uniroma3.siw.rentalev.model.Hub;
 import it.uniroma3.siw.rentalev.model.PartnerInformation;
+import it.uniroma3.siw.rentalev.model.Scooter;
+import it.uniroma3.siw.rentalev.model.Swap;
+import it.uniroma3.siw.rentalev.payload.request.CoinTransationRequest;
+import it.uniroma3.siw.rentalev.payload.request.SwapRequest;
+import it.uniroma3.siw.rentalev.repository.BatteryRepository;
 import it.uniroma3.siw.rentalev.repository.CoinTransationRepository;
+import it.uniroma3.siw.rentalev.repository.CustomerInformationRepository;
+import it.uniroma3.siw.rentalev.repository.HubRepository;
 import it.uniroma3.siw.rentalev.repository.PartnerInformationRepository;
+import it.uniroma3.siw.rentalev.repository.ScooterRepository;
 
 
 @CrossOrigin(origins = "*")
@@ -34,7 +45,19 @@ public class CoinTransationController {
   CoinTransationRepository coinTransactionRepository;
   
   @Autowired
+  BatteryRepository batteryRepository;
+  
+  @Autowired
+  ScooterRepository scooterRepository;
+  
+  @Autowired
+  HubRepository hubRepository;
+  
+  @Autowired
   PartnerInformationRepository partnerInformationRepository;
+  
+  @Autowired
+  CustomerInformationRepository customerInformationRepository;
 
   @GetMapping("/coinTransations")
   public ResponseEntity<List<CoinTransation>> getAllCoinTransations() {
@@ -69,7 +92,7 @@ public class CoinTransationController {
   @GetMapping("/coinTransations/toPartner")
   public ResponseEntity<List<CoinTransation>> getCoinTransationByPartner(@RequestParam long id) {
 	  Optional<PartnerInformation> _partnerInformation= partnerInformationRepository.findById(id);
-    List<CoinTransation> coinTransactionData = coinTransactionRepository.findByToPartner(_partnerInformation);
+    List<CoinTransation> coinTransactionData = coinTransactionRepository.findByToPartner(_partnerInformation.get());
 
     if (!coinTransactionData.isEmpty()) {
       return new ResponseEntity<>(coinTransactionData, HttpStatus.OK);
@@ -79,22 +102,45 @@ public class CoinTransationController {
   }
   
   @PostMapping("/coinTransactions")
-  public ResponseEntity<CoinTransation> createCoinTransation(@RequestBody CoinTransation coinTransaction) {
-    try {
-      CoinTransation _coinTransaction = coinTransactionRepository.save(new CoinTransation( coinTransaction.getFromCustomer(),coinTransaction.getToPartner(),coinTransaction.getCoin(),coinTransaction.getEntrySwap()));
+  public ResponseEntity<CoinTransation> createCoinTransation(@RequestBody CoinTransationRequest coinTransactionRequest) {
+	  Optional<PartnerInformation> _partnerInformation= partnerInformationRepository.findById(coinTransactionRequest.getIdPartner());
+	  Optional<CustomerInformation> _customerInformation= customerInformationRepository.findById(coinTransactionRequest.getIdCustomer());
+	  PartnerInformation partnerInformation=null;
+	  CustomerInformation customerInformation=null;
+	  Scooter scooter=null;
+	  if(_partnerInformation.isPresent() && _customerInformation.isPresent()) {
+		  partnerInformation=_partnerInformation.get();
+		  customerInformation=_customerInformation.get();
+		  scooter=customerInformation.getRent().getScooter();
+	  try {
+      CoinTransation _coinTransaction = coinTransactionRepository.save(new CoinTransation( customerInformation,partnerInformation,coinTransactionRequest.getCoin(),new Swap(partnerInformation.getHub(),scooter.getBattery(),scooter)));
       return new ResponseEntity<>(_coinTransaction, HttpStatus.CREATED);
     } catch (Exception e) {
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+	  }else{
+		  return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	  }
   }
   @PutMapping("/coinTransactions/{id}")
-  public ResponseEntity<CoinTransation> updateCoinTransation(@PathVariable("id") long id, @RequestBody CoinTransation coinTransaction) {
-    Optional<CoinTransation> coinTransactionData = coinTransactionRepository.findById(id);
-
+  public ResponseEntity<CoinTransation> updateCoinTransation(@PathVariable("id") long id, @RequestBody SwapRequest swapRequest) {
+   Swap _exitSwap=null;
+	  Optional<CoinTransation> coinTransactionData = coinTransactionRepository.findById(id);
+    Optional<Battery> batteryData=batteryRepository.findById(swapRequest.getId_battery());
+    Optional<Scooter> scooterData=scooterRepository.findById(swapRequest.getId_scooter());
+    Optional<Hub> hubData=hubRepository.findById(swapRequest.getId_hub());
+   if(batteryData.isPresent() && scooterData.isPresent() && hubData.isPresent()) {
+	   Hub _hub=hubData.get();
+	   Scooter _scooter=scooterData.get();
+	   Battery _battery=batteryData.get();
+     _exitSwap= new Swap(_hub,_battery,_scooter);
+    } else {
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      }
     if (coinTransactionData.isPresent()) {
     	CoinTransation _coinTransaction = coinTransactionData.get();
-    	_coinTransaction.setExitSwap(coinTransaction.getExitSwap());
-    	_coinTransaction.setIsComplete(coinTransaction.getIsComplete());
+    	_coinTransaction.setExitSwap(_exitSwap);
+    	_coinTransaction.setIsComplete(true);
 
       return new ResponseEntity<>(coinTransactionRepository.save(_coinTransaction), HttpStatus.OK);
     } else {
