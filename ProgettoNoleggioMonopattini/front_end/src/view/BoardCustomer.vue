@@ -37,6 +37,7 @@
 import AddRent from "../components/AddRent.vue";
 import SwapPoint from "../components/SwapPoint.vue";
 import SwapPoints from "../components/SwapPoints.vue";
+import coinTransationService from '../services/coinTransation.service';
 import customerInformationService from "../services/customerInformation.service"
 
 
@@ -60,11 +61,22 @@ export default {
     .then(response=>{
       console.log(response.data);
       this.currentCustomer=response.data
-      this.coinTransations=this.currentCustomer.coinTransations;
+      this.getCoinTransation(response.data);
       this.rent=this.currentCustomer.rent;
+      console.log(this.rent);
       }
     )
   },
+  methods:{
+    getCoinTransation(customer){
+      coinTransationService.getCoinTransationByCustomer(customer.id).then(
+        response=>{
+          console.log(response.data);
+          this.coinTransations=response.data;
+        }
+      )
+    }
+  }
 
   
 };

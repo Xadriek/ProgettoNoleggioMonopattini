@@ -23,6 +23,10 @@ class CoinTransationService{
         return axios.get(API_URL + 'coinTransations'+'/'+ 'partner'+ '/'+ partnerId,{
          header: authHeader()});
     }
+    getCoinTransationByCustomer(customerId){
+        return axios.get(API_URL + 'coinTransations'+'/'+ 'customer'+ '/'+ customerId,{
+         header: authHeader()});
+    }
         
 }
 

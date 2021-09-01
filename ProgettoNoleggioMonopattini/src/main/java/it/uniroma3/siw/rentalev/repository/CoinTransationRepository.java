@@ -22,4 +22,6 @@ public interface CoinTransationRepository extends JpaRepository<CoinTransation, 
 
 	List<CoinTransation> findByToPartner(PartnerInformation partnerInformation);
 
+	List<CoinTransation> findByFromCustomer(Optional<CustomerInformation> _customerInformation);
+
 }

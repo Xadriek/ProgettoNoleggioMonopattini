@@ -102,6 +102,19 @@ public class CoinTransationController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
+	
+	@GetMapping("/coinTransations/customer/{customerId}")
+	public ResponseEntity<List<CoinTransation>> getCoinTransationByCustomer(@PathVariable("customerId") long customerId) {
+		Optional<CustomerInformation> _customerInformation= customerInformationRepository.findById(customerId);
+		List<CoinTransation> coinTransactionData = coinTransationRepository.findByFromCustomer(_customerInformation.get());
+
+		if (!coinTransactionData.isEmpty()) {
+			return new ResponseEntity<>(coinTransactionData, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+
 
 	@PostMapping("/coinTransations")
 	public ResponseEntity<CoinTransation> createCoinTransation(@RequestBody CoinTransationRequest coinTransationRequest) {
