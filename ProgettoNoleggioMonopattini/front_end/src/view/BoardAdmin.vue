@@ -1,7 +1,5 @@
 <template>
   <div class="container">
-   
-
     <div>
       <div>
         <div>
@@ -13,7 +11,8 @@
               class="text-center"
             >
               <b-button variant="primary">
-                I Noleggi Attivi sono: <b-badge variant="light">{{countRentOngoing}}</b-badge>
+                I Noleggi Attivi sono:
+                <b-badge variant="light">{{ countRentOngoing }}</b-badge>
               </b-button>
             </b-card>
 
@@ -24,7 +23,8 @@
               class="text-center"
             >
               <b-button variant="secondary">
-                Il Numero di Hub Attivi: <b-badge variant="light">{{numHubActive}}</b-badge>
+                Il Numero di Hub Attivi:
+                <b-badge variant="light">{{ numHubActive }}</b-badge>
               </b-button>
             </b-card>
 
@@ -35,53 +35,65 @@
               class="text-center"
             >
               <b-button variant="info">
-                Il Numero Transazioni: <b-badge variant="light">{{countTransation}}</b-badge>
+                Il Numero Transazioni:
+                <b-badge variant="light">{{ countTransation }}</b-badge>
               </b-button>
             </b-card>
           </b-card-group>
         </div>
 
-       <div>
+        <div>
           <b-card no-body>
             <b-tabs card>
               <b-tab no-body title="Clienti">
-                <b-table
-                  striped
-                  hover
-                  :items="customers"
-                  
-                ></b-table>
+                <b-table :items="customers" striped responsive="sm">
+                  <template #cell(show_details)="row">
+                    <b-button size="sm" @click="row.toggleDetails" class="mr-2">
+                      {{ row.detailsShowing ? "Hide" : "Show" }} Details
+                    </b-button>
+
+                    <!-- As `row.showDetails` is one-way, we call the toggleDetails function on @change -->
+                    <b-form-checkbox
+                      v-model="row.detailsShowing"
+                      @change="row.toggleDetails"
+                    >
+                      Details via check
+                    </b-form-checkbox>
+                  </template>
+
+                  <template #row-details="row">
+                    <b-card>
+                      <b-row class="mb-2">
+                        <b-col sm="3" class="text-sm-right"><b>Age:</b></b-col>
+                        <b-col>{{ row.item.age }}</b-col>
+                      </b-row>
+
+                      <b-row class="mb-2">
+                        <b-col sm="3" class="text-sm-right"
+                          ><b>Is Active:</b></b-col
+                        >
+                        <b-col>{{ row.item.isActive }}</b-col>
+                      </b-row>
+
+                      <b-button size="sm" @click="row.toggleDetails"
+                        >Hide Details</b-button
+                      >
+                    </b-card>
+                  </template>
+                </b-table>
               </b-tab>
 
-            <b-tab no-body title="Partner">
-                <b-table
-                  striped
-                  hover
-                  :items="partners"
-                  
-                ></b-table>
+              <b-tab no-body title="Partner">
+                <b-table striped hover :items="partners"></b-table>
               </b-tab>
 
-              
               <b-tab no-body title="Rents">
-                <b-table
-                  striped
-                  hover
-                  :items="rents"
-                  
-                ></b-table>
-                 </b-tab>
-
-              
-              <b-tab no-body title="Swaps">
-                <b-table
-                  striped
-                  hover
-                  :items="coinTransations"
-                  
-                ></b-table>
+                <b-table striped hover :items="rents"></b-table>
               </b-tab>
-              
+
+              <b-tab no-body title="Swaps">
+                <b-table striped hover :items="coinTransations"></b-table>
+              </b-tab>
 
               <b-tab title="Aiuto">
                 <b-card-text>
@@ -92,133 +104,127 @@
             </b-tabs>
           </b-card>
         </div>
-
-        
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import CustomerInformationService from '../services/customerInformation.service';
-import PartnerInformationService from '../services/partnerInformation.service';
-import RentService from '../services/rent.service';
-import CoinTransationService from '../services/coinTransation.service';
-
-
+import CustomerInformationService from "../services/customerInformation.service";
+import PartnerInformationService from "../services/partnerInformation.service";
+import RentService from "../services/rent.service";
+import CoinTransationService from "../services/coinTransation.service";
 
 export default {
   name: "admin",
   data() {
     return {
-      customers:[],
-      partners:[],
-      rents:[],
-      coinTransations:[],
-      numHubActive:0,
-      countTransation:0,
-      countRentOngoing:0,
-      count:0
+      checked: false,
+      customers: [],
+      partners: [],
+      rents: [],
+      coinTransations: [],
+      numHubActive: 0,
+      countTransation: 0,
+      countRentOngoing: 0,
+      count: 0,
     };
   },
   mounted() {
-    
-    
     this.allCustomers();
     this.allPartners();
     this.allCounters();
     this.allCoinTransation();
     this.allRents();
   },
-  methods:{
-    rentOutgoing(){
+  methods: {
+    rentOutgoing() {
       var rent;
-      this.count=0;
-      for(rent in this.rents){
-        if(rent.outgoing==true){
+      this.count = 0;
+      for (rent in this.rents) {
+        if (rent.outgoing == true) {
           this.count++;
         }
       }
       return this.count;
     },
-    activeHub(){
-      this.count=0;
-       var partner;
-      for(partner in this.partners){
-        
-        if(partner.isActive==true){
+    activeHub() {
+      this.count = 0;
+      var partner;
+      for (partner in this.partners) {
+        if (partner.isActive == true) {
           this.count++;
         }
-    }
-    return this.count;
-  },
-  
-  allCustomers(){
-    console.log('customers');
-    CustomerInformationService.getAllCustomerInformations().then(
-      (response)=>{
-        console.log(response.data);
-        this.customers=response.data;
-      },
-      (error) => {
-        this.content =
-          (error.response && error.response.data) ||
-          error.message ||
-          error.toString();
       }
-    );
-  },
-  
-  allCoinTransation(){
-    console.log('coinTransation');
-    CoinTransationService.getAllCoinTransations().then(
-      (response)=>{
-        console.log(response.data);
-        this.coinTransations=response.data;
-      },
-      (error) => {
-        this.content =
-          (error.response && error.response.data) ||
-          error.message ||
-          error.toString();
-      }
-    );
+      return this.count;
     },
-   allRents(){
-    console.log('rents');
-    RentService.getAllRents().then(
-      (response)=>{
-        console.log(response.data);
-        this.rents=response.data;
-      },
-      (error) => {
-        this.content =
-          (error.response && error.response.data) ||
-          error.message ||
-          error.toString();
-      }
-    );
+
+    allCustomers() {
+      console.log("customers");
+      CustomerInformationService.getAllCustomerInformations().then(
+        (response) => {
+          console.log(response.data);
+          this.customers = response.data;
+        },
+        (error) => {
+          this.content =
+            (error.response && error.response.data) ||
+            error.message ||
+            error.toString();
+        }
+      );
     },
-  allPartners(){
-    console.log('partners');
-    PartnerInformationService.getAllPartnerInformations().then(
-      (response)=>{
-        console.log(response.data);
-        this.partners=response.data;
-      },
-      (error) => {
-        this.content =
-          (error.response && error.response.data) ||
-          error.message ||
-          error.toString();
-      }
-    );
+
+    allCoinTransation() {
+      console.log("coinTransation");
+      CoinTransationService.getAllCoinTransations().then(
+        (response) => {
+          console.log(response.data);
+          this.coinTransations = response.data;
+        },
+        (error) => {
+          this.content =
+            (error.response && error.response.data) ||
+            error.message ||
+            error.toString();
+        }
+      );
+    },
+    allRents() {
+      console.log("rents");
+      RentService.getAllRents().then(
+        (response) => {
+          console.log(response.data);
+          this.rents = response.data;
+        },
+        (error) => {
+          this.content =
+            (error.response && error.response.data) ||
+            error.message ||
+            error.toString();
+        }
+      );
+    },
+    allPartners() {
+      console.log("partners");
+      PartnerInformationService.getAllPartnerInformations().then(
+        (response) => {
+          console.log(response.data);
+          this.partners = response.data;
+        },
+        (error) => {
+          this.content =
+            (error.response && error.response.data) ||
+            error.message ||
+            error.toString();
+        }
+      );
+    },
+    allCounters() {
+      this.countTransation = this.coinTransations.length;
+      this.countRentOngoing = this.rentOutgoing();
+      this.numHubActive = this.activeHub();
+    },
   },
-  allCounters(){
-    this.countTransation=this.coinTransations.length;
-    this.countRentOngoing=this.rentOutgoing();
-    this.numHubActive=this.activeHub();
-  }
-  }
 };
 </script>
