@@ -77,7 +77,7 @@ public class CustomerInformation implements UserInformation{
 		this.telephon = telephon;
 		this.address = address;
 		this.isActive = false;
-		this.customerWallet = new Wallet(0);
+		this.customerWallet = new Wallet(20);
 		this.rent = new Rent();
 		this.email=email;
 		this.username=username;

@@ -5,13 +5,13 @@
     </header>
     <div>
       <div class="mb-3">
-        <b-button v-b-toggle.creanoleggio class="m-1">Crea Noleggio</b-button>
+        <b-button v-if="show" v-b-toggle.creanoleggio class="m-1">Crea Noleggio</b-button>
         <b-button v-b-toggle.cercaswappoint class="m-1">Cerca SwapPoint</b-button>
         <b-button v-b-toggle.listaswappoint class="m-1">Lista SwapPoint</b-button
         >
       </div>
     </div>
-      <b-collapse id="creanoleggio">
+      <b-collapse v-if="show" id="creanoleggio">
         <b-card title="Inserimento Nuovo Noleggio">
           <add-rent />
         </b-card>
@@ -53,7 +53,8 @@ export default {
     return {
       currentCustomer:{},
       coinTransations:[],
-      rent:[]
+      rent:[],
+      show:true
     };
   },
   mounted() {
@@ -63,6 +64,7 @@ export default {
       this.currentCustomer=response.data
       this.getCoinTransation(response.data);
       this.rent=this.currentCustomer.rent;
+      this.show=false;
       console.log(this.rent);
       }
     )
