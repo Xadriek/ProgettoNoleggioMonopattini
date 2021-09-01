@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import it.uniroma3.siw.rentalev.model.Battery;
 import it.uniroma3.siw.rentalev.model.CoinTransation;
 import it.uniroma3.siw.rentalev.model.CustomerInformation;
+import it.uniroma3.siw.rentalev.model.EBattery;
 import it.uniroma3.siw.rentalev.model.Hub;
 import it.uniroma3.siw.rentalev.model.PartnerInformation;
 import it.uniroma3.siw.rentalev.model.Scooter;
@@ -111,9 +112,13 @@ public class CoinTransationController {
 		  PartnerInformation  partnerInformation=_partnerInformation.get();
 		  CustomerInformation customerInformation=_customerInformation.get();
 		  Scooter scooter=customerInformation.getRent().getScooter();
+		  Battery battery=scooter.getBattery();
 	  try {
-      CoinTransation _coinTransation = coinTransactionRepository.save(new CoinTransation( customerInformation,partnerInformation,coinTransationRequest.getCoin(),new Swap(partnerInformation.getHub(),scooter.getBattery(),scooter)));
-      
+      CoinTransation _coinTransation = coinTransactionRepository.save(new CoinTransation( customerInformation,partnerInformation,coinTransationRequest.getCoin(),new Swap(partnerInformation.getHub(),battery,scooter)));
+      	battery.setHub(partnerInformation.getHub());
+      	battery.setScooter(null);
+      	battery.setState(EBattery.IN_CARICA);
+      batteryRepository.save(battery);
 
       return new ResponseEntity<>(_coinTransation, HttpStatus.CREATED);
     } catch (Exception e) {

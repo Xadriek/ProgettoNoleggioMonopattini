@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -16,6 +16,7 @@ import javax.persistence.Id;
 
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -41,8 +42,12 @@ public class Battery {
 	@JsonIgnore
 	@OneToMany(mappedBy="battery")
 	private List<Swap> swapList;
-	@ManyToOne
+	@JsonIgnore
+	@ManyToOne(cascade=CascadeType.ALL)
 	private Hub hub;
+	@JsonIgnore
+	@OneToOne(cascade=CascadeType.ALL)
+	private Scooter scooter;
 	
 	
 	@Enumerated(EnumType.STRING)
@@ -51,7 +56,17 @@ public class Battery {
 	
 	
 
-
+	public Battery(Scooter scooter,Hub hub) {
+		super();
+		this.voltage = 48;
+		this.capacity = 13;
+		this.dateOfBirth = new Date();
+		this.swapList = new ArrayList<>();
+		this.scooter=scooter;
+		this.hub=hub;
+		this.state = EBattery.IN_USO;
+		
+	}
 	
 
 	
@@ -144,6 +159,22 @@ public class Battery {
 
 	public void setHub(Hub hub) {
 		this.hub = hub;
+	}
+
+
+
+
+
+	public Scooter getScooter() {
+		return scooter;
+	}
+
+
+
+
+
+	public void setScooter(Scooter scooter) {
+		this.scooter = scooter;
 	}
 
 

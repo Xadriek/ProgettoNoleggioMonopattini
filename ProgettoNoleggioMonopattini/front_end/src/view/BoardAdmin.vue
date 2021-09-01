@@ -128,6 +128,7 @@ export default {
       countTransation: 0,
       countRentOngoing: 0,
       count: 0,
+      show_details:true
     };
   },
   mounted() {

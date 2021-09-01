@@ -42,7 +42,7 @@ public class Scooter {
 		super();
 
 
-		this.battery = new Battery();
+		this.battery = new Battery(this,null);
 		this.dateOfBirth = new Date();
 		this.swapList = new ArrayList<Swap>();
 	}
