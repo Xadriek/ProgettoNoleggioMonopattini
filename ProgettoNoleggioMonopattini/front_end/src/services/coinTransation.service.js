@@ -19,12 +19,11 @@ class CoinTransationService{
             
         },{headers: authHeader() })
         } 
-    getCoinTransationByPartner(partner){
-        return axios.get(API_URL + 'coinTransations'+ '/'+ 'toPartner',{
-        params:{
-            partnerID:partner.id
-     }, header: authHeader()});
-    }    
+    getCoinTransationByPartner(partnerId){
+        return axios.get(API_URL + 'coinTransations'+'/'+ 'partner'+ '/'+ partnerId,{
+         header: authHeader()});
+    }
+        
 }
 
 

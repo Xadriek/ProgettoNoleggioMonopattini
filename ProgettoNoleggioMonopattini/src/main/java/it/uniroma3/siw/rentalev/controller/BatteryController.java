@@ -21,8 +21,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.uniroma3.siw.rentalev.model.Battery;
-
+import it.uniroma3.siw.rentalev.model.Hub;
 import it.uniroma3.siw.rentalev.repository.BatteryRepository;
+import it.uniroma3.siw.rentalev.repository.HubRepository;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -31,6 +32,10 @@ public class BatteryController {
 
   @Autowired
   BatteryRepository batteryRepository;
+  
+  @Autowired
+  HubRepository hubRepository;
+  
   private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
   @GetMapping("/batteries")
@@ -59,6 +64,18 @@ public class BatteryController {
 
     if (tutorialData.isPresent()) {
       return new ResponseEntity<>(tutorialData.get(), HttpStatus.OK);
+    } else {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+  }
+  
+  @GetMapping("/batteries/hub/{hubId}")
+  public ResponseEntity<List<Battery>> getBatteryByHub(@PathVariable("hubId") long hubId) {
+    Optional<Hub> _hub=hubRepository.findById(hubId);
+	  List<Battery> tutorialData = batteryRepository.findByHub(_hub.get());
+
+    if (!tutorialData.isEmpty()) {
+      return new ResponseEntity<>(tutorialData, HttpStatus.OK);
     } else {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }

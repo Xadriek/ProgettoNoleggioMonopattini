@@ -78,8 +78,9 @@
 <script>
 
 import AddHub from '../components/AddHub.vue';
+import coinTransationService from '../services/coinTransation.service';
 import partnerInformationService from "../services/partnerInformation.service.js"
-
+import batteryService from '../services/battery.service';
 
 
 export default {
@@ -119,28 +120,43 @@ export default {
       },
       
       batteries:[],
-      coinTransation:{},
-      content:""
+      coinTransation:[],
+      content:"",
+      currentPartner:{}
       
 
     };
   },
 
-  mounted() {
+  
      
+  mounted(){
     partnerInformationService.getPartnerByEmail(this.currentUser.email)
     .then(response=>{
       console.log(response.data);
       this.currentPartner=response.data;
-      this.coinTransation=this.currentPartner.coinTransation;
-      console.log(this.coinTransation);
-      this.batteries=this.currentPartner.hub.stokedBattery;
-      console.log(this.batteries);
-      })
-      
-  },
+      this.infoPartner(this.currentPartner);
+      })}
+  ,
   methods:{
-
+    infoPartner(currentPartner){
+      console.log(currentPartner);
+      coinTransationService.getCoinTransationByPartner(currentPartner.id).then(
+        response=>{
+          console.log(response.data);
+          this.coinTransation=response.data;
+        }
+      ),
+      console.log(currentPartner.hub.id);
+      batteryService.getBatteryByHub(currentPartner.hub.id).then(
+        response=>{
+          console.log(response.data);
+          this.batteries=response.data;
+        }
+      )
+        
+    },
+    
   
   }
 

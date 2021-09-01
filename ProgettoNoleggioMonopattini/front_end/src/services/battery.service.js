@@ -10,7 +10,10 @@ class BatteryService{
 
     updatebattery(battery){
         return axios.put(API_URL + 'batteries' + '/'+ battery.id ,{battery:battery} ,{headers: authHeader() })}
-         
+    
+    getBatteryByHub(batteryId){
+        return axios.get(API_URL+ 'batteries'+ '/'+ 'hub'+ '/'+ batteryId, {headers: authHeader() })
+    }
 }
 
 export default new BatteryService();
