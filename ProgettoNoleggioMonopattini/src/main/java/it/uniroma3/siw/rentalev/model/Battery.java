@@ -17,6 +17,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 
 
@@ -36,6 +38,7 @@ public class Battery {
 	private Date dateOfBirth;
 	@Column(nullable=true)
 	private Date dateOfDismiss;
+	@JsonIgnore
 	@OneToMany(mappedBy="battery")
 	private List<Swap> swapList;
 	@ManyToOne

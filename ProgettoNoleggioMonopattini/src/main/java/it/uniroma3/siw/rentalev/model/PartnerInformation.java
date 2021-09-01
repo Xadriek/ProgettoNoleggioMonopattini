@@ -16,6 +16,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 
 @Entity
@@ -57,7 +59,7 @@ public class PartnerInformation implements UserInformation {
 	private String email;
 	@Column
 	private String username;
-
+	@JsonIgnore
 	@OneToMany(mappedBy="toPartner")
 	private List<CoinTransation> coinTransations;
 

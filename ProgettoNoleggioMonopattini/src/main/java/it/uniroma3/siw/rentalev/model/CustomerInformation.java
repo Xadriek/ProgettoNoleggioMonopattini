@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 
 
@@ -48,7 +50,7 @@ public class CustomerInformation implements UserInformation{
 	@OneToOne(cascade = CascadeType.PERSIST)
 	private Rent rent;
 	
-	
+	@JsonIgnore
 	@OneToMany(mappedBy="fromCustomer")
 	private List<CoinTransation> coinTransactions;
 
