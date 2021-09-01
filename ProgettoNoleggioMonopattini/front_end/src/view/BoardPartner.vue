@@ -94,7 +94,6 @@ export default {
   data() {
     return {
       show: true,
-      swaps:[],
       ArrivalSwap: ['ID', 'Event', 'Scooter','UserName'],
       itemsA: [
         {
@@ -121,7 +120,6 @@ export default {
       
       batteries:[],
       coinTransation:[],
-      content:"",
       currentPartner:{}
       
 
