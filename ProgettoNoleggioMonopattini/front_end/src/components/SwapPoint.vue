@@ -18,8 +18,12 @@
           <b-list-group-item >{{selectedPartner.telephon}}</b-list-group-item>
         </b-list-group>
       </b-card>
+      <div v-if="show2">
        <b-button type="submit" variant="primary" class="m-1" @click="showMsgBoxOne">Conferma</b-button>
+      
       <b-button type="reset" variant="danger" class="m-1">Annulla</b-button>
+      </div>
+      <div v-else-if="this.selectedPartner.id!=null">Non hai abbastanza monete</div>
     </b-form>
   </div>
 </template>
@@ -45,7 +49,9 @@ export default {
         customerId:0,
         coin:0
       },
+      customerCoin:Number,
       show: true,
+      show2:false,
       selectedPartner:{},
       address:{},
       numBatteries:5,
@@ -112,6 +118,9 @@ export default {
       customerInformationService.getCustomerByEmail(this.currentUser.email).then(
         response=>{
           console.log(response.data.id);
+          this.customerCoin=response.data.customerWallet.coin;
+          if(this.customerCoin>1){this.show2=true;}
+          console.log(this.customerCoin);
           this.requestBody.customerId=response.data.id;
         }
       )

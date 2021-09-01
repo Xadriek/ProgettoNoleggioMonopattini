@@ -125,6 +125,8 @@ public class CoinTransationController {
 		CustomerInformation customerInformation=_customerInformation.get();
 		Scooter scooter=customerInformation.getRent().getScooter();
 		Battery battery=scooter.getBattery();
+		partnerInformation.getPartnerWallet().setCoin(partnerInformation.getPartnerWallet().getCoin()+2);
+		customerInformation.getCustomerWallet().setCoin(customerInformation.getCustomerWallet().getCoin()-2);
 		try {
 			CoinTransation _coinTransation = coinTransationRepository.save(new CoinTransation( customerInformation,partnerInformation,coinTransationRequest.getCoin(),new Swap(partnerInformation.getHub(),battery,scooter)));
 			battery.setHub(partnerInformation.getHub());
@@ -133,6 +135,8 @@ public class CoinTransationController {
 			batteryRepository.save(battery);
 			scooter.setBattery(null);
 			scooterRepository.save(scooter);
+			customerInformationRepository.save(customerInformation);
+			partnerInformationRepository.save(partnerInformation);
 
 			return new ResponseEntity<>(_coinTransation, HttpStatus.CREATED);
 		} catch (Exception e) {
