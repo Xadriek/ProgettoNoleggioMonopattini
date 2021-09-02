@@ -46,29 +46,34 @@
           <b-card no-body>
             <b-tabs card>
               <b-tab no-body title="Clienti">
-                <b-container class="bv-row">
-                  <b-row class="my-1">
-                    <b-col v-for="type in types" :key="type">
-                      <label :for="`type-${type}`">
-                        <code>{{ type }}</code
-                        >:</label
-                      >
-                      <b-form-input :id="`type-${type}`"></b-form-input>
-                      </b-col>
-                      <b-col>
-                      <label >  Active</label                      >
-                      <b-form-checkbox
-                        v-model="checked"
-                        name="check-button"
-                        switch
-                      >
-                        Abilitazione 
-                      </b-form-checkbox>
-                    </b-col>
-                  </b-row>
-                </b-container>
 
-                <b-table :items="customers" striped hover> </b-table>
+                <b-list-group>
+                  <b-list-group-item
+                    class="d-flex justify-content-between align-items-center"
+                    active
+                  >
+                    id | name | surname | address.street | customerWallet.coin |
+                    rent.id | email | username | active
+                  </b-list-group-item>
+                  <b-list-group-item
+                    class="d-flex justify-content-between align-items-center"
+                    v-for="customers in customers"
+                    v-bind:key="customers.id"
+                  >
+                    {{ customers.id }} | {{ customers.name }} |
+                    {{ customers.surname }} | {{ customers.address.street }} |
+                    {{ customers.customerWallet.coin }} |
+                    {{ customers.rent.id }} | {{ customers.email }} |
+                    {{ customers.username }} | {{ customers.active }}
+                    <b-form-checkbox
+                      v-model="checked"
+                      name="check-button"
+                      switch
+                    >
+                    </b-form-checkbox>
+                  </b-list-group-item>
+                </b-list-group>
+                
               </b-tab>
 
               <b-tab no-body title="Partner">
