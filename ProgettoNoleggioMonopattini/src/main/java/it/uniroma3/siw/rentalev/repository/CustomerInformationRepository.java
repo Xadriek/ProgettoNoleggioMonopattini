@@ -20,8 +20,6 @@ public interface CustomerInformationRepository extends JpaRepository<CustomerInf
 		
 		List<CustomerInformation> findBySurname(String surname);
 
-		List<CustomerInformation> findByIsActive(boolean b);
-
 		CustomerInformation findByEmail(String email);
 
 }

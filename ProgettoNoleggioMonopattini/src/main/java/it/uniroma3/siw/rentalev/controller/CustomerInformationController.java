@@ -18,12 +18,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import it.uniroma3.siw.rentalev.model.Address;
 import it.uniroma3.siw.rentalev.model.CustomerInformation;
 import it.uniroma3.siw.rentalev.payload.request.RentRequest;
 import it.uniroma3.siw.rentalev.repository.CustomerInformationRepository;
+import it.uniroma3.siw.rentalev.repository.RentRepository;
 
 
 
@@ -34,20 +34,19 @@ public class CustomerInformationController {
 
   @Autowired
   CustomerInformationRepository customerInformationRepository;
-  
+  @Autowired
+  RentRepository rentRepository;
 
 
   @GetMapping("/customerInformations")
-  public ResponseEntity<List<CustomerInformation>> getAllCustomerInformations(@RequestParam(required = false) Boolean isActive) {
+  public ResponseEntity<List<CustomerInformation>> getAllCustomerInformations() {
     try {
       List<CustomerInformation> customerInformations = new ArrayList<CustomerInformation>();
 
       
-      if (isActive == null) {
-    	  customerInformationRepository.findAll().forEach(customerInformations::add);
-      }else  if(isActive) { 
-    	  customerInformationRepository.findByIsActive(isActive).forEach(customerInformations::add);
-        }
+     
+    customerInformationRepository.findAll().forEach(customerInformations::add);
+      
 
       if (customerInformations.isEmpty()) {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -83,16 +82,14 @@ public class CustomerInformationController {
     }
   }
   @PutMapping("/customerInformations/{id}")
-  public ResponseEntity<CustomerInformation> updateCustomerInformation(@PathVariable("id") long id, @RequestBody CustomerInformation customerInformation) {
+  public ResponseEntity<CustomerInformation> updateCustomerInformation(@PathVariable("id") long id, @RequestBody Boolean isActive) {
     Optional<CustomerInformation> customerInformationData = customerInformationRepository.findById(id);
 
     if (customerInformationData.isPresent()) {
     	CustomerInformation _customerInformation = customerInformationData.get();
-    	_customerInformation.setAddress(customerInformation.getAddress());
-    	_customerInformation.setActive(customerInformation.isActive());
-    	_customerInformation.setTelephon(customerInformation.getTelephon());
-    	_customerInformation.setCustomerWallet(customerInformation.getCustomerWallet());
-    	
+    	_customerInformation.getRent().setOngoing(isActive);
+    	rentRepository.save(_customerInformation.getRent());
+
       return new ResponseEntity<>(customerInformationRepository.save(_customerInformation), HttpStatus.OK);
     } else {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -120,21 +117,7 @@ public class CustomerInformationController {
 
   }
 
-  @GetMapping("/customerInformations/isActive")
-  public ResponseEntity<List<CustomerInformation>> findByIsActive() {
-    try {
-      List<CustomerInformation> customerInformation = customerInformationRepository.findByIsActive(true);
 
-      if (customerInformation.isEmpty()) {
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-      }
-      return new ResponseEntity<>(customerInformation, HttpStatus.OK);
-    } catch (Exception e) {
-      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
-  }
-  
   @GetMapping("/customerInformation/{email}")
   public ResponseEntity<CustomerInformation> getCustomerInformationByEmail(@PathVariable("email") String emailRequest) {
     CustomerInformation customerInformationData = customerInformationRepository.findByEmail(emailRequest);

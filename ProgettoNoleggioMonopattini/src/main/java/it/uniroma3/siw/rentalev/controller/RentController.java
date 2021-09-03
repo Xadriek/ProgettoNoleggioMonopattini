@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.uniroma3.siw.rentalev.model.Rent;
+import it.uniroma3.siw.rentalev.repository.BatteryRepository;
 import it.uniroma3.siw.rentalev.repository.RentRepository;
+import it.uniroma3.siw.rentalev.repository.ScooterRepository;
 
 
 
@@ -30,8 +32,12 @@ public class RentController {
 
 	@Autowired
 	RentRepository rentRepository;
+	
+	@Autowired
+	BatteryRepository batteryRepository;
 
-
+	@Autowired
+	ScooterRepository scooterRepository;
 
 	@GetMapping("/rents")
 	public ResponseEntity<List<Rent>> getAllRents(@RequestParam(required = false) Boolean ongoing) {
@@ -78,16 +84,20 @@ public class RentController {
     }
   }*/
 	@PutMapping("/rents/{id}")
-	public ResponseEntity<Rent> updateRent(@PathVariable("id") long id, @RequestBody Rent rent) {
+	public ResponseEntity<Rent> updateRent(@PathVariable("id") long id, @RequestBody String dismiss) {
 		Optional<Rent> rentData = rentRepository.findById(id);
 
 		if (rentData.isPresent()) {
 			Rent _rent = rentData.get();
-			if(rent.getFinishRent()!=null) {
+			if(dismiss!=null) {
 			_rent.setFinishRent(new Date());
+			_rent.setOngoing(false);
+			_rent.getScooter().setDateOfDismiss(new Date());
+			_rent.getScooter().getBattery().setDateOfDismiss(new Date());
+			scooterRepository.save(_rent.getScooter());
+			batteryRepository.save(_rent.getScooter().getBattery());
 			}
 
-			_rent.setOngoing(rent.getOngoing());
 			
 			return new ResponseEntity<>(rentRepository.save(_rent), HttpStatus.OK);
 		} else {
