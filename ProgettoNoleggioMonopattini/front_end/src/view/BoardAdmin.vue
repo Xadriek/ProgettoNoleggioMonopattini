@@ -57,14 +57,14 @@
                   </b-list-group-item>
                   <b-list-group-item
                     class="d-flex justify-content-between align-items-center"
-                    v-for="customers in customers"
-                    v-bind:key="customers.id"
+                    v-for="customer in customers"
+                    v-bind:key="customer.id"
                   >
-                    {{ customers.id }} | {{ customers.name }} |
-                    {{ customers.surname }} | {{ customers.address.street }} |
-                    {{ customers.customerWallet.coin }} |
-                    {{ customers.rent.id }} | {{ customers.email }} |
-                    {{ customers.username }} | {{ customers.active }}
+                    {{ customer.id }} | {{ customer.name }} |
+                    {{ customer.surname }} | {{ customer.address.street }} |
+                    {{ customer.customerWallet.coin }} |
+                    {{ customer.rent.id }} | {{ customer.email }} |
+                    {{ customer.username }} | {{ customer.active }}
                     <b-form-checkbox
                       v-model="checked"
                       name="check-button"
@@ -77,7 +77,41 @@
               </b-tab>
 
               <b-tab no-body title="Partner">
-                <b-table striped hover :items="partners"></b-table>
+                <b-list-group>
+                    <b-list-group horizontal>
+                      <b-list-group-item>id</b-list-group-item>
+                      <b-list-group-item>Username   </b-list-group-item>
+                      <b-list-group-item>P.Iva      </b-list-group-item>
+                      <b-list-group-item>Address    </b-list-group-item>
+                      <b-list-group-item>Coin       </b-list-group-item>
+                      <b-list-group-item>StartPartnership</b-list-group-item>
+                      <b-list-group-item>ClosurePartnership</b-list-group-item>
+                      <b-list-group-item>IsActive</b-list-group-item>
+                      <b-list-group-item>Hub</b-list-group-item>
+                    </b-list-group>
+                    <b-list-group horizontal
+                    
+                    v-for="partner in partners"
+                    v-bind:key="partner.id"
+                    >
+                      <b-list-group-item>{{partner.id}}</b-list-group-item>
+                      <b-list-group-item>{{partner.username}}   </b-list-group-item>
+                      <b-list-group-item>{{partner.pIva}}     </b-list-group-item>
+                      <b-list-group-item>{{partner.address.street}}{{partner.address.numberStreet}}{{partner.address.city}}</b-list-group-item>
+                      <b-list-group-item>{{partner.partnerWallet.coin}}       </b-list-group-item>
+                      <b-list-group-item>{{partner.startPartnership}}</b-list-group-item>
+                      <b-list-group-item>{{partner.ClosurePartnership}}</b-list-group-item>
+                      <b-list-group-item><b-form-checkbox
+                      v-model="partner.isActive"
+                      name="check-button"
+                      switch
+                    >
+                    {{partner.isActive}}
+                    </b-form-checkbox></b-list-group-item>
+                      <b-list-group-item>{{partner.hub.id}}</b-list-group-item>
+
+                    </b-list-group>
+                </b-list-group>
               </b-tab>
 
               <b-tab no-body title="Rents">
@@ -140,6 +174,9 @@ export default {
     this.allCounters();
     this.allCoinTransation();
     this.allRents();
+  },
+  updated(){
+    
   },
   methods: {
     rentOutgoing() {
