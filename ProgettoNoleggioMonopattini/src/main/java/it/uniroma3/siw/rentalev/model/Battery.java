@@ -64,7 +64,7 @@ public class Battery {
 		this.swapList = new ArrayList<>();
 		this.scooter=scooter;
 		this.hub=hub;
-		this.state = EBattery.IN_USO;
+		this.state = EBattery.IN_CARICA;
 		
 	}
 	

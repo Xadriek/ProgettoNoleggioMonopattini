@@ -9,7 +9,7 @@ class CoinTransationService{
         return axios.get(API_URL + 'coinTransations', {headers: authHeader() })}
 
     updateCoinTransations(coinTransation){
-        return axios.put(API_URL + 'coinTransations' + '/'+ coinTransation.id ,{coinTransation:coinTransation} ,{headers: authHeader() })}
+        return axios.put(API_URL + 'coinTransations' + '/'+ coinTransation.id, {headers: authHeader() })}
     
     saveCoinTransaction(requestBody){
         return axios.post(API_URL + 'coinTransations',{
@@ -27,6 +27,9 @@ class CoinTransationService{
         return axios.get(API_URL + 'coinTransations'+'/'+ 'customer'+ '/'+ customerId,{
          header: authHeader()});
     }
+    completeSwap(coinTransation){
+        return axios.put(API_URL + 'coinTransations' + '/'+ coinTransation.id ,{coinTransation:coinTransation} ,{headers: authHeader() })} 
+    
         
 }
 

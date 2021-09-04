@@ -43,6 +43,7 @@ public class Scooter {
 
 
 		this.battery = new Battery(this,null);
+		this.battery.setState(EBattery.IN_USO);
 		this.dateOfBirth = new Date();
 		this.swapList = new ArrayList<Swap>();
 	}

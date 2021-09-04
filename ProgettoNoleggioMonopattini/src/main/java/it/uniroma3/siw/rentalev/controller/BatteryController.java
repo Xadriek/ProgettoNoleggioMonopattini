@@ -1,7 +1,6 @@
 package it.uniroma3.siw.rentalev.controller;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,7 +20,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.uniroma3.siw.rentalev.model.Battery;
+import it.uniroma3.siw.rentalev.model.EBattery;
 import it.uniroma3.siw.rentalev.model.Hub;
+import it.uniroma3.siw.rentalev.payload.request.BatteryRequest;
 import it.uniroma3.siw.rentalev.repository.BatteryRepository;
 import it.uniroma3.siw.rentalev.repository.HubRepository;
 
@@ -82,38 +83,25 @@ public class BatteryController {
   }
 
   @PostMapping("/batteries")
-  public ResponseEntity<Battery> createBattery(@RequestBody Battery battery) {
+  public ResponseEntity<Battery> createBattery(@RequestBody BatteryRequest batteryRequest) {
     try {
-      Battery _battery = batteryRepository.save(new Battery());
+    Optional<Hub> _hub=hubRepository.findById(batteryRequest.getHubId());
+      Battery _battery = batteryRepository.save(new Battery(null,_hub.get()));
       return new ResponseEntity<>(_battery, HttpStatus.CREATED);
     } catch (Exception e) {
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
   @PutMapping("/batteries/{id}")
-  public ResponseEntity<Battery> updateBattery(@PathVariable("id") long id, @RequestBody Battery battery) {
+  public ResponseEntity<Battery> updateBattery(@PathVariable("id") long id) {
     Optional<Battery> batteryData = batteryRepository.findById(id);
+    if(batteryData.isPresent()) {
     Battery _battery = batteryData.get();
+    _battery.setState(EBattery.CARICA);
     
-    if ((batteryData.isPresent()) && (battery.getHub()!=null) && (_battery.getHub()==null)) {
-    	_battery.setHub(battery.getHub());
-
-    	_battery.setState(battery.getState());
-      return new ResponseEntity<>(batteryRepository.save(_battery), HttpStatus.OK);
-    } else 
-    	if (batteryData.isPresent() && (_battery.getHub()==battery.getHub())) {
-    	_battery.setState(battery.getState());
-    	if(battery.getDateOfDismiss()!=null) {
-    		_battery.setDateOfDismiss(new Date());
-    	}
       return new ResponseEntity<>(batteryRepository.save(_battery), HttpStatus.OK);
     }else
-    	if(batteryData.isPresent() &&(battery.getHub()==null) && (_battery.getHub()!=null)){
-    		_battery.setHub(null);
-    		_battery.setState(battery.getState());
-    	      return new ResponseEntity<>(batteryRepository.save(_battery), HttpStatus.OK);
-    	}else
-    
+    	    
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     
   }

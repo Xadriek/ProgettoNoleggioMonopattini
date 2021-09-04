@@ -144,23 +144,24 @@ public class CoinTransationController {
 		}
 	}  
 	@PutMapping("/coinTransations/{id}")
-	public ResponseEntity<CoinTransation> updateCoinTransation(@PathVariable("id") long id, @RequestBody SwapRequest swapRequest) {
+	public ResponseEntity<CoinTransation> updateCoinTransation(@PathVariable("id") long id) {
 		Swap _exitSwap=null;
 		Optional<CoinTransation> coinTransactionData = coinTransationRepository.findById(id);
-		Optional<Battery> batteryData=batteryRepository.findById(swapRequest.getId_battery());
-		Optional<Scooter> scooterData=scooterRepository.findById(swapRequest.getId_scooter());
-		Optional<Hub> hubData=hubRepository.findById(swapRequest.getId_hub());
-		if(batteryData.isPresent() && scooterData.isPresent() && hubData.isPresent()) {
-			Hub _hub=hubData.get();
-			Scooter _scooter=scooterData.get();
-			Battery _battery=batteryData.get();
-			_exitSwap= new Swap(_hub,_battery,_scooter);
-			_battery.setHub(null);
-			_battery.setScooter(_scooter);
-			_battery.setState(EBattery.IN_USO);
-			batteryRepository.save(_battery);
-			_scooter.setBattery(_battery);
-			scooterRepository.save(_scooter);
+		Hub hub=coinTransactionData.get().getToPartner().getHub();
+		List<Battery> batteries=hub.getStokedBattery();
+		Optional<Battery> battery=batteries.stream()
+				.filter(bat->bat.getState()==EBattery.CARICA)
+				.findFirst();
+		Scooter scooter=coinTransactionData.get().getFromCustomer().getRent().getScooter();
+		
+		if(battery.isPresent() && scooter!=null && hub!=null) {
+			_exitSwap= new Swap(hub,battery.get(),scooter);
+			battery.get().setHub(null);
+			battery.get().setScooter(scooter);
+			battery.get().setState(EBattery.IN_USO);
+			batteryRepository.save(battery.get());
+			scooter.setBattery(battery.get());
+			scooterRepository.save(scooter);
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}

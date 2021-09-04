@@ -5,7 +5,7 @@
     <div>
       </div>
       
-        <b-card title="Inserimento Nuovo Noleggio">
+        <b-card v-if="this.currentPartner==null" title="Inserimento Nuovo Noleggio">
           <add-hub />
         </b-card>
       
@@ -19,7 +19,7 @@
             class="text-center"
           >
             <b-button variant="primary">
-              I Swap effettuati sono : <b-badge variant="light">4</b-badge>
+              I Swap effettuati sono : <b-badge variant="light">{{countCoinTransationComplete}}</b-badge>
             </b-button>
           </b-card>
 
@@ -30,7 +30,7 @@
             class="text-center"
           >
             <b-button variant="info">
-              Numero Batterie Cariche: <b-badge variant="light">9</b-badge>
+              Numero Batterie Cariche: <b-badge variant="light">{{countBatteryCharged}}</b-badge>
             </b-button>
           </b-card>
         </b-card-group>
@@ -42,7 +42,43 @@
             <b-tab no-body title="Swap in Arrivo">
               
              
-              <b-table striped hover :items="swaps" :ArrivalSwap="fields"></b-table>
+              <b-list-group >
+                    <b-list-group horizontal="md"
+                     fluid="md"
+                    active 
+                  >
+                      <b-list-group-item>id</b-list-group-item>
+                      <b-list-group-item>Event Log</b-list-group-item>
+                      <b-list-group-item>Scooter  </b-list-group-item>
+                      <b-list-group-item>Customer Username   </b-list-group-item>
+                    </b-list-group>
+                    <b-list-group horizontal="md"
+                     fluid="md"
+                    active
+                    
+                    v-for="coinTransation in coinTransationsNotComplete"
+                    v-bind:key="coinTransation.id"
+                    >
+                      <b-list-group-item>{{coinTransation.id}}</b-list-group-item>
+                      <b-list-group-item>{{coinTransation.logTransition}}   </b-list-group-item>
+                      <b-list-group-item>{{coinTransation.entrySwap.scooter.id}}     </b-list-group-item>
+                      <b-list-group-item>{{coinTransation.fromCustomer.username}}</b-list-group-item>
+                      <b-list-group-item>
+                        <b-button-group>
+                             <b-button variant="outline-primary" @click="showMsgBoxIncompleteSwap(coinTransation)">
+                         <b-iconstack >
+                                <b-icon stacked icon="square"></b-icon>
+                                
+                                <b-icon stacked icon="check"></b-icon>
+                                
+                                </b-iconstack>
+                                Complete Swap
+                             </b-button>
+                             </b-button-group>
+                      </b-list-group-item>
+                      
+                    </b-list-group>
+                </b-list-group>
 
 
 
@@ -50,14 +86,85 @@
 
             <b-tab no-body title="Swap Terminati">
 
-              <b-table striped hover :items="itemsB" :TerminalSwap="fields"></b-table>
+               <b-list-group >
+                    <b-list-group horizontal="md"
+                     fluid="md"
+                    active 
+                  >
+                      <b-list-group-item>id</b-list-group-item>
+                      <b-list-group-item>From Customer</b-list-group-item>
+                      <b-list-group-item>To Partner  </b-list-group-item>
+                      <b-list-group-item>Log  </b-list-group-item>
+                      <b-list-group-item>Coin  </b-list-group-item>
+                      <b-list-group-item>Complete</b-list-group-item>
+                    </b-list-group>
+                    <b-list-group horizontal="md"
+                     fluid="md"
+                    active
+                    
+                    v-for="coinTransation in coinTransationsComplete"
+                    v-bind:key="coinTransation.id"
+                    >
+                      <b-list-group-item>{{coinTransation.id}}</b-list-group-item>
+                      <b-list-group-item>{{coinTransation.fromCustomer}}   </b-list-group-item>
+                      <b-list-group-item>{{coinTransation.toPartner}}     </b-list-group-item>
+                      <b-list-group-item>{{coinTransation.logTransition}}</b-list-group-item>
+                      <b-list-group-item>{{coinTransation.coin}}       </b-list-group-item>
+                      <b-list-group-item >
+                           <b-iconstack v-if="coinTransation.isComplete==true" >
+                                <b-icon stacked icon="square"></b-icon>
+                                <b-icon stacked icon="check"></b-icon>
+                                </b-iconstack>
+                      </b-list-group-item>
+                      
+                    </b-list-group>
+                </b-list-group>
 
             </b-tab>
 
             <b-tab no-body title="Batterie">
              
 
-              <b-table striped hover :items="itemsC" :Batterie="fields"></b-table>
+             <b-list-group >
+                    <b-list-group horizontal="md"
+                     fluid="md"
+                    active 
+                  >
+                      <b-list-group-item>id</b-list-group-item>
+                      <b-list-group-item>Voltage</b-list-group-item>
+                      <b-list-group-item>Capacity</b-list-group-item>
+                      <b-list-group-item>Date Immission</b-list-group-item>
+                      <b-list-group-item>State</b-list-group-item>
+                      <b-list-group-item>
+                        <b-button-group>
+                             <b-button variant="outline-primary" @click="showMsgBoxBattery()">
+                          <b-icon icon="x-circle"></b-icon> Add Battery
+                             </b-button>
+                             </b-button-group>
+                      </b-list-group-item>
+                    </b-list-group>
+                    <b-list-group horizontal="md"
+                     fluid="md"
+                    active
+                    
+                    v-for="battery in batteries"
+                    v-bind:key="battery.id"
+                    >
+                      <b-list-group-item>{{battery.id}}</b-list-group-item>
+                      <b-list-group-item>{{battery.voltage}}   </b-list-group-item>
+                      <b-list-group-item>{{battery.capacity}}     </b-list-group-item>
+                      <b-list-group-item>{{battery.dateOfBirth}}</b-list-group-item>
+                      <b-list-group-item>{{battery.state}}       </b-list-group-item>
+                      <b-list-group-item>
+                        <b-button-group>
+                             <b-button variant="outline-primary" @click="showMsgBoxBatteryState(battery)">
+                          <b-icon icon="x-circle"></b-icon> Change State Battery
+                             </b-button>
+                             </b-button-group>
+                      </b-list-group-item>
+                      
+                    </b-list-group>
+                </b-list-group>
 
             </b-tab>
             
@@ -83,6 +190,7 @@ import partnerInformationService from "../services/partnerInformation.service.js
 import batteryService from '../services/battery.service';
 
 
+
 export default {
   components: { AddHub },
   name: "partner",
@@ -94,33 +202,19 @@ export default {
   data() {
     return {
       show: true,
-      ArrivalSwap: ['ID', 'Event', 'Scooter','UserName'],
-      itemsA: [
-        {
-          
-        }
-      ],
-      
-      TerminalSwap: ['ID', 'Customer', 'Partner','Log','Coin','IsComplete'],
-      itemsB: [
-        {
-          
-        }
-      ],
-      Batterie: ['ID', 'Voltaggio', 'Capacita','DataImmissione','Stato'],
-      itemsC: [
-        {
-          
-        }
-      ],
+      countCoinTransationComplete:0,
+      countBatteryCharged:0,
       geocode:{
         latitude:null,
         longitude:null
       },
       
       batteries:[],
-      coinTransation:[],
-      currentPartner:{}
+      coinTransations:[],
+      currentPartner:{},
+      coinTransationsComplete:[],
+      coinTransationsNotComplete:[],
+
       
 
     };
@@ -137,12 +231,69 @@ export default {
       })}
   ,
   methods:{
+    showMsgBoxIncompleteSwap(coinTransation){
+       this.conferm = ''
+        this.$bvModal.msgBoxConfirm('Confermi il completamento dello swap?')
+          .then(value => { 
+            if(value){
+              console.log(value);
+              this.completeSwap(coinTransation);
+            }
+          })
+    },
+    completeSwap(coinTransation){
+      coinTransationService.updateCoinTransations(coinTransation).then(
+        response=>{
+          console.log(response.data);
+          coinTransation=response.data;
+        }
+      )
+    },
+    showMsgBoxBattery(){
+      this.conferm = ''
+        this.$bvModal.msgBoxConfirm('Aggiungi una batteria?')
+          .then(value => { 
+            if(value){
+              console.log(value);
+              this.addBattery();
+            }
+          })
+    },
+    addBattery(){
+      batteryService.createBattery(this.currentPartner.hub.id).then(
+        response=>{
+          console.log(response.data);
+
+        }
+      )
+    },
+    showMsgBoxBatteryState(battery){
+       this.conferm = ''
+        this.$bvModal.msgBoxConfirm('Vuoi cambiare lo stato della batteria?')
+          .then(value => { 
+            if(value){
+              console.log(value);
+              this.changeState(battery);
+            }
+          })
+    },
+    changeState(battery){
+      batteryService.updatebattery(battery).then(
+        response=>{
+          console.log(response.data);
+          battery=response.data;
+        }
+      )
+    },
     infoPartner(currentPartner){
       console.log(currentPartner);
       coinTransationService.getCoinTransationByPartner(currentPartner.id).then(
         response=>{
           console.log(response.data);
-          this.coinTransation=response.data;
+          this.coinTransations=response.data;
+          this.coinTransationsComplete=this.coinTransations.filter(coinTransation=>coinTransation.isComplete==true);
+          this.coinTransationsNotComplete=this.coinTransations.filter(coinTransation=>coinTransation.isComplete==false);
+          this.countCoinTransationsComplete=this.coinTransationsComplete.length;
         }
       ),
       console.log(currentPartner.hub.id);
@@ -150,6 +301,8 @@ export default {
         response=>{
           console.log(response.data);
           this.batteries=response.data;
+          this.countBatteryCharged=this.batteries.filter(battery=>battery.state=='CARICA').length;
+          
         }
       )
         
