@@ -28,6 +28,10 @@ class RentService{
             }, {headers: authHeader() })
             ;
         }
+        updateRent(rent,dismiss){
+        return axios.put(API_URL + 'rents' + '/'+ rent.id ,{
+                dismiss:dismiss
+            } ,{headers: authHeader() })}
     }
 
 export default new RentService();

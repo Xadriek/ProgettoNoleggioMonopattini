@@ -32,7 +32,7 @@ class CustomerInformationService{
        
     }
     updateCustomerInformation(customerInformation){
-      return axios.put(API_URL + 'customerInformations' + '/'+ customerInformation.id ,{customerInformations:customerInformation} ,{headers: authHeader() })}
+      return axios.put(API_URL + 'customerInformations' + '/'+ customerInformation.id ,{isActive:customerInformation.isActive} ,{headers: authHeader() })}
 }
     
 

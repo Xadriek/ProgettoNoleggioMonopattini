@@ -45,7 +45,7 @@ public class Rent {
 		super();
 		this.startRent = new Date();
 		this.scooter = new Scooter();
-		this.ongoing = false;
+		this.ongoing = true;
 		this.contract =new Contract(null);
 		this.numberPolicy=initNP();
 	}

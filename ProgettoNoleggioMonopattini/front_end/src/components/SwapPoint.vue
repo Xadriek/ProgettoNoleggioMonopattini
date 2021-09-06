@@ -18,11 +18,12 @@
           <b-list-group-item >{{selectedPartner.telephon}}</b-list-group-item>
         </b-list-group>
       </b-card>
-
+      <div v-if="show2">
+       <b-button type="submit" variant="primary" class="m-1" @click="showMsgBoxOne">Conferma</b-button>
       
-
-      <b-button type="submit" variant="primary" class="m-1">Conferma</b-button>
       <b-button type="reset" variant="danger" class="m-1">Annulla</b-button>
+      </div>
+      <div v-else-if="this.selectedPartner.id!=null">Non hai abbastanza monete</div>
     </b-form>
   </div>
 </template>
@@ -30,12 +31,27 @@
 <script>
 import AddGoogleMap from "../components/AddGoogleMap";
 import partnerInformationService from "../services/partnerInformation.service"
+import coinTransationService from '../services/coinTransation.service';
+import customerInformationService from "../services/customerInformation.service"
 export default {
   name: "SwapPoint",
+  computed: {
+    currentUser() {
+      return this.$store.state.auth.user;
+    }
+  },
   data() {
     return {
       form: {},
+      conferm:'',
+      requestBody:{
+        partnerId:0,
+        customerId:0,
+        coin:0
+      },
+      customerCoin:Number,
       show: true,
+      show2:false,
       selectedPartner:{},
       address:{},
       numBatteries:5,
@@ -50,7 +66,7 @@ export default {
   methods: {
     onSubmit(event) {
       event.preventDefault();
-      alert(JSON.stringify(this.form));
+      
     },
     onReset(event) {
       event.preventDefault();
@@ -60,6 +76,25 @@ export default {
       this.$nextTick(() => {
         this.show = true;
       });
+    },
+    initSwap(){
+      console.log(this.requestBody);
+      coinTransationService.saveCoinTransaction(this.requestBody).then(
+        response=>{
+          console.log(response.data);
+        }
+      );
+    },
+    showMsgBoxOne() {
+        this.conferm = ''
+        this.$bvModal.msgBoxConfirm('Confermi lo Swap?')
+          .then(value => { 
+            if(value){
+              console.log(value);
+              this.initSwap();
+            }
+          })
+         
     },
     hubPosition(position){
       this.position=position;
@@ -71,9 +106,22 @@ export default {
           this.address=this.selectedPartner.address;
           this.hub=this.selectedPartner.hub;
           console.log(this.hub);
-          this.numBatteries=this.hub.stokedBattery.size();
-          console.log(this.numBatteries);
+          this.requestBody.partnerId=this.selectedPartner.id;
+          this.getCustomer();
+          this.requestBody.coin=2;
+          console.log(this.requestBody);
           
+        }
+      )
+    },
+    getCustomer(){
+      customerInformationService.getCustomerByEmail(this.currentUser.email).then(
+        response=>{
+          console.log(response.data.id);
+          this.customerCoin=response.data.customerWallet.coin;
+          if(this.customerCoin>1){this.show2=true;}
+          console.log(this.customerCoin);
+          this.requestBody.customerId=response.data.id;
         }
       )
     }

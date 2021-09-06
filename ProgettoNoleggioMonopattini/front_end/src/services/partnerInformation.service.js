@@ -12,8 +12,11 @@ class PartnerInformationService{
         return axios.get(API_URL +'partnerInformation'+ '/'+ email, {headers: authHeader() })
              
           }
-    updatePartnerInformation(partnerInformation){
-        return axios.put(API_URL + 'partnerInformations' + '/'+ partnerInformation.id ,{partnerInformation} ,{headers: authHeader() })}
+    updatePartnerInformation(partnerInformation,dismiss){
+        return axios.put(API_URL + 'partnerInformations' + '/'+ partnerInformation.id ,{
+            isActive:true,
+            dismiss:dismiss
+        } ,{headers: authHeader() })}
       
     savePartner(partnerInformation,address,currentUserEmail,currentUsername,geocode) {
             return axios.post(API_URL + 'partnerInformations',{

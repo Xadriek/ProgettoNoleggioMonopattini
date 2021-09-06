@@ -1,10 +1,11 @@
 package it.uniroma3.siw.rentalev.controller;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +20,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.uniroma3.siw.rentalev.model.Battery;
-
+import it.uniroma3.siw.rentalev.model.EBattery;
+import it.uniroma3.siw.rentalev.model.Hub;
+import it.uniroma3.siw.rentalev.payload.request.BatteryRequest;
 import it.uniroma3.siw.rentalev.repository.BatteryRepository;
+import it.uniroma3.siw.rentalev.repository.HubRepository;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -29,6 +33,11 @@ public class BatteryController {
 
   @Autowired
   BatteryRepository batteryRepository;
+  
+  @Autowired
+  HubRepository hubRepository;
+  
+  private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
   @GetMapping("/batteries")
   public ResponseEntity<List<Battery>> getAllBatterys() {
@@ -40,9 +49,10 @@ public class BatteryController {
    
 
       if (batterys.isEmpty()) {
+    	  this.logger.debug("non ci sono batterie");
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
       }
-
+      this.logger.debug("arrivano le batterie");
       return new ResponseEntity<>(batterys, HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -59,39 +69,42 @@ public class BatteryController {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
   }
+  
+  @GetMapping("/batteries/hub/{hubId}")
+  public ResponseEntity<List<Battery>> getBatteryByHub(@PathVariable("hubId") long hubId) {
+    Optional<Hub> _hub=hubRepository.findById(hubId);
+	  List<Battery> tutorialData = batteryRepository.findByHub(_hub.get());
+
+    if (!tutorialData.isEmpty()) {
+      return new ResponseEntity<>(tutorialData, HttpStatus.OK);
+    } else {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+  }
 
   @PostMapping("/batteries")
-  public ResponseEntity<Battery> createBattery(@RequestBody Battery battery) {
+  public ResponseEntity<Battery> createBattery(@RequestBody BatteryRequest batteryRequest) {
     try {
-      Battery _battery = batteryRepository.save(new Battery());
+    Optional<Hub> _hub=hubRepository.findById(batteryRequest.getHubId());
+      Battery _battery = batteryRepository.save(new Battery(null,_hub.get()));
       return new ResponseEntity<>(_battery, HttpStatus.CREATED);
     } catch (Exception e) {
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
- /* @PutMapping("/batteries/{id}")
-  public ResponseEntity<Battery> updateBattery(@PathVariable("id") long id, @RequestBody Battery battery) {
+  @PutMapping("/batteries/{id}")
+  public ResponseEntity<Battery> updateBattery(@PathVariable("id") long id) {
     Optional<Battery> batteryData = batteryRepository.findById(id);
+    if(batteryData.isPresent()) {
     Battery _battery = batteryData.get();
+    _battery.setState(EBattery.CARICA);
     
-    if ((batteryData.isPresent()) && (battery.getHub()!=null) && (_battery.getHub()!=battery.getHub() && (_battery.getScooter()!=battery.getScooter()))) {
-    	_battery.setHub(null);
-    	_battery.setScooter(battery.getScooter());
-    	_battery.setState(battery.getState());
       return new ResponseEntity<>(batteryRepository.save(_battery), HttpStatus.OK);
-    } else 
-    	if (batteryData.isPresent()&& ((battery.getScooter()!=null) && (_battery.getHub()!=battery.getHub()) && (_battery.getScooter()!=battery.getScooter()))) {
-    	_battery.setHub(battery.getHub());
-    	_battery.setScooter(null);
-    	_battery.setState(battery.getState());
-    	if(battery.getDateOfDismiss()!=null) {
-    		_battery.setDateOfDismiss(new Date());
-    	}
-      return new ResponseEntity<>(batteryRepository.save(_battery), HttpStatus.OK);
-    }else{
+    }else
+    	    
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-  }*/
+    
+  }
 
   @DeleteMapping("/batteries/{id}")
   public ResponseEntity<HttpStatus> deleteBattery(@PathVariable("id") long id) {

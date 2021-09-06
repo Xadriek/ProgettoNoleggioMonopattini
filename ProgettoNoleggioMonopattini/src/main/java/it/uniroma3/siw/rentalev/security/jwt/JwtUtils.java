@@ -26,7 +26,7 @@ public class JwtUtils {
   public String generateJwtToken(Authentication authentication) {
 	  
 	jwtSecret="foxSecretKey";
-	jwtExpirationMs=86400000;
+	jwtExpirationMs=864000000;
 	
     UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
 

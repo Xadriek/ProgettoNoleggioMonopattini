@@ -7,10 +7,13 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
 
@@ -30,6 +33,7 @@ public class CoinTransation {
 	@Column(nullable=false)
 	private int coin;
 	@OneToOne
+    @MapsId
 	private Swap entrySwap;
 	@OneToOne
 	private Swap exitSwap;
@@ -54,6 +58,8 @@ public class CoinTransation {
 	public CoinTransation() {
 		super();
 		this.logTransition = new Date();
+		this.isComplete=false;
+		this.entrySwap = new Swap();
 	}
 
 

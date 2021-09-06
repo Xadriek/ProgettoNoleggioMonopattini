@@ -21,7 +21,7 @@ public interface PartnerInformationRepository extends JpaRepository<PartnerInfor
 	
 	Optional<PartnerInformation> findByHub(Hub hub);
 
-	List<PartnerInformation> findByIsActive(boolean b);
+
 
 	PartnerInformation findByEmail(String emailRequest);
 

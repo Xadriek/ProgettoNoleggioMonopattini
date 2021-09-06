@@ -2,7 +2,7 @@ package it.uniroma3.siw.rentalev.controller;
 
 
 import java.util.ArrayList;
-
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,12 +53,9 @@ public class PartnerInformationController {
       List<PartnerInformation> partnerInformations = new ArrayList<PartnerInformation>();
 
       
-      if (isActive == null) {
+
     	  partnerInformationRepository.findAll().forEach(partnerInformations::add);
-      }else  if(isActive) { 
-    	  partnerInformationRepository.findByIsActive(isActive).forEach(partnerInformations::add);
-        }
-   
+     
 
       if (partnerInformations.isEmpty()) {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -113,17 +110,16 @@ public class PartnerInformationController {
     }
   }
   @PutMapping("/partnerInformations/{id}")
-  public ResponseEntity<PartnerInformation> updatePartnerInformation(@PathVariable("id") long id, @RequestBody PartnerInformation partnerInformation) {
+  public ResponseEntity<PartnerInformation> updatePartnerInformation(@PathVariable("id") long id,@RequestBody String date) {
     Optional<PartnerInformation> partnerInformationData = partnerInformationRepository.findById(id);
 
     if (partnerInformationData.isPresent()) {
     	PartnerInformation _partnerInformation = partnerInformationData.get();
-    	_partnerInformation.setHub(partnerInformation.getHub());
-    	_partnerInformation.setPartnerWallet(partnerInformation.getPartnerWallet());
-    	_partnerInformation.setActive(partnerInformation.isActive());
-    	if(partnerInformation.getClosurePartnership()!=null) {
-    		
-    	_partnerInformation.setClosurePartnership(partnerInformation.getClosurePartnership());
+    
+    	if(date!=null) {
+    	_partnerInformation.setClosurePartnership(new Date());
+    	_partnerInformation.getHub().setDateOfDismiss(new Date());
+    	hubRepository.save(_partnerInformation.getHub());
     	}
     	return new ResponseEntity<>(partnerInformationRepository.save(_partnerInformation), HttpStatus.OK);
     } else {
@@ -152,19 +148,7 @@ public class PartnerInformationController {
 
   }
 
- @GetMapping("/partnerInformations/isActive")
-  public ResponseEntity<List<PartnerInformation>> findByIsActive() {
-    try {
-      List<PartnerInformation> partnerInformation = partnerInformationRepository.findByIsActive(true);
 
-      if (partnerInformation.isEmpty()) {
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-      }
-      return new ResponseEntity<>(partnerInformation, HttpStatus.OK);
-    } catch (Exception e) {
-      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-  }
  @GetMapping("/partnerInformation/{email}")
  public ResponseEntity<PartnerInformation> getPartnerInformationByEmail(@PathVariable("email") String emailRequest) {
    PartnerInformation partnerInformationData = partnerInformationRepository.findByEmail(emailRequest);

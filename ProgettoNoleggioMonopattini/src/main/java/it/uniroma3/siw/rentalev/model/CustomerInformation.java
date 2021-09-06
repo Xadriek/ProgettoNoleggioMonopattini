@@ -1,6 +1,6 @@
 package it.uniroma3.siw.rentalev.model;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 
@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 
@@ -38,8 +40,6 @@ public class CustomerInformation implements UserInformation{
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Address address;
 	
-	@Column
-	private boolean isActive;
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	private Wallet customerWallet;
@@ -48,7 +48,7 @@ public class CustomerInformation implements UserInformation{
 	@OneToOne(cascade = CascadeType.PERSIST)
 	private Rent rent;
 	
-	
+	@JsonIgnore
 	@OneToMany(mappedBy="fromCustomer")
 	private List<CoinTransation> coinTransactions;
 
@@ -62,10 +62,9 @@ public class CustomerInformation implements UserInformation{
 
 	public CustomerInformation() {
 		super();
-		this.isActive = false;
+
 		this.customerWallet = new Wallet(0);
 		this.rent = new Rent();
-		this.coinTransactions = new ArrayList<CoinTransation>();
 	}
 
 	public CustomerInformation(String name, String surname, Long telephon, Address address,String email,String username ) {
@@ -75,10 +74,8 @@ public class CustomerInformation implements UserInformation{
 		this.surname = surname;
 		this.telephon = telephon;
 		this.address = address;
-		this.isActive = false;
-		this.customerWallet = new Wallet(0);
+		this.customerWallet = new Wallet(20);
 		this.rent = new Rent();
-		this.coinTransactions = new ArrayList<CoinTransation>();
 		this.email=email;
 		this.username=username;
 	}
@@ -146,14 +143,6 @@ public class CustomerInformation implements UserInformation{
 
 	public void setCoinTransactions(List<CoinTransation> coinTransactions) {
 		this.coinTransactions = coinTransactions;
-	}
-
-	public boolean isActive() {
-		return isActive;
-	}
-
-	public void setActive(boolean isActive) {
-		this.isActive = isActive;
 	}
 
 	public String getEmail() {

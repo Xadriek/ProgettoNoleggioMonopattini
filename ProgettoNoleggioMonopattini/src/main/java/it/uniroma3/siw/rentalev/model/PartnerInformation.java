@@ -16,6 +16,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 
 @Entity
@@ -52,13 +54,11 @@ public class PartnerInformation implements UserInformation {
 	private Date closurePartnership;
 	
 	@Column
-	private boolean isActive;
-	@Column
 	private String email;
 	@Column
 	private String username;
-
-	@OneToMany(mappedBy="toPartner",cascade = CascadeType.ALL)
+	@JsonIgnore
+	@OneToMany(mappedBy="toPartner")
 	private List<CoinTransation> coinTransations;
 
 
@@ -77,7 +77,7 @@ public class PartnerInformation implements UserInformation {
 		this.partnerWallet = new Wallet(0);
 		this.hub=hub;
 		this.startPartnership = new Date();
-		this.isActive = false;
+
 		this.coinTransations = new ArrayList<CoinTransation>();
 		this.email=email;
 		this.username=username;
@@ -89,7 +89,6 @@ public class PartnerInformation implements UserInformation {
 		super();
 		this.partnerWallet = new Wallet(0);
 		this.startPartnership = new Date();
-		this.isActive = false;
 		this.coinTransations = new ArrayList<CoinTransation>();
 	}
 
@@ -181,16 +180,6 @@ public class PartnerInformation implements UserInformation {
 		this.closurePartnership = closurePartnership;
 	}
 
-
-	public boolean isActive() {
-		return isActive;
-	}
-
-
-	public void setActive(boolean isActive) {
-		this.isActive = isActive;
-	}
-	
 	public String getEmail() {
 		return email;
 	}
