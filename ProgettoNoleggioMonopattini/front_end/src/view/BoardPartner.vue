@@ -19,7 +19,7 @@
             class="text-center"
           >
             <b-button variant="primary">
-              I Swap effettuati sono : <b-badge variant="light">{{countCoinTransationComplete}}</b-badge>
+              I Swap effettuati sono : <b-badge variant="light">{{countCoinTransationsComplete}}</b-badge>
             </b-button>
           </b-card>
 
@@ -311,7 +311,7 @@ export default {
         response=>{
           console.log(response.data);
           this.batteries=response.data;
-          this.countBatteryCharged=this.batteries.filter(battery=>battery.state=='CARICA').length;
+          this.countBatteryCharged=this.batteries.filter(battery=>battery.state=="CARICA").length;
           
         }
       )

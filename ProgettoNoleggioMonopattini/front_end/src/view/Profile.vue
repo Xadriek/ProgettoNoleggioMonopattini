@@ -13,6 +13,7 @@
     <strong>Id:</strong>
     {{currentUser.id}}
     </p>
+<div v-if="this.currentUser.roles.includes('ROLE_CUSTOMER')">
     <p>
     <strong>Nome:</strong>
     {{userProfile.name}}
@@ -24,26 +25,48 @@
     <p>
     <strong>Telefono:</strong>
     {{userProfile.telephon}}
-    </p>
-    <p>
-    <strong>Stato Attivo/Disattivo</strong>
-    {{userProfile.isActive}}
     </p>        
     <p>
     <strong>Monete nel Wallet</strong>
-    {{userProfile.walletCoin}}
+    {{userProfile.customerWallet.coin}}
     </p>
     <p>
     <strong>ID Noleggio</strong>
-    {{userProfile.rentId}}
-    </p>    
+    {{userProfile.rent.id}}
+    </p>
+        <p>
+    <strong>Username</strong>
+    {{userProfile.username}}
+    </p>
+</div> 
+
+<div v-if="this.currentUser.roles.includes('ROLE_PARTNER')">
+    <p>
+    <strong>Nome:</strong>
+    {{userProfile.name}}
+    </p>
+    <p>
+    <strong>P.Iva:</strong>
+    {{userProfile.pIva}}
+    </p>
+    <p>
+    <strong>Telefono:</strong>
+    {{userProfile.telephon}}
+    </p>        
+    <p>
+    <strong>Monete nel Wallet</strong>
+    {{userProfile.partnerWallet.coin}}
+    </p>
+    <p>
+    <strong>Username</strong>
+    {{userProfile.username}}
+    </p>
+</div> 
     <p>
     <strong>Numero Transazioni</strong>
-    {{userProfile.transationNumber}}
+    {{numCoinTransation}}
     </p>   
-
-
-    <p>
+   <p>
       <strong>Email:</strong>
       {{currentUser.email}}
     </p>
@@ -55,6 +78,7 @@
 </template>
 
 <script>
+import coinTransationService from '../services/coinTransation.service';
 import customerInformationService from "../services/customerInformation.service"
 import partnerInformationService from "../services/partnerInformation.service"
 
@@ -65,11 +89,15 @@ export default {
       return this.$store.state.auth.user;
     }
   },
-  data(){return{
-      userProfile:{}
+  data(){
+    return{
+      userProfile:{},
+      numCoinTransation:0,
+      coinTransations:[]
   }
   },
   mounted() {
+    
     if (!this.currentUser) {
       
       this.$router.push('/login');
@@ -78,7 +106,9 @@ export default {
   customerInformationService.getCustomerByEmail(this.currentUser.email)
     .then(response=>{
       console.log(response.data);
-      this.userProfile=response.data;}
+      this.userProfile=response.data;
+      this.getCoinTransationNumberCustomer();
+      }
     )
     
   }
@@ -86,11 +116,45 @@ export default {
   partnerInformationService.getPartnerByEmail(this.currentUser.email)
     .then(response=>{
       console.log(response.data);
-      this.userProfile=response.data;}
+      this.userProfile=response.data;
+      this.getCoinTransationNumberPartner();}
     )
     
+  }else{
+    this.getCoinTransationNumber();
+  }
+  
+},
+methods:{
+  getCoinTransationNumberCustomer(){
+    coinTransationService.getCoinTransationByCustomer(this.userProfile.id).then(
+      response=>{
+        console.log(response.data);
+        this.coinTransations=response.data;
+        this.numCoinTransation=this.coinTransations.filter(coinTransation=>coinTransation.isComplete==true).length;
+      }
+    )
+  },
+  getCoinTransationNumberPartner(){
+    coinTransationService.getCoinTransationByPartner(this.userProfile.id).then(
+      response=>{
+        console.log(response.data);
+        this.coinTransations=response.data;
+        this.numCoinTransation=this.coinTransations.filter(coinTransation=>coinTransation.isComplete==true).length;
+      }
+    )
+  },
+  getCoinTransationNumber(){
+    coinTransationService.getAllCoinTransations().then(
+      response=>{
+        console.log(response.data);
+        this.coinTransations=response.data;
+        this.numCoinTransation=this.coinTransations.filter(coinTransation=>coinTransation.isComplete==true).length;
+      }
+    )
   }
   
 }
+
 }
 </script>

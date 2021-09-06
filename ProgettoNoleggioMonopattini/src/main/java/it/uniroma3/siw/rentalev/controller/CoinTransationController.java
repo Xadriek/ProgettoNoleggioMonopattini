@@ -97,7 +97,7 @@ public class CoinTransationController {
 	@GetMapping("/coinTransations/partner/{partnerId}")
 	public ResponseEntity<List<CoinTransation>> getCoinTransationByPartner(@PathVariable("partnerId") long partnerId) {
 		Optional<PartnerInformation> _partnerInformation= partnerInformationRepository.findById(partnerId);
-		List<CoinTransation> coinTransactionData = coinTransationRepository.findByToPartner(_partnerInformation);
+		List<CoinTransation> coinTransactionData = coinTransationRepository.findByToPartner(_partnerInformation.get());
 
 		if (!coinTransactionData.isEmpty()) {
 			return new ResponseEntity<>(coinTransactionData, HttpStatus.OK);
@@ -202,19 +202,7 @@ public class CoinTransationController {
 
 	}
 
-	/* @GetMapping("/coinTransactions/custodial")
-  public ResponseEntity<CoinTransation> findByCustodial(@RequestBody PartnerInformation custodial) {
-    try {
-      CoinTransation coinTransaction = coinTransactionRepository.findByCustodial(custodial);
 
-      if (coinTransaction==null) {
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-      }
-      return new ResponseEntity<>(coinTransaction, HttpStatus.OK);
-    } catch (Exception e) {
-      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-  }*/
 
 
 }
