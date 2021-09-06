@@ -1,12 +1,14 @@
 package it.uniroma3.siw.rentalev.controller;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -14,7 +16,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -74,6 +78,27 @@ public class AuthController {
 												 userDetails.getEmail(), 
 												 roles));
 	}
+	@PutMapping("/update")
+	public ResponseEntity<?> updateUser(@Valid @RequestBody SignupRequest signUpRequest ){
+		Optional<User> userData = userRepository.findByUsername(signUpRequest.getUsername());
+		User _user=userData.get();
+		if(encoder.encode(signUpRequest.getOldPassword()).equals(_user.getPassword())){
+		_user.setPassword(encoder.encode(signUpRequest.getPassword()));
+		userRepository.save(_user);
+
+		return ResponseEntity.ok(new MessageResponse("Password update successfully!"));
+		}else {
+			return ResponseEntity
+			.badRequest()
+			.body(new MessageResponse("Error: Qualcosa è andato storto!"));
+		}
+	}
+	
+	
+	
+	
+	
+	
 
 	@PostMapping("/signup")
 	public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {

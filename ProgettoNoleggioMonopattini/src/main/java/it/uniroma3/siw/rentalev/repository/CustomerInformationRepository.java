@@ -1,7 +1,7 @@
 package it.uniroma3.siw.rentalev.repository;
 
 import java.util.List;
-
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -20,6 +20,6 @@ public interface CustomerInformationRepository extends JpaRepository<CustomerInf
 		
 		List<CustomerInformation> findBySurname(String surname);
 
-		CustomerInformation findByEmail(String email);
+		Optional<CustomerInformation> findByEmail(String email);
 
 }

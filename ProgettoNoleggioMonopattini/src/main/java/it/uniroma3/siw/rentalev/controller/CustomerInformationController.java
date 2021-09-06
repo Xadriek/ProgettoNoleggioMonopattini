@@ -120,11 +120,11 @@ public class CustomerInformationController {
 
   @GetMapping("/customerInformation/{email}")
   public ResponseEntity<CustomerInformation> getCustomerInformationByEmail(@PathVariable("email") String emailRequest) {
-    CustomerInformation customerInformationData = customerInformationRepository.findByEmail(emailRequest);
+	  Optional<CustomerInformation> customerInformationData = customerInformationRepository.findByEmail(emailRequest);
     
     
-    if (customerInformationData.getName()!=null) {
-        return new ResponseEntity<>(customerInformationData, HttpStatus.OK);
+    if (customerInformationData.isPresent()) {
+        return new ResponseEntity<>(customerInformationData.get(), HttpStatus.OK);
       } else {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
       }
