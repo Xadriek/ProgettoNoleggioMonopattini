@@ -23,10 +23,78 @@
            <swap-point />
           </b-card>
         </b-collapse>
+
         <b-collapse id="listaswappoint">
-          <b-card title="Lista Swap Point">
-           <swap-points />
+
+          <b-card  title="Swap in corso">
+
+              <b-list-group >
+                    <b-list-group horizontal="md"
+                     fluid="md"
+                    active 
+                  >
+                      <b-list-group-item>id</b-list-group-item>
+                      <b-list-group-item>Event Log</b-list-group-item>
+                      <b-list-group-item>Scooter  </b-list-group-item>
+                      <b-list-group-item>Customer Username   </b-list-group-item>
+                    </b-list-group>
+                    <b-list-group horizontal="md"
+                     fluid="md"
+                    active
+                    
+                    v-for="coinTransation in coinTransationsNotComplete"
+                    v-bind:key="coinTransation.id"
+                    >
+                      <b-list-group-item>{{coinTransation.id}}</b-list-group-item>
+                      <b-list-group-item>{{coinTransation.logTransition}}   </b-list-group-item>
+                      <b-list-group-item>{{coinTransation.entrySwap.scooter.id}}     </b-list-group-item>
+                      <b-list-group-item>{{coinTransation.fromCustomer.username}}</b-list-group-item>
+                      
+                      
+                    </b-list-group>
+                </b-list-group>
           </b-card>
+          <b-card  title="Swap Terminati">
+
+               <b-list-group >
+                    <b-list-group horizontal="md"
+                     fluid="md"
+                    active 
+                  >
+                      <b-list-group-item>id</b-list-group-item>
+                      <b-list-group-item>From Customer</b-list-group-item>
+                      <b-list-group-item>To Partner  </b-list-group-item>
+                      <b-list-group-item>Log  </b-list-group-item>
+                      <b-list-group-item>Coin  </b-list-group-item>
+                      <b-list-group-item>Complete</b-list-group-item>
+                    </b-list-group>
+                    <b-list-group horizontal="md"
+                     fluid="md"
+                    active
+                    
+                    v-for="coinTransation in coinTransationsComplete"
+                    v-bind:key="coinTransation.id"
+                    >
+                      <b-list-group-item>{{coinTransation.id}}</b-list-group-item>
+                      <b-list-group-item>{{coinTransation.fromCustomer.username}}   </b-list-group-item>
+                      <b-list-group-item>{{coinTransation.toPartner.username}}     </b-list-group-item>
+                      <b-list-group-item>{{coinTransation.logTransition}}</b-list-group-item>
+                      <b-list-group-item>{{coinTransation.coin}}       </b-list-group-item>
+                      <b-list-group-item >
+                           <b-iconstack v-if="coinTransation.isComplete==true" >
+                                <b-icon stacked icon="square"></b-icon>
+                                <b-icon stacked icon="check"></b-icon>
+                                </b-iconstack>
+                      </b-list-group-item>
+                      
+                    </b-list-group>
+                </b-list-group>
+
+            </b-card>
+
+
+
+
         </b-collapse>
       </div>
     </div>
@@ -36,13 +104,12 @@
 <script>
 import AddRent from "../components/AddRent.vue";
 import SwapPoint from "../components/SwapPoint.vue";
-import SwapPoints from "../components/SwapPoints.vue";
 import coinTransationService from '../services/coinTransation.service';
 import customerInformationService from "../services/customerInformation.service"
 
 
 export default {
-  components: { AddRent, SwapPoint, SwapPoints },
+  components: { AddRent, SwapPoint},
   name: "customer",
   computed: {
     currentUser() {
@@ -53,6 +120,8 @@ export default {
     return {
       currentCustomer:{},
       coinTransations:[],
+      coinTransationsNotComplete:[],
+      coinTransationsComplete:[],
       rent:[],
       show:true
     };
@@ -70,11 +139,16 @@ export default {
     )
   },
   methods:{
+    update(){
+      this.$forceUpdate();
+    },
     getCoinTransation(customer){
       coinTransationService.getCoinTransationByCustomer(customer.id).then(
         response=>{
           console.log(response.data);
           this.coinTransations=response.data;
+          this.coinTransationsComplete=this.coinTransations.filter(coinTransation=>coinTransation.isComplete==true);
+          this.coinTransationsNotComplete=this.coinTransations.filter(coinTransation=>coinTransation.isComplete==false);
         }
       )
     }

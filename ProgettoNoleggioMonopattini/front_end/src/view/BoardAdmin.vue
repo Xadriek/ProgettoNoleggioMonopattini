@@ -284,6 +284,9 @@ export default {
     
   },
   methods: {
+    update(){
+      this.$forceUpdate();
+    },
     showMsgBoxOne(rent,dismiss) {
         this.conferm = ''
         this.$bvModal.msgBoxConfirm('Confermi la terminazione del noleggio?')

@@ -27,13 +27,13 @@ import it.uniroma3.siw.rentalev.model.PartnerInformation;
 import it.uniroma3.siw.rentalev.model.Scooter;
 import it.uniroma3.siw.rentalev.model.Swap;
 import it.uniroma3.siw.rentalev.payload.request.CoinTransationRequest;
-import it.uniroma3.siw.rentalev.payload.request.SwapRequest;
 import it.uniroma3.siw.rentalev.repository.BatteryRepository;
 import it.uniroma3.siw.rentalev.repository.CoinTransationRepository;
 import it.uniroma3.siw.rentalev.repository.CustomerInformationRepository;
 import it.uniroma3.siw.rentalev.repository.HubRepository;
 import it.uniroma3.siw.rentalev.repository.PartnerInformationRepository;
 import it.uniroma3.siw.rentalev.repository.ScooterRepository;
+import it.uniroma3.siw.rentalev.repository.SwapRepository;
 
 
 
@@ -53,6 +53,9 @@ public class CoinTransationController {
 
 	@Autowired
 	HubRepository hubRepository;
+	
+	@Autowired
+	SwapRepository swapRepository;
 
 
 	@Autowired
@@ -162,6 +165,7 @@ public class CoinTransationController {
 			batteryRepository.save(battery.get());
 			scooter.setBattery(battery.get());
 			scooterRepository.save(scooter);
+			swapRepository.save(_exitSwap);
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
@@ -169,6 +173,7 @@ public class CoinTransationController {
 			CoinTransation _coinTransaction = coinTransactionData.get();
 			_coinTransaction.setExitSwap(_exitSwap);
 			_coinTransaction.setIsComplete(true);
+			
 
 			return new ResponseEntity<>(coinTransationRepository.save(_coinTransaction), HttpStatus.OK);
 		} else {

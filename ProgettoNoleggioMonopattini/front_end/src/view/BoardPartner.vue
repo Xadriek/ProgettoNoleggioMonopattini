@@ -106,8 +106,8 @@
                     v-bind:key="coinTransation.id"
                     >
                       <b-list-group-item>{{coinTransation.id}}</b-list-group-item>
-                      <b-list-group-item>{{coinTransation.fromCustomer}}   </b-list-group-item>
-                      <b-list-group-item>{{coinTransation.toPartner}}     </b-list-group-item>
+                      <b-list-group-item>{{coinTransation.fromCustomer.username}}   </b-list-group-item>
+                      <b-list-group-item>{{coinTransation.toPartner.username}}     </b-list-group-item>
                       <b-list-group-item>{{coinTransation.logTransition}}</b-list-group-item>
                       <b-list-group-item>{{coinTransation.coin}}       </b-list-group-item>
                       <b-list-group-item >
@@ -231,6 +231,9 @@ export default {
       })}
   ,
   methods:{
+    update(){
+      this.$forceUpdate();
+    },
     showMsgBoxIncompleteSwap(coinTransation){
        this.conferm = ''
         this.$bvModal.msgBoxConfirm('Confermi il completamento dello swap?')
@@ -238,6 +241,8 @@ export default {
             if(value){
               console.log(value);
               this.completeSwap(coinTransation);
+              this.update;
+              
             }
           })
     },
@@ -246,6 +251,7 @@ export default {
         response=>{
           console.log(response.data);
           coinTransation=response.data;
+          
         }
       )
     },
@@ -256,6 +262,7 @@ export default {
             if(value){
               console.log(value);
               this.addBattery();
+              this.update;
             }
           })
     },
@@ -263,6 +270,7 @@ export default {
       batteryService.createBattery(this.currentPartner.hub.id).then(
         response=>{
           console.log(response.data);
+          
 
         }
       )
@@ -274,6 +282,7 @@ export default {
             if(value){
               console.log(value);
               this.changeState(battery);
+              this.update;
             }
           })
     },
@@ -282,6 +291,7 @@ export default {
         response=>{
           console.log(response.data);
           battery=response.data;
+          this.update();
         }
       )
     },
