@@ -2,6 +2,7 @@ package it.uniroma3.siw.rentalev.controller;
 
 
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import it.uniroma3.siw.rentalev.model.Address;
 import it.uniroma3.siw.rentalev.model.CustomerInformation;
+import it.uniroma3.siw.rentalev.model.EContract;
 import it.uniroma3.siw.rentalev.payload.request.RentRequest;
 import it.uniroma3.siw.rentalev.repository.CustomerInformationRepository;
 import it.uniroma3.siw.rentalev.repository.RentRepository;
@@ -77,13 +79,29 @@ public class CustomerInformationController {
     Address _address= new Address(rentRequest.getStreet(), rentRequest.getCap(), rentRequest.getNumberStreet(), rentRequest.getMunicipality(), rentRequest.getCity(), rentRequest.getCountry());
       CustomerInformation _customerInformation =new CustomerInformation( rentRequest.getName(),rentRequest.getSurname(),rentRequest.getTelephon(),_address,rentRequest.getUserEmail(),rentRequest.getUsername());
       _customerInformation.getRent().getContract().setPlan(rentRequest.getPlan());
+      _customerInformation.getRent().setFinishRent(calculateFinishRent(_customerInformation.getRent().getStartRent(),rentRequest.getPlan()));
       CustomerInformation customerInformation =customerInformationRepository.save(_customerInformation);
       return new ResponseEntity<>(customerInformation, HttpStatus.CREATED);
     } catch (Exception e) {
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
-  @PutMapping("/customerInformations/{id}")
+  private LocalDate calculateFinishRent(LocalDate startRent, EContract plan) {
+	LocalDate finish=null;
+	if(plan.equals(EContract.PIANO_TARIFFARIO1)) {
+		finish= startRent.plusMonths(3);
+	}
+	if(plan.equals(EContract.PIANO_TARIFFARIO2)) {
+		finish= startRent.plusMonths(6);
+	}
+	if(plan.equals(EContract.PIANO_TARIFFARIO3)) {
+		finish= startRent.plusMonths(12);
+	}
+	
+	return finish;
+}
+
+@PutMapping("/customerInformations/{id}")
   public ResponseEntity<CustomerInformation> updateCustomerInformation(@PathVariable("id") long id, @RequestBody Boolean isActive) {
     Optional<CustomerInformation> customerInformationData = customerInformationRepository.findById(id);
 

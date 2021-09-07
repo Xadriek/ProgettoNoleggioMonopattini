@@ -1,7 +1,7 @@
 package it.uniroma3.siw.rentalev.controller;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -80,8 +80,8 @@ public class ScooterController {
     	Scooter _scooter = scooterData.get();
     	_scooter.setBattery(scooter.getBattery());
     	if(scooter.getDateOfDismiss()!=null) {
-    	_scooter.setDateOfDismiss(new Date());
-    	_scooter.getBattery().setDateOfDismiss(new Date());
+    	_scooter.setDateOfDismiss(LocalDate.now());
+    	_scooter.getBattery().setDateOfDismiss(LocalDate.now());
     	}
       return new ResponseEntity<>(scooterRepository.save(_scooter), HttpStatus.OK);
     } else {
@@ -110,19 +110,6 @@ public class ScooterController {
 
   }
 
- /* @GetMapping("/scooters/custodial")
-  public ResponseEntity<Scooter> findByCustodial(@RequestBody PartnerInformation custodial) {
-    try {
-      Scooter scooter = scooterRepository.findByCustodial(custodial);
 
-      if (scooter==null) {
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-      }
-      return new ResponseEntity<>(scooter, HttpStatus.OK);
-    } catch (Exception e) {
-      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-  }
-  */
 
 }

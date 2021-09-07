@@ -2,7 +2,7 @@ package it.uniroma3.siw.rentalev.model;
 
 
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -29,7 +29,7 @@ public class CoinTransation {
 	@ManyToOne
 	private PartnerInformation toPartner;
 	@Column(nullable=false)
-	private Date logTransition;
+	private LocalDate logTransition;
 	@Column(nullable=false)
 	private int coin;
 	@OneToOne(cascade=CascadeType.REMOVE)
@@ -47,7 +47,7 @@ public class CoinTransation {
 
 		this.fromCustomer = fromCustomer;
 		this.toPartner = toPartner;
-		this.logTransition = new Date();
+		this.logTransition = LocalDate.now();
 		this.coin = coin;
 		this.entrySwap = entrySwap;
 		this.exitSwap= null;
@@ -57,7 +57,7 @@ public class CoinTransation {
 	
 	public CoinTransation() {
 		super();
-		this.logTransition = new Date();
+		this.logTransition = LocalDate.now();
 		this.isComplete=false;
 		this.entrySwap = new Swap();
 	}
@@ -81,10 +81,10 @@ public class CoinTransation {
 	public void setToPartner(PartnerInformation toPartner) {
 		this.toPartner = toPartner;
 	}
-	public Date getLogTransition() {
+	public LocalDate getLogTransition() {
 		return logTransition;
 	}
-	public void setLogTransition(Date logTransition) {
+	public void setLogTransition(LocalDate logTransition) {
 		this.logTransition = logTransition;
 	}
 	public int getCoin() {

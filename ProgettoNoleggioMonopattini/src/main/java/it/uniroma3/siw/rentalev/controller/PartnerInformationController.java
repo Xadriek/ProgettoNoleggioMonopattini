@@ -1,8 +1,8 @@
 package it.uniroma3.siw.rentalev.controller;
 
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -120,8 +120,8 @@ public class PartnerInformationController {
     	PartnerInformation _partnerInformation = partnerInformationData.get();
     
     	if(date!=null) {
-    	_partnerInformation.setClosurePartnership(new Date());
-    	_partnerInformation.getHub().setDateOfDismiss(new Date());
+    	_partnerInformation.setClosurePartnership(LocalDate.now());
+    	_partnerInformation.getHub().setDateOfDismiss(LocalDate.now());
     	hubRepository.save(_partnerInformation.getHub());
     	}
     	return new ResponseEntity<>(partnerInformationRepository.save(_partnerInformation), HttpStatus.OK);

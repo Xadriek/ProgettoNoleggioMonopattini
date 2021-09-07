@@ -1,8 +1,8 @@
 package it.uniroma3.siw.rentalev.model;
 
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
@@ -48,10 +48,10 @@ public class PartnerInformation implements UserInformation {
 	
 	
 	@Column(nullable=false)
-	private Date startPartnership;
+	private LocalDate startPartnership;
 	
 	@Column(nullable=true)
-	private Date closurePartnership;
+	private LocalDate closurePartnership;
 	
 	@Column
 	private String email;
@@ -76,7 +76,7 @@ public class PartnerInformation implements UserInformation {
 		this.address = address;
 		this.partnerWallet = new Wallet(0);
 		this.hub=hub;
-		this.startPartnership = new Date();
+		this.startPartnership = LocalDate.now();
 
 		this.coinTransations = new ArrayList<CoinTransation>();
 		this.email=email;
@@ -88,7 +88,7 @@ public class PartnerInformation implements UserInformation {
 	public PartnerInformation() {
 		super();
 		this.partnerWallet = new Wallet(0);
-		this.startPartnership = new Date();
+		this.startPartnership = LocalDate.now();
 		this.coinTransations = new ArrayList<CoinTransation>();
 	}
 
@@ -161,22 +161,22 @@ public class PartnerInformation implements UserInformation {
 	}
 
 
-	public Date getStartPartnership() {
+	public LocalDate getStartPartnership() {
 		return startPartnership;
 	}
 
 
-	public void setStartPartnership(Date startPartnership) {
+	public void setStartPartnership(LocalDate startPartnership) {
 		this.startPartnership = startPartnership;
 	}
 
 
-	public Date getClosurePartnership() {
+	public LocalDate getClosurePartnership() {
 		return closurePartnership;
 	}
 
 
-	public void setClosurePartnership(Date closurePartnership) {
+	public void setClosurePartnership(LocalDate closurePartnership) {
 		this.closurePartnership = closurePartnership;
 	}
 
