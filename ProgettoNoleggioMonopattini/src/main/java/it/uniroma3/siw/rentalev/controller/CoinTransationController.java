@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -65,6 +66,7 @@ public class CoinTransationController {
 	CustomerInformationRepository customerInformationRepository;
 
 	@GetMapping("/coinTransations")
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<List<CoinTransation>> getAllCoinTransations() {
 		try {
 			List<CoinTransation> coinTransactions = new ArrayList<CoinTransation>();
@@ -120,6 +122,7 @@ public class CoinTransationController {
 
 
 	@PostMapping("/coinTransations")
+	@PreAuthorize("hasRole('CUSTOMER')")
 	public ResponseEntity<CoinTransation> createCoinTransation(@RequestBody CoinTransationRequest coinTransationRequest) {
 		Optional<PartnerInformation> _partnerInformation= partnerInformationRepository.findById(Long.parseLong(coinTransationRequest.getIdPartner()));
 		Optional<CustomerInformation> _customerInformation= customerInformationRepository.findById(Long.parseLong(coinTransationRequest.getIdCustomer()));
@@ -147,6 +150,7 @@ public class CoinTransationController {
 		}
 	}  
 	@PutMapping("/coinTransations/{id}")
+	@PreAuthorize("hasRole('PARTNER')")
 	public ResponseEntity<CoinTransation> updateCoinTransation(@PathVariable("id") long id) {
 		Swap _exitSwap=null;
 		Optional<CoinTransation> coinTransactionData = coinTransationRepository.findById(id);
@@ -182,6 +186,7 @@ public class CoinTransationController {
 	}
 
 	@DeleteMapping("/coinTransations/{id}")
+	@PreAuthorize("hasRole('CUSTOMER')")
 	public ResponseEntity<HttpStatus> deleteCoinTransation(@PathVariable("id") long id) {
 		try {
 			coinTransationRepository.deleteById(id);

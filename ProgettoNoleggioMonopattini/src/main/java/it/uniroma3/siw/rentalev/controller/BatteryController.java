@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,6 +41,7 @@ public class BatteryController {
   private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
   @GetMapping("/batteries")
+  @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<List<Battery>> getAllBatterys() {
     try {
       List<Battery> batterys = new ArrayList<Battery>();
@@ -71,6 +73,7 @@ public class BatteryController {
   }
   
   @GetMapping("/batteries/hub/{hubId}")
+  @PreAuthorize("hasRole('PARTNER')")
   public ResponseEntity<List<Battery>> getBatteryByHub(@PathVariable("hubId") long hubId) {
     Optional<Hub> _hub=hubRepository.findById(hubId);
 	  List<Battery> tutorialData = batteryRepository.findByHub(_hub.get());
@@ -83,6 +86,7 @@ public class BatteryController {
   }
 
   @PostMapping("/batteries")
+  @PreAuthorize("hasRole('PARTNER')")
   public ResponseEntity<Battery> createBattery(@RequestBody BatteryRequest batteryRequest) {
     try {
     Optional<Hub> _hub=hubRepository.findById(batteryRequest.getHubId());
@@ -93,6 +97,7 @@ public class BatteryController {
     }
   }
   @PutMapping("/batteries/{id}")
+  @PreAuthorize("hasRole('PARTNER')")
   public ResponseEntity<Battery> updateBattery(@PathVariable("id") long id) {
     Optional<Battery> batteryData = batteryRepository.findById(id);
     if(batteryData.isPresent()) {

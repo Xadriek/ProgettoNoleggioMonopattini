@@ -4,7 +4,7 @@
       
     </header>
     <div>
-      <div class="mb-3">
+      <div class="mb-3" v-if="this.currentUser.roles.includes('ROLE_CUSTOMER')">
         <b-button block variant="primary" size="lg" v-if="show" v-b-toggle.creanoleggio class="m-1">Crea Noleggio</b-button>
         <b-button block variant="primary" size="lg" v-b-toggle.cercaswappoint class="m-1">Cerca SwapPoint</b-button>
         <b-button block variant="primary" size="lg" v-b-toggle.listaswappoint class="m-1">Lista Swap</b-button

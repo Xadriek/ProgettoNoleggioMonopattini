@@ -11,6 +11,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,6 +49,7 @@ public class PartnerInformationController {
   private static final Logger logger = LogManager.getLogger();
 
   @GetMapping("/partnerInformations")
+  @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<List<PartnerInformation>> getAllPartnerInformations(@RequestParam(required = false) Boolean isActive) {
     try {
       List<PartnerInformation> partnerInformations = new ArrayList<PartnerInformation>();
@@ -95,6 +97,7 @@ public class PartnerInformationController {
   }
 
   @PostMapping("/partnerInformations")
+  @PreAuthorize("hasRole('PARTNER')")
   public ResponseEntity<PartnerInformation> createPartnerInformation(@RequestBody HubRequest hubRequest) {
     try {
       

@@ -9,7 +9,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,6 +39,7 @@ public class CustomerInformationController {
 
 
   @GetMapping("/customerInformations")
+  @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<List<CustomerInformation>> getAllCustomerInformations() {
     try {
       List<CustomerInformation> customerInformations = new ArrayList<CustomerInformation>();
@@ -70,6 +71,7 @@ public class CustomerInformationController {
   }
 
   @PostMapping("/customerInformations")
+  @PreAuthorize("hasRole('CUSTOMER')")
   public ResponseEntity<CustomerInformation> createCustomerInformation(@RequestBody RentRequest rentRequest) {
     try {
     Address _address= new Address(rentRequest.getStreet(), rentRequest.getCap(), rentRequest.getNumberStreet(), rentRequest.getMunicipality(), rentRequest.getCity(), rentRequest.getCountry());
@@ -119,6 +121,7 @@ public class CustomerInformationController {
 
 
   @GetMapping("/customerInformation/{email}")
+  @PreAuthorize("hasRole('CUSTOMER')")
   public ResponseEntity<CustomerInformation> getCustomerInformationByEmail(@PathVariable("email") String emailRequest) {
 	  Optional<CustomerInformation> customerInformationData = customerInformationRepository.findByEmail(emailRequest);
     
