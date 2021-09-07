@@ -23,7 +23,7 @@ public interface PartnerInformationRepository extends JpaRepository<PartnerInfor
 
 
 
-	PartnerInformation findByEmail(String emailRequest);
+	Optional<PartnerInformation> findByEmail(String emailRequest);
 
 	PartnerInformation findByUsername(String username);
 	

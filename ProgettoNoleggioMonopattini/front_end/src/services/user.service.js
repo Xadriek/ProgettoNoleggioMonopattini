@@ -1,7 +1,7 @@
 import axios from 'axios';
 import authHeader from './auth-header';
 
-const API_URL = 'http://localhost:8080/api/test/';
+const API_URL = 'http://localhost:8080/api/rest/';
 
 class UserService {
   getPublicContent() {
@@ -18,6 +18,12 @@ class UserService {
 
   getAdminBoard() {
     return axios.get(API_URL + 'admin', { headers: authHeader() });
+  }
+  getAllUsers(){
+    return axios.get(API_URL + 'users',{headers: authHeader()});
+  }
+  updateRole(user){
+    return axios.put(API_URL + 'users'+ '/'+ user.id,{headers: authHeader()});
   }
 }
 

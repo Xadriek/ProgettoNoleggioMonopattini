@@ -97,7 +97,7 @@ public class PartnerInformationController {
   }
 
   @PostMapping("/partnerInformations")
-  @PreAuthorize("hasRole('PARTNER')")
+  
   public ResponseEntity<PartnerInformation> createPartnerInformation(@RequestBody HubRequest hubRequest) {
     try {
       
@@ -154,10 +154,10 @@ public class PartnerInformationController {
 
  @GetMapping("/partnerInformation/{email}")
  public ResponseEntity<PartnerInformation> getPartnerInformationByEmail(@PathVariable("email") String emailRequest) {
-   PartnerInformation partnerInformationData = partnerInformationRepository.findByEmail(emailRequest);
+   Optional<PartnerInformation> partnerInformationData = partnerInformationRepository.findByEmail(emailRequest);
    
-   if (partnerInformationData.getName()!=null) {
-       return new ResponseEntity<>(partnerInformationData, HttpStatus.OK);
+   if (partnerInformationData.isPresent()) {
+       return new ResponseEntity<>(partnerInformationData.get(), HttpStatus.OK);
      } else {
        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
      }

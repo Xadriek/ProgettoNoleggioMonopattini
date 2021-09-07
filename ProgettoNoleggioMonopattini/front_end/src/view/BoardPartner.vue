@@ -5,7 +5,7 @@
     <div>
       </div>
       
-        <b-card v-if="this.currentPartner==null" title="Inserimento Nuovo Noleggio">
+        <b-card v-if="this.currentPartner.id==null" title="Inserimento Nuovo Noleggio">
           <add-hub />
         </b-card>
       
