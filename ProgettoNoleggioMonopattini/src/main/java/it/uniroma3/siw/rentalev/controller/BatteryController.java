@@ -73,7 +73,7 @@ public class BatteryController {
   }
   
   @GetMapping("/batteries/hub/{hubId}")
-  @PreAuthorize("hasRole('PARTNER')")
+  
   public ResponseEntity<List<Battery>> getBatteryByHub(@PathVariable("hubId") long hubId) {
     Optional<Hub> _hub=hubRepository.findById(hubId);
 	  List<Battery> tutorialData = batteryRepository.findByHub(_hub.get());
