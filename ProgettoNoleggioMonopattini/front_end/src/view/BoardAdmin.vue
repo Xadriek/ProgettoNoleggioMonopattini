@@ -340,11 +340,56 @@
                   </b-list-group>
                 </b-list-group>
               </b-tab>
-              <b-tab title="Aiuto">
-                <b-card-text>
-                  Qui scriviamo un minimo di spiegazione che può essere utile se
-                  vuoi
-                </b-card-text>
+              <b-tab title="Utenti">
+                <b-list-group>
+                  <b-list-group horizontal="md" fluid="md" active>
+                  <b-list-group-item>id</b-list-group-item>
+                    <b-list-group-item>Username</b-list-group-item>
+                    <b-list-group-item>Email </b-list-group-item>
+                    <b-list-group-item>Role </b-list-group-item>
+                </b-list-group>
+                <b-list-group
+                    horizontal="md"
+                    fluid="md"
+                    active
+                    v-for="user in users"
+                    v-bind:key="user.id"
+                  >
+                    <b-list-group-item>
+                      {{user.id}}
+                      </b-list-group-item>
+                    <b-list-group-item
+                      >{{ user.username}}
+                    </b-list-group-item>
+                    <b-list-group-item
+                      >{{ user.email}}
+                    </b-list-group-item>
+                    <b-list-group-item
+                      ><ul>
+      <li v-for="(role,index) in user.roles" :key="index">{{role.name}}</li>
+    </ul>
+                    </b-list-group-item>
+                    <b-list-group-item>
+                      <b-button-group>
+                        <b-button
+                          variant="outline-primary"
+                          @click="changeRole(user)"
+                        >
+                          <b-icon icon="x-circle"></b-icon>Change Role in Partner
+                        </b-button>
+                        <b-alert
+                          v-model="showTop4"
+                          class="position-fixed fixed-top m-0 rounded-0"
+                          style="z-index: 2000"
+                          variant="success"
+                          dismissible
+                        >
+                          Role has been changed, please refresh
+                        </b-alert>
+                      </b-button-group>
+                      </b-list-group-item>
+                </b-list-group>
+                </b-list-group>
               </b-tab>
             </b-tabs>
           </b-card>
@@ -361,6 +406,7 @@ import RentService from "../services/rent.service";
 import CoinTransationService from "../services/coinTransation.service";
 import rentService from "../services/rent.service";
 import walletService from "../services/wallet.service";
+import userService from '../services/user.service';
 
 export default {
   name: "admin",
@@ -369,13 +415,15 @@ export default {
       customers: [],
       partners: [],
       rents: [],
+      users:[],
       coinTransations: [],
       countHub: 0,
       countTransation: 0,
       countRent: 0,
       showTop1: false,
       showTop2: false,
-      showTop3: false
+      showTop3: false,
+      showTop4: false
       
     };
   },
@@ -384,6 +432,7 @@ export default {
     this.allPartners();
     this.allCoinTransation();
     this.allRents();
+    this.allUsers();
   },
   updated() {},
   methods: {
@@ -512,6 +561,24 @@ export default {
         }
       );
     },
+    allUsers(){
+      console.log("users");
+      userService.getAllUsers().then(
+        response=>{
+          console.log(response.data);
+          this.users=response.data;
+          
+        }
+      )
+    },
+    changeRole(user){
+      userService.updateRole(user).then(
+        response=>{
+          console.log(response.data);
+          this.showTop4=true;
+        }
+      )
+    }
   },
 };
 </script>
