@@ -54,6 +54,15 @@
                              <b-button variant="outline-danger" @click="showMsgBoxDelete(coinTransation)">
                           <b-icon icon="x-circle"></b-icon> Delete Swap
                              </b-button>
+                              <b-alert
+                          v-model="showTop"
+                          class="position-fixed fixed-top m-0 rounded-0"
+                          style="z-index: 2000"
+                          variant="success"
+                          dismissible
+                        >
+                          Swap is delete, please refresh
+                        </b-alert>
                              </b-button-group>
                       </b-list-group-item>
                       
@@ -129,7 +138,8 @@ export default {
       coinTransationsNotComplete:[],
       coinTransationsComplete:[],
       rent:[],
-      show:true
+      show:true,
+      showTop: false
     };
   },
   mounted() {
@@ -164,6 +174,7 @@ export default {
       coinTransationService.deleteCoinTransation(coinTransation).then(
         response=>{
           console.log(response.state);
+          this.showTop=true;
           
         }
       )

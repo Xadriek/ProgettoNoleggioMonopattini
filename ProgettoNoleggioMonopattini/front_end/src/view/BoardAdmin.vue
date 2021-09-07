@@ -86,11 +86,27 @@
                       <div>
                         <label for="sb-inline"></label>
                         <b-form-spinbutton
+                          size="sm"
                           id="sb-inline"
                           v-model="customer.customerWallet.coin"
                           inline
                         ></b-form-spinbutton>
-                        <b-button squared variant="success" @click="updateWallet(customer.customerWallet)">Aggiorna</b-button>
+                        <b-button
+                          size="sm"
+                          squared
+                          variant="outline-success"
+                          @click="updateWallet(customer.customerWallet)"
+                          >Aggiorna</b-button
+                        >
+                        <b-alert
+                          v-model="showTop1"
+                          class="position-fixed fixed-top m-0 rounded-0"
+                          style="z-index: 2000"
+                          variant="success"
+                          dismissible
+                        >
+                          Wallet updated, please refresh
+                        </b-alert>
                       </div>
                     </b-list-group-item>
                     <b-list-group-item
@@ -116,6 +132,15 @@
                         >
                           <b-icon icon="x-circle"></b-icon> Dismiss Rent
                         </b-button>
+                        <b-alert
+                          v-model="showTop2"
+                          class="position-fixed fixed-top m-0 rounded-0"
+                          style="z-index: 2000"
+                          variant="success"
+                          dismissible
+                        >
+                          Rent dismissed, please refresh
+                        </b-alert>
                       </b-button-group>
                     </b-list-group-item>
                   </b-list-group>
@@ -172,6 +197,15 @@
                         >
                           <b-icon icon="x-circle"></b-icon> Dismiss PartnerShip
                         </b-button>
+                        <b-alert
+                          v-model="showTop3"
+                          class="position-fixed fixed-top m-0 rounded-0"
+                          style="z-index: 2000"
+                          variant="success"
+                          dismissible
+                        >
+                          Partnership has been dismissed, please refresh
+                        </b-alert>
                       </b-button-group>
                     </b-list-group-item>
                   </b-list-group>
@@ -230,6 +264,15 @@
                         >
                           <b-icon icon="x-circle"></b-icon> Dismiss Rent
                         </b-button>
+                        <b-alert
+                          v-model="showTop2"
+                          class="position-fixed fixed-top m-0 rounded-0"
+                          style="z-index: 2000"
+                          variant="success"
+                          dismissible
+                        >
+                          Rent has been dismissed, please refresh
+                        </b-alert>
                       </b-button-group>
                     </b-list-group-item>
                   </b-list-group>
@@ -330,6 +373,10 @@ export default {
       countHub: 0,
       countTransation: 0,
       countRent: 0,
+      showTop1: false,
+      showTop2: false,
+      showTop3: false
+      
     };
   },
   mounted() {
@@ -343,14 +390,13 @@ export default {
     update() {
       this.$forceUpdate();
     },
-    updateWallet(customerWallet){
+    updateWallet(customerWallet) {
       console.log(customerWallet.coin);
-      walletService.updateWallet(customerWallet).then(
-        response=>{
-          console.log(response.data);
-          customerWallet=response.data;
-        }
-      )
+      walletService.updateWallet(customerWallet).then((response) => {
+        console.log(response.data);
+        customerWallet = response.data;
+        this.showTop1=true;
+      });
     },
     showMsgBoxOne(rent, dismiss) {
       this.conferm = "";
@@ -379,6 +425,7 @@ export default {
         console.log(response.data);
         rent = response.data;
         this.allRents;
+        this.showTop2=true;
       });
     },
     dismissPartner(partner, dismiss) {
@@ -388,6 +435,7 @@ export default {
           console.log(response.data);
           partner = response.data;
           this.allPartners;
+          this.showTop3=true;
         }
       );
     },
