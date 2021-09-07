@@ -30,6 +30,9 @@ class CoinTransationService{
     completeSwap(coinTransation){
         return axios.put(API_URL + 'coinTransations' + '/'+ coinTransation.id ,{coinTransation:coinTransation} ,{headers: authHeader() })} 
     
+        deleteCoinTransation(coinTransation){
+            return axios.delete(API_URL + 'coinTransations' + '/'+ coinTransation.id, {headers: authHeader() })
+        }
         
 }
 

@@ -1,5 +1,5 @@
 <template>
-  <div >
+  <div class="container" >
     <header >
       
     </header>
@@ -7,7 +7,7 @@
       <div class="mb-3">
         <b-button block variant="primary" size="lg" v-if="show" v-b-toggle.creanoleggio class="m-1">Crea Noleggio</b-button>
         <b-button block variant="primary" size="lg" v-b-toggle.cercaswappoint class="m-1">Cerca SwapPoint</b-button>
-        <b-button block variant="primary" size="lg" v-b-toggle.listaswappoint class="m-1">Lista SwapPoint</b-button
+        <b-button block variant="primary" size="lg" v-b-toggle.listaswappoint class="m-1">Lista Swap</b-button
         >
       </div>
     </div>
@@ -49,7 +49,13 @@
                       <b-list-group-item>{{coinTransation.logTransition}}   </b-list-group-item>
                       <b-list-group-item>{{coinTransation.entrySwap.scooter.id}}     </b-list-group-item>
                       <b-list-group-item>{{coinTransation.fromCustomer.username}}</b-list-group-item>
-                      
+                       <b-list-group-item>
+                        <b-button-group>
+                             <b-button variant="outline-danger" @click="showMsgBoxDelete(coinTransation)">
+                          <b-icon icon="x-circle"></b-icon> Delete Swap
+                             </b-button>
+                             </b-button-group>
+                      </b-list-group-item>
                       
                     </b-list-group>
                 </b-list-group>
@@ -141,6 +147,26 @@ export default {
   methods:{
     update(){
       this.$forceUpdate();
+    },
+    showMsgBoxDelete(coinTransation){
+      this.conferm = ''
+        this.$bvModal.msgBoxConfirm('Confermi la cancellazione dello swap?')
+          .then(value => { 
+            if(value){
+              console.log(value);
+              this.deleteSwap(coinTransation);
+              this.update;
+              
+            }
+          })
+    },
+    deleteSwap(coinTransation){
+      coinTransationService.deleteCoinTransation(coinTransation).then(
+        response=>{
+          console.log(response.state);
+          
+        }
+      )
     },
     getCoinTransation(customer){
       coinTransationService.getCoinTransationByCustomer(customer.id).then(

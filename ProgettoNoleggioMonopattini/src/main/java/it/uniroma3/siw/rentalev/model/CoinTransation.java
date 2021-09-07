@@ -4,7 +4,7 @@ package it.uniroma3.siw.rentalev.model;
 
 import java.util.Date;
 
-
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
@@ -32,7 +32,7 @@ public class CoinTransation {
 	private Date logTransition;
 	@Column(nullable=false)
 	private int coin;
-	@OneToOne
+	@OneToOne(cascade=CascadeType.REMOVE)
     @MapsId
 	private Swap entrySwap;
 	@OneToOne
