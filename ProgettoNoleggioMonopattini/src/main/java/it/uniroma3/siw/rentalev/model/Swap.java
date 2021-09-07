@@ -2,7 +2,7 @@ package it.uniroma3.siw.rentalev.model;
 
 
 
-import java.util.Date;
+import java.time.LocalTime;
 
 
 import javax.persistence.Column;
@@ -25,7 +25,7 @@ public class Swap {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	@Column(nullable=false)
-	private Date eventLog;
+	private LocalTime eventLog;
 	@ManyToOne
 	private Hub hub;
 	@ManyToOne
@@ -44,7 +44,7 @@ public class Swap {
 	public Swap(Hub hub, Battery battery, Scooter scooter
 			 ) {
 		super();
-		this.eventLog = new Date();
+		this.eventLog =LocalTime.now();
 		this.hub = hub;
 		this.battery = battery;
 		this.scooter = scooter;
@@ -54,7 +54,7 @@ public class Swap {
 
 	public Swap() {
 		super();
-		this.eventLog = new Date();
+		this.eventLog = LocalTime.now();
 	}
 
 
@@ -68,12 +68,12 @@ public class Swap {
 	}
 
 
-	public Date getEventLog() {
+	public LocalTime getEventLog() {
 		return eventLog;
 	}
 
 
-	public void setEventLog(Date eventLog) {
+	public void setEventLog(LocalTime eventLog) {
 		this.eventLog = eventLog;
 	}
 

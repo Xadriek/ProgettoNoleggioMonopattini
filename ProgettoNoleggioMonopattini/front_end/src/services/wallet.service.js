@@ -9,7 +9,10 @@ class WalletService{
         return axios.get(API_URL + 'wallets', {headers: authHeader() })}
 
     updateWallet(wallet){
-        return axios.put(API_URL + 'wallets' + '/'+ wallet.id ,{wallet:wallet} ,{headers: authHeader() })}
+        return axios.put(API_URL + 'wallets' + '/'+ wallet.id ,{
+            id:wallet.id,
+            coin:wallet.coin
+        } ,{headers: authHeader() })}
 }
 
 export default new WalletService();

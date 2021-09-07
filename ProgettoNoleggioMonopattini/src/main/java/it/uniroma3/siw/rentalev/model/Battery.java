@@ -1,8 +1,8 @@
 package it.uniroma3.siw.rentalev.model;
 
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -36,9 +36,9 @@ public class Battery {
 	@Column(nullable=false)
 	private float capacity;
 	@Column(nullable=false)
-	private Date dateOfBirth;
+	private LocalDate dateOfBirth;
 	@Column(nullable=true)
-	private Date dateOfDismiss;
+	private LocalDate dateOfDismiss;
 	@JsonIgnore
 	@OneToMany(mappedBy="battery")
 	private List<Swap> swapList;
@@ -60,7 +60,7 @@ public class Battery {
 		super();
 		this.voltage = 48;
 		this.capacity = 13;
-		this.dateOfBirth = new Date();
+		this.dateOfBirth = LocalDate.now();
 		this.swapList = new ArrayList<>();
 		this.scooter=scooter;
 		this.hub=hub;
@@ -76,7 +76,7 @@ public class Battery {
 		super();
 		this.voltage = 48;
 		this.capacity = 13;
-		this.dateOfBirth = new Date();
+		this.dateOfBirth = LocalDate.now();
 		this.swapList = new ArrayList<>();
 		
 		this.state = EBattery.IN_USO;
@@ -111,19 +111,19 @@ public class Battery {
 		this.capacity = capacity;
 	}
 
-	public Date getDateOfBirth() {
+	public LocalDate getDateOfBirth() {
 		return dateOfBirth;
 	}
 
-	public void setDateOfBirth(Date dateOfBirth) {
+	public void setDateOfBirth(LocalDate dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
 
-	public Date getDateOfDismiss() {
+	public LocalDate getDateOfDismiss() {
 		return dateOfDismiss;
 	}
 
-	public void setDateOfDismiss(Date dateOfDismiss) {
+	public void setDateOfDismiss(LocalDate dateOfDismiss) {
 		this.dateOfDismiss = dateOfDismiss;
 	}
 

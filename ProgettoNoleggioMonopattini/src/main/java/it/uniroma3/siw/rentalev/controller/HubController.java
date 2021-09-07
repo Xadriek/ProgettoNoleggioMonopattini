@@ -1,7 +1,7 @@
 package it.uniroma3.siw.rentalev.controller;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -98,7 +98,7 @@ public class HubController {
     
     if(hub.getDateOfDismiss()!=null) {
     
-    	_hub.setDateOfDismiss(new Date());
+    	_hub.setDateOfDismiss(LocalDate.now());
     	_hub.getStokedBattery().add(new Battery());
     }
     

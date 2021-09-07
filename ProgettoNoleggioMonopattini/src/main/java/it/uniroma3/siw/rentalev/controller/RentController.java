@@ -1,13 +1,14 @@
 package it.uniroma3.siw.rentalev.controller;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,6 +41,7 @@ public class RentController {
 	ScooterRepository scooterRepository;
 
 	@GetMapping("/rents")
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<List<Rent>> getAllRents(@RequestParam(required = false) Boolean ongoing) {
 		try {
 			List<Rent> rents = new ArrayList<Rent>();
@@ -84,16 +86,17 @@ public class RentController {
     }
   }*/
 	@PutMapping("/rents/{id}")
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<Rent> updateRent(@PathVariable("id") long id, @RequestBody String dismiss) {
 		Optional<Rent> rentData = rentRepository.findById(id);
 
 		if (rentData.isPresent()) {
 			Rent _rent = rentData.get();
 			if(dismiss!=null) {
-			_rent.setFinishRent(new Date());
+			_rent.setFinishRent(LocalDate.now());
 			_rent.setOngoing(false);
-			_rent.getScooter().setDateOfDismiss(new Date());
-			_rent.getScooter().getBattery().setDateOfDismiss(new Date());
+			_rent.getScooter().setDateOfDismiss(LocalDate.now());
+			_rent.getScooter().getBattery().setDateOfDismiss(LocalDate.now());
 			scooterRepository.save(_rent.getScooter());
 			batteryRepository.save(_rent.getScooter().getBattery());
 			}

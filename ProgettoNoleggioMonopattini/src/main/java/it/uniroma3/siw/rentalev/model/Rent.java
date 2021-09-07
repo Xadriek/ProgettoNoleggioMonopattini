@@ -1,7 +1,7 @@
 package it.uniroma3.siw.rentalev.model;
 
 
-import java.util.Date;
+import java.time.LocalDate;
 
 
 import javax.persistence.CascadeType;
@@ -23,9 +23,9 @@ public class Rent {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	@Column(nullable=false)
-	private Date startRent;
+	private LocalDate startRent;
 	@Column(nullable=true)
-	private Date finishRent;
+	private LocalDate finishRent;
 	@Column(unique=true)
 	
 	private Double numberPolicy;
@@ -43,7 +43,7 @@ public class Rent {
 
 	public Rent() {
 		super();
-		this.startRent = new Date();
+		this.startRent = LocalDate.now();
 		this.scooter = new Scooter();
 		this.ongoing = true;
 		this.contract =new Contract(null);
@@ -65,19 +65,19 @@ public class Rent {
 		this.id = id;
 	}
 
-	public Date getStartRent() {
+	public LocalDate getStartRent() {
 		return startRent;
 	}
 
-	public void setStartRent(Date startRent) {
+	public void setStartRent(LocalDate startRent) {
 		this.startRent = startRent;
 	}
 
-	public Date getFinishRent() {
+	public LocalDate getFinishRent() {
 		return finishRent;
 	}
 
-	public void setFinishRent(Date finishRent) {
+	public void setFinishRent(LocalDate finishRent) {
 		this.finishRent = finishRent;
 	}
 

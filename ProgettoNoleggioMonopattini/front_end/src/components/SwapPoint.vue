@@ -14,14 +14,14 @@
         <b-list-group>
           <b-list-group-item >{{selectedPartner.name}}</b-list-group-item>
           <b-list-group-item >{{address.street}} {{address.numberStreet}} {{address.cap}} {{address.municipality}} {{address.city}}</b-list-group-item>
-          <b-list-group-item > Numero batterie disponibili{{numBatteries}}</b-list-group-item>
+          <b-list-group-item > <p> batterie disponibili</p>{{numBatteries}}</b-list-group-item>
           <b-list-group-item >{{selectedPartner.telephon}}</b-list-group-item>
         </b-list-group>
       </b-card>
       <div v-if="show2">
        <b-button type="submit" variant="primary" class="m-1" @click="showMsgBoxOne">Conferma</b-button>
       
-      <b-button type="reset" variant="danger" class="m-1">Annulla</b-button>
+      <b-button type="reset" variant="danger" class="m-1" >Annulla</b-button>
       </div>
       <div v-else-if="this.selectedPartner.id!=null">Non hai abbastanza monete</div>
     </b-form>
@@ -33,6 +33,7 @@ import AddGoogleMap from "../components/AddGoogleMap";
 import partnerInformationService from "../services/partnerInformation.service"
 import coinTransationService from '../services/coinTransation.service';
 import customerInformationService from "../services/customerInformation.service"
+import batteryService from '../services/battery.service';
 export default {
   name: "SwapPoint",
   computed: {
@@ -53,8 +54,9 @@ export default {
       show: true,
       show2:false,
       selectedPartner:{},
+      batteries:[],
       address:{},
-      numBatteries:5,
+      numBatteries:0,
       hub:{},
       position:{
         lat:0,
@@ -64,13 +66,16 @@ export default {
   },
   components: { AddGoogleMap },
   methods: {
+    
     onSubmit(event) {
       event.preventDefault();
       
     },
     onReset(event) {
       event.preventDefault();
-      // Reset our form values
+      this.selectedPartner={};
+      this.address={};
+      this.numBatteries=0;
       // Trick to reset/clear native browser form validation state
       this.show = false;
       this.$nextTick(() => {
@@ -105,6 +110,7 @@ export default {
           this.selectedPartner=response.data;
           this.address=this.selectedPartner.address;
           this.hub=this.selectedPartner.hub;
+          this.getBatteries();
           console.log(this.hub);
           this.requestBody.partnerId=this.selectedPartner.id;
           this.getCustomer();
@@ -114,6 +120,16 @@ export default {
         }
       )
     },
+    getBatteries(){
+      batteryService.getBatteryByHub(this.hub.id).then(
+        response=>{
+          console.log(response.data);
+          this.batteries=response.data;
+          this.numBatteries=this.batteries.filter(battery=>battery.state=="CARICA").length;
+        }
+      )
+    },
+
     getCustomer(){
       customerInformationService.getCustomerByEmail(this.currentUser.email).then(
         response=>{

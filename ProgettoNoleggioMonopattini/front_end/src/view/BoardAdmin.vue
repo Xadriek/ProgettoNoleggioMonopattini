@@ -46,197 +46,298 @@
           <b-card no-body>
             <b-tabs card>
               <b-tab no-body title="Customer">
-                <b-list-group >
-                    <b-list-group horizontal="md"
-                     fluid="md"
-                    active 
-                  >
-                      <b-list-group-item  >id</b-list-group-item>
-                      <b-list-group-item>Username   </b-list-group-item>
-                      <b-list-group-item>Email</b-list-group-item>
-                      <b-list-group-item>Name</b-list-group-item>
-                      <b-list-group-item>Surname     </b-list-group-item>
-                      <b-list-group-item>Telephon</b-list-group-item>
-                      <b-list-group-item>Address    </b-list-group-item>
-                      <b-list-group-item>Coin       </b-list-group-item>
-                      <b-list-group-item>Rent</b-list-group-item>
-                    </b-list-group>
-                    <b-list-group horizontal="md"
-                     fluid="md"
+                <b-list-group>
+                  <b-list-group horizontal="md" fluid="md" active>
+                    <b-list-group-item>id</b-list-group-item>
+                    <b-list-group-item>Username </b-list-group-item>
+                    <b-list-group-item>Email</b-list-group-item>
+                    <b-list-group-item>Name</b-list-group-item>
+                    <b-list-group-item>Surname </b-list-group-item>
+                    <b-list-group-item>Telephon</b-list-group-item>
+                    <b-list-group-item>Address </b-list-group-item>
+                    <b-list-group-item>Coin </b-list-group-item>
+                    <b-list-group-item>Rent</b-list-group-item>
+                  </b-list-group>
+                  <b-list-group
+                    horizontal="md"
+                    fluid="md"
                     active
-                    
                     v-for="customer in customers"
                     v-bind:key="customer.id"
+                  >
+                    <b-list-group-item>{{ customer.id }}</b-list-group-item>
+                    <b-list-group-item
+                      >{{ customer.username }}
+                    </b-list-group-item>
+                    <b-list-group-item>{{ customer.email }} </b-list-group-item>
+                    <b-list-group-item>{{ customer.name }} </b-list-group-item>
+                    <b-list-group-item
+                      >{{ customer.surname }}
+                    </b-list-group-item>
+                    <b-list-group-item
+                      >{{ customer.telephon }}
+                    </b-list-group-item>
+                    <b-list-group-item
+                      >{{ customer.address.street
+                      }}{{ customer.address.numberStreet
+                      }}{{ customer.address.city }}</b-list-group-item
                     >
-                      <b-list-group-item>{{customer.id}}</b-list-group-item>
-                      <b-list-group-item>{{customer.username}}   </b-list-group-item>
-                      <b-list-group-item>{{customer.email}}     </b-list-group-item>
-                      <b-list-group-item>{{customer.name}}     </b-list-group-item>
-                      <b-list-group-item>{{customer.surname}}     </b-list-group-item>
-                      <b-list-group-item>{{customer.telephon}}     </b-list-group-item>
-                      <b-list-group-item>{{customer.address.street}}{{customer.address.numberStreet}}{{customer.address.city}}</b-list-group-item>
-                      <b-list-group-item>{{customer.customerWallet.coin}}       </b-list-group-item>
-                      <b-list-group-item>{{customer.rent.id}}{{customer.rent.contract.plan}}</b-list-group-item>
-                      <b-list-group-item >
-                           <b-iconstack v-if="customer.rent.ongoing==true" >
-                                <b-icon stacked icon="square"></b-icon>
-                                <b-icon stacked icon="check"></b-icon>
-                                </b-iconstack>
-                      
-                           <b-iconstack v-else-if="customer.rent.ongoing==false" >
-                                <b-icon stacked icon="square"></b-icon>
-                                <b-icon stacked icon="x-circle"></b-icon>
-                                </b-iconstack>
-                      </b-list-group-item>
-                      <b-list-group-item>
-                        <b-button-group>
-                             <b-button variant="outline-primary" @click="showMsgBoxOne(customer.rent,'dismiss')">
+                    <b-list-group-item>
+                      <div>
+                        <label for="sb-inline"></label>
+                        <b-form-spinbutton
+                          size="sm"
+                          id="sb-inline"
+                          v-model="customer.customerWallet.coin"
+                          inline
+                        ></b-form-spinbutton>
+                        <b-button
+                          size="sm"
+                          squared
+                          variant="outline-success"
+                          @click="updateWallet(customer.customerWallet)"
+                          >Aggiorna</b-button
+                        >
+                        <b-alert
+                          v-model="showTop1"
+                          class="position-fixed fixed-top m-0 rounded-0"
+                          style="z-index: 2000"
+                          variant="success"
+                          dismissible
+                        >
+                          Wallet updated, please refresh
+                        </b-alert>
+                      </div>
+                    </b-list-group-item>
+                    <b-list-group-item
+                      >{{ customer.rent.id
+                      }}{{ customer.rent.contract.plan }}</b-list-group-item
+                    >
+                    <b-list-group-item>
+                      <b-iconstack v-if="customer.rent.ongoing == true">
+                        <b-icon stacked icon="square"></b-icon>
+                        <b-icon stacked icon="check"></b-icon>
+                      </b-iconstack>
+
+                      <b-iconstack v-else-if="customer.rent.ongoing == false">
+                        <b-icon stacked icon="square"></b-icon>
+                        <b-icon stacked icon="x-circle"></b-icon>
+                      </b-iconstack>
+                    </b-list-group-item>
+                    <b-list-group-item>
+                      <b-button-group>
+                        <b-button
+                          variant="outline-primary"
+                          @click="showMsgBoxOne(customer.rent, 'dismiss')"
+                        >
                           <b-icon icon="x-circle"></b-icon> Dismiss Rent
-                             </b-button>
-                             </b-button-group>
-                      </b-list-group-item>
-                    </b-list-group>
+                        </b-button>
+                        <b-alert
+                          v-model="showTop2"
+                          class="position-fixed fixed-top m-0 rounded-0"
+                          style="z-index: 2000"
+                          variant="success"
+                          dismissible
+                        >
+                          Rent dismissed, please refresh
+                        </b-alert>
+                      </b-button-group>
+                    </b-list-group-item>
+                  </b-list-group>
                 </b-list-group>
               </b-tab>
 
               <b-tab no-body title="Partner">
-                <b-list-group >
-                    <b-list-group horizontal="md"
-                     fluid="md"
-                    active 
-                  >
-                      <b-list-group-item  >id</b-list-group-item>
-                      <b-list-group-item>Username   </b-list-group-item>
-                      <b-list-group-item>P.Iva      </b-list-group-item>
-                      <b-list-group-item>Address    </b-list-group-item>
-                      <b-list-group-item>Coin       </b-list-group-item>
-                      <b-list-group-item>StartPartnership</b-list-group-item>
-                      <b-list-group-item>ClosurePartnership</b-list-group-item>
-                      <b-list-group-item>Hub</b-list-group-item>
-                    </b-list-group>
-                    <b-list-group horizontal="md"
-                     fluid="md"
+                <b-list-group>
+                  <b-list-group horizontal="md" fluid="md" active>
+                    <b-list-group-item>id</b-list-group-item>
+                    <b-list-group-item>Username </b-list-group-item>
+                    <b-list-group-item>P.Iva </b-list-group-item>
+                    <b-list-group-item>Address </b-list-group-item>
+                    <b-list-group-item>Coin </b-list-group-item>
+                    <b-list-group-item>StartPartnership</b-list-group-item>
+                    <b-list-group-item>ClosurePartnership</b-list-group-item>
+                    <b-list-group-item>Hub</b-list-group-item>
+                  </b-list-group>
+                  <b-list-group
+                    horizontal="md"
+                    fluid="md"
                     active
-                    
                     v-for="partner in partners"
                     v-bind:key="partner.id"
+                  >
+                    <b-list-group-item>{{ partner.id }}</b-list-group-item>
+                    <b-list-group-item
+                      >{{ partner.username }}
+                    </b-list-group-item>
+                    <b-list-group-item>{{ partner.pIva }} </b-list-group-item>
+                    <b-list-group-item
+                      >{{ partner.address.street
+                      }}{{ partner.address.numberStreet
+                      }}{{ partner.address.city }}</b-list-group-item
                     >
-                      <b-list-group-item>{{partner.id}}</b-list-group-item>
-                      <b-list-group-item>{{partner.username}}   </b-list-group-item>
-                      <b-list-group-item>{{partner.pIva}}     </b-list-group-item>
-                      <b-list-group-item>{{partner.address.street}}{{partner.address.numberStreet}}{{partner.address.city}}</b-list-group-item>
-                      <b-list-group-item>{{partner.partnerWallet.coin}}       </b-list-group-item>
-                      <b-list-group-item>{{partner.startPartnership}}</b-list-group-item>
-                      <b-list-group-item v-if="partner.closurePartnership!=null">{{partner.closurePartnership}} </b-list-group-item>
-                      <b-list-group-item v-else>Partnerhip in course</b-list-group-item>
-                      <b-list-group-item>{{partner.hub.id}}</b-list-group-item>
-                      <b-list-group-item>
-                        <b-button-group>
-                             <b-button variant="outline-primary" @click="showMsgBoxTwo(partner,'dismiss')">
+                    <b-list-group-item
+                      >{{ partner.partnerWallet.coin }}
+                    </b-list-group-item>
+                    <b-list-group-item>{{
+                      partner.startPartnership
+                    }}</b-list-group-item>
+                    <b-list-group-item v-if="partner.closurePartnership != null"
+                      >{{ partner.closurePartnership }}
+                    </b-list-group-item>
+                    <b-list-group-item v-else
+                      >Partnerhip in course</b-list-group-item
+                    >
+                    <b-list-group-item>{{ partner.hub.id }}</b-list-group-item>
+                    <b-list-group-item>
+                      <b-button-group>
+                        <b-button
+                          variant="outline-primary"
+                          @click="showMsgBoxTwo(partner, 'dismiss')"
+                        >
                           <b-icon icon="x-circle"></b-icon> Dismiss PartnerShip
-                             </b-button>
-                             </b-button-group>
-                      </b-list-group-item>
-                      
-                    </b-list-group>
+                        </b-button>
+                        <b-alert
+                          v-model="showTop3"
+                          class="position-fixed fixed-top m-0 rounded-0"
+                          style="z-index: 2000"
+                          variant="success"
+                          dismissible
+                        >
+                          Partnership has been dismissed, please refresh
+                        </b-alert>
+                      </b-button-group>
+                    </b-list-group-item>
+                  </b-list-group>
                 </b-list-group>
               </b-tab>
 
               <b-tab no-body title="Rents">
-                 <b-list-group >
-                    <b-list-group horizontal="md"
-                     fluid="md"
-                    active 
-                  >
-                      <b-list-group-item  >id</b-list-group-item>
-                      <b-list-group-item>Start    </b-list-group-item>
-                      <b-list-group-item>Finish     </b-list-group-item>
-                      <b-list-group-item>Number Policy    </b-list-group-item>
-                      <b-list-group-item>Scooter       </b-list-group-item>
-                      <b-list-group-item>Plan</b-list-group-item>
-                      <b-list-group-item>Ongoing</b-list-group-item>
-                      
-                    </b-list-group>
-                    <b-list-group horizontal="md"
-                     fluid="md"
+                <b-list-group>
+                  <b-list-group horizontal="md" fluid="md" active>
+                    <b-list-group-item>id</b-list-group-item>
+                    <b-list-group-item>Start </b-list-group-item>
+                    <b-list-group-item>Finish </b-list-group-item>
+                    <b-list-group-item>Number Policy </b-list-group-item>
+                    <b-list-group-item>Scooter </b-list-group-item>
+                    <b-list-group-item>Plan</b-list-group-item>
+                    <b-list-group-item>Ongoing</b-list-group-item>
+                  </b-list-group>
+                  <b-list-group
+                    horizontal="md"
+                    fluid="md"
                     active
-                    
                     v-for="rent in rents"
                     v-bind:key="rent.id"
-                    >
-                      <b-list-group-item>{{rent.id}}</b-list-group-item>
-                      <b-list-group-item>{{rent.startRent}}   </b-list-group-item>
-                      <b-list-group-item v-if="rent.finishRent!=null">{{rent.finishRent}} </b-list-group-item>
-                      <b-list-group-item v-else>rent in course</b-list-group-item>
-                      <b-list-group-item>{{rent.numberPolicy}}</b-list-group-item>
-                      <b-list-group-item>{{rent.scooter.id}}       </b-list-group-item>
-                      <b-list-group-item>{{rent.contract.plan}}</b-list-group-item>
-                      <b-list-group-item >
-                           <b-iconstack v-if="rent.ongoing==true" >
-                                <b-icon stacked icon="square"></b-icon>
-                                <b-icon stacked icon="check"></b-icon>
-                                </b-iconstack>
-                      
-                           <b-iconstack v-else-if="rent.ongoing==false" >
-                                <b-icon stacked icon="square"></b-icon>
-                                <b-icon stacked icon="x-circle"></b-icon>
-                                </b-iconstack>
-                      </b-list-group-item>
-                      <b-list-group-item>
-                        <b-button-group>
-                             <b-button variant="outline-primary" @click="showMsgBoxOne(rent,'dismiss')">
+                  >
+                    <b-list-group-item>{{ rent.id }}</b-list-group-item>
+                    <b-list-group-item>{{ rent.startRent }} </b-list-group-item>
+                    <b-list-group-item v-if="rent.finishRent != null"
+                      >{{ rent.finishRent }}
+                    </b-list-group-item>
+                    <b-list-group-item v-else>rent in course</b-list-group-item>
+                    <b-list-group-item>{{
+                      rent.numberPolicy
+                    }}</b-list-group-item>
+                    <b-list-group-item
+                      >{{ rent.scooter.id }}
+                    </b-list-group-item>
+                    <b-list-group-item>{{
+                      rent.contract.plan
+                    }}</b-list-group-item>
+                    <b-list-group-item>
+                      <b-iconstack v-if="rent.ongoing == true">
+                        <b-icon stacked icon="square"></b-icon>
+                        <b-icon stacked icon="check"></b-icon>
+                      </b-iconstack>
+
+                      <b-iconstack v-else-if="rent.ongoing == false">
+                        <b-icon stacked icon="square"></b-icon>
+                        <b-icon stacked icon="x-circle"></b-icon>
+                      </b-iconstack>
+                    </b-list-group-item>
+                    <b-list-group-item>
+                      <b-button-group>
+                        <b-button
+                          variant="outline-primary"
+                          @click="showMsgBoxOne(rent, 'dismiss')"
+                        >
                           <b-icon icon="x-circle"></b-icon> Dismiss Rent
-                             </b-button>
-                             </b-button-group>
-                      </b-list-group-item>
-                    </b-list-group>
+                        </b-button>
+                        <b-alert
+                          v-model="showTop2"
+                          class="position-fixed fixed-top m-0 rounded-0"
+                          style="z-index: 2000"
+                          variant="success"
+                          dismissible
+                        >
+                          Rent has been dismissed, please refresh
+                        </b-alert>
+                      </b-button-group>
+                    </b-list-group-item>
+                  </b-list-group>
                 </b-list-group>
-                  
-                
               </b-tab>
 
               <b-tab no-body title="CoinTransations">
-                <b-list-group >
-                    <b-list-group horizontal="md"
-                     fluid="md"
-                    active 
-                  >
-                      <b-list-group-item>id</b-list-group-item>
-                      <b-list-group-item>From Customer   </b-list-group-item>
-                      <b-list-group-item>To Partner      </b-list-group-item>
-                      <b-list-group-item>Log create    </b-list-group-item>
-                      <b-list-group-item>Coin       </b-list-group-item>
-                      <b-list-group-item>EntrySwap</b-list-group-item>
-                      <b-list-group-item>ExitSwap</b-list-group-item>
-                      <b-list-group-item>Complete</b-list-group-item>
-                    </b-list-group>
-                    <b-list-group horizontal="md"
-                     fluid="md"
+                <b-list-group>
+                  <b-list-group horizontal="md" fluid="md" active>
+                    <b-list-group-item>id</b-list-group-item>
+                    <b-list-group-item>From Customer </b-list-group-item>
+                    <b-list-group-item>To Partner </b-list-group-item>
+                    <b-list-group-item>Log create </b-list-group-item>
+                    <b-list-group-item>Coin </b-list-group-item>
+                    <b-list-group-item>EntrySwap</b-list-group-item>
+                    <b-list-group-item>ExitSwap</b-list-group-item>
+                    <b-list-group-item>Complete</b-list-group-item>
+                  </b-list-group>
+                  <b-list-group
+                    horizontal="md"
+                    fluid="md"
                     active
-                    
                     v-for="coinTransation in coinTransations"
                     v-bind:key="coinTransation.id"
+                  >
+                    <b-list-group-item>{{
+                      coinTransation.id
+                    }}</b-list-group-item>
+                    <b-list-group-item
+                      >{{ coinTransation.fromCustomer.username
+                      }}{{ coinTransation.fromCustomer.email }}
+                    </b-list-group-item>
+                    <b-list-group-item
+                      >{{ coinTransation.toPartner.username
+                      }}{{ coinTransation.toPartner.email }}
+                    </b-list-group-item>
+                    <b-list-group-item>{{
+                      coinTransation.logTransition
+                    }}</b-list-group-item>
+                    <b-list-group-item
+                      >{{ coinTransation.coin }}
+                    </b-list-group-item>
+                    <b-list-group-item>{{
+                      coinTransation.entrySwap.id
+                    }}</b-list-group-item>
+                    <b-list-group-item v-if="coinTransation.exitSwap != null"
+                      >{{ coinTransation.exitSwap.id }}
+                    </b-list-group-item>
+                    <b-list-group-item v-else
+                      >CoinTransation in course</b-list-group-item
                     >
-                      <b-list-group-item>{{coinTransation.id}}</b-list-group-item>
-                      <b-list-group-item>{{coinTransation.fromCustomer.username}}{{coinTransation.fromCustomer.email}} </b-list-group-item>
-                      <b-list-group-item>{{coinTransation.toPartner.username}}{{coinTransation.toPartner.email}}     </b-list-group-item>
-                      <b-list-group-item>{{coinTransation.logTransition}}</b-list-group-item>
-                      <b-list-group-item>{{coinTransation.coin}}       </b-list-group-item>
-                      <b-list-group-item>{{coinTransation.entrySwap.id}}</b-list-group-item>
-                       <b-list-group-item v-if="coinTransation.exitSwap!=null">{{coinTransation.exitSwap.id}} </b-list-group-item>
-                      <b-list-group-item v-else>CoinTransation in course</b-list-group-item>
-                      <b-list-group-item >
-                           <b-iconstack v-if="coinTransation.isComplete==true" >
-                                <b-icon stacked icon="square"></b-icon>
-                                <b-icon stacked icon="check"></b-icon>
-                                </b-iconstack>
-                      
-                           <b-iconstack v-else-if="coinTransation.isComplete==false" >
-                                <b-icon stacked icon="square"></b-icon>
-                                <b-icon stacked icon="x-circle"></b-icon>
-                                </b-iconstack>
-                      </b-list-group-item>
-                    </b-list-group>
+                    <b-list-group-item>
+                      <b-iconstack v-if="coinTransation.isComplete == true">
+                        <b-icon stacked icon="square"></b-icon>
+                        <b-icon stacked icon="check"></b-icon>
+                      </b-iconstack>
+
+                      <b-iconstack
+                        v-else-if="coinTransation.isComplete == false"
+                      >
+                        <b-icon stacked icon="square"></b-icon>
+                        <b-icon stacked icon="x-circle"></b-icon>
+                      </b-iconstack>
+                    </b-list-group-item>
+                  </b-list-group>
                 </b-list-group>
               </b-tab>
               <b-tab title="Aiuto">
@@ -258,13 +359,13 @@ import CustomerInformationService from "../services/customerInformation.service"
 import PartnerInformationService from "../services/partnerInformation.service";
 import RentService from "../services/rent.service";
 import CoinTransationService from "../services/coinTransation.service";
-import rentService from '../services/rent.service';
+import rentService from "../services/rent.service";
+import walletService from "../services/wallet.service";
 
 export default {
   name: "admin",
   data() {
     return {
-      
       customers: [],
       partners: [],
       rents: [],
@@ -272,6 +373,10 @@ export default {
       countHub: 0,
       countTransation: 0,
       countRent: 0,
+      showTop1: false,
+      showTop2: false,
+      showTop3: false
+      
     };
   },
   mounted() {
@@ -280,54 +385,59 @@ export default {
     this.allCoinTransation();
     this.allRents();
   },
-  updated() {
-    
-  },
+  updated() {},
   methods: {
-    update(){
+    update() {
       this.$forceUpdate();
     },
-    showMsgBoxOne(rent,dismiss) {
-        this.conferm = ''
-        this.$bvModal.msgBoxConfirm('Confermi la terminazione del noleggio?')
-          .then(value => { 
-            if(value){
-              console.log(value);
-              this.dismissRent(rent,dismiss);
-            }
-          })
-         
+    updateWallet(customerWallet) {
+      console.log(customerWallet.coin);
+      walletService.updateWallet(customerWallet).then((response) => {
+        console.log(response.data);
+        customerWallet = response.data;
+        this.showTop1=true;
+      });
     },
-    showMsgBoxTwo(partner,dismiss) {
-        this.conferm = ''
-        this.$bvModal.msgBoxConfirm('Confermi la fine della collaborazione?')
-          .then(value => { 
-            if(value){
-              console.log(value);
-              this.dismissPartner(partner,dismiss);
-            }
-          })
-         
+    showMsgBoxOne(rent, dismiss) {
+      this.conferm = "";
+      this.$bvModal
+        .msgBoxConfirm("Confermi la terminazione del noleggio?")
+        .then((value) => {
+          if (value) {
+            console.log(value);
+            this.dismissRent(rent, dismiss);
+          }
+        });
     },
-    dismissRent(rent,dismiss){
-      rentService.updateRent(rent,dismiss).then(
-        response=>{
-          console.log(response.data);
-          rent=response.data;
-          this.allRents;
-        }
-      )
+    showMsgBoxTwo(partner, dismiss) {
+      this.conferm = "";
+      this.$bvModal
+        .msgBoxConfirm("Confermi la fine della collaborazione?")
+        .then((value) => {
+          if (value) {
+            console.log(value);
+            this.dismissPartner(partner, dismiss);
+          }
+        });
     },
-    dismissPartner(partner,dismiss){
+    dismissRent(rent, dismiss) {
+      rentService.updateRent(rent, dismiss).then((response) => {
+        console.log(response.data);
+        rent = response.data;
+        this.allRents;
+        this.showTop2=true;
+      });
+    },
+    dismissPartner(partner, dismiss) {
       alert();
-      PartnerInformationService.updatePartnerInformation(partner,dismiss).then(
-        response=>{
+      PartnerInformationService.updatePartnerInformation(partner, dismiss).then(
+        (response) => {
           console.log(response.data);
-          partner=response.data;
+          partner = response.data;
           this.allPartners;
-
+          this.showTop3=true;
         }
-      )
+      );
     },
     allCustomers() {
       console.log("customers");
@@ -351,7 +461,9 @@ export default {
         (response) => {
           console.log(response.data);
           this.coinTransations = response.data;
-          this.countTransation=this.coinTransations.filter(coinTransation=>coinTransation.isComplete==true).length;
+          this.countTransation = this.coinTransations.filter(
+            (coinTransation) => coinTransation.isComplete == true
+          ).length;
           console.log(this.countTransation);
         },
         (error) => {
@@ -368,7 +480,9 @@ export default {
         (response) => {
           console.log(response.data);
           this.rents = response.data;
-          this.countRent=this.rents.filter(rent=>rent.ongoing==true).length;
+          this.countRent = this.rents.filter(
+            (rent) => rent.ongoing == true
+          ).length;
           console.log(this.countRent);
         },
         (error) => {
@@ -385,7 +499,9 @@ export default {
         (response) => {
           console.log(response.data);
           this.partners = response.data;
-          this.countHub=this.partners.filter(partner=>partner.hub.dateOfDismiss==null).length;
+          this.countHub = this.partners.filter(
+            (partner) => partner.hub.dateOfDismiss == null
+          ).length;
           console.log(this.countHub);
         },
         (error) => {

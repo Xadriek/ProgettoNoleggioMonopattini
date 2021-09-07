@@ -2,8 +2,8 @@ package it.uniroma3.siw.rentalev.model;
 
 
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -27,7 +27,7 @@ public class Hub {
 	
 	public Hub(Geocode geocode) {
 		super();
-		this.dateOfAssembly = new Date();
+		this.dateOfAssembly = LocalDate.now();
 		this.swapCompleted = new ArrayList<Swap>();
 		this.stokedBattery = new ArrayList<Battery>();
 		this.dateOfDismiss=null;
@@ -40,7 +40,7 @@ public class Hub {
 
 	public Hub() {
 		super();
-		this.dateOfAssembly = new Date();
+		this.dateOfAssembly = LocalDate.now();
 		this.swapCompleted = new ArrayList<Swap>();
 		this.stokedBattery = new ArrayList<Battery>();
 		this.dateOfDismiss=null;
@@ -55,9 +55,9 @@ public class Hub {
 	private Long id;
 
 	@Column
-	private Date dateOfAssembly;
+	private LocalDate dateOfAssembly;
 	@Column(nullable=true)
-	private Date dateOfDismiss;
+	private LocalDate dateOfDismiss;
 	@JsonIgnore
 	@OneToMany(mappedBy="hub")
 	private List<Swap> swapCompleted;
@@ -76,16 +76,16 @@ public class Hub {
 		this.id = id;
 	}
 	
-	public Date getDateOfAssembly() {
+	public LocalDate getDateOfAssembly() {
 		return dateOfAssembly;
 	}
-	public void setDateOfAssembly(Date dateOfAssembly) {
+	public void setDateOfAssembly(LocalDate dateOfAssembly) {
 		this.dateOfAssembly = dateOfAssembly;
 	}
-	public Date getDateOfDismiss() {
+	public LocalDate getDateOfDismiss() {
 		return dateOfDismiss;
 	}
-	public void setDateOfDismiss(Date dateOfDismiss) {
+	public void setDateOfDismiss(LocalDate dateOfDismiss) {
 		this.dateOfDismiss = dateOfDismiss;
 	}
 	public List<Swap> getSwapCompleted() {

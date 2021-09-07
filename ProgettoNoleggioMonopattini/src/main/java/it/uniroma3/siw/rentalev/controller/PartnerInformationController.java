@@ -1,8 +1,8 @@
 package it.uniroma3.siw.rentalev.controller;
 
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,6 +11,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,6 +49,7 @@ public class PartnerInformationController {
   private static final Logger logger = LogManager.getLogger();
 
   @GetMapping("/partnerInformations")
+  @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<List<PartnerInformation>> getAllPartnerInformations(@RequestParam(required = false) Boolean isActive) {
     try {
       List<PartnerInformation> partnerInformations = new ArrayList<PartnerInformation>();
@@ -95,6 +97,7 @@ public class PartnerInformationController {
   }
 
   @PostMapping("/partnerInformations")
+  @PreAuthorize("hasRole('PARTNER')")
   public ResponseEntity<PartnerInformation> createPartnerInformation(@RequestBody HubRequest hubRequest) {
     try {
       
@@ -117,8 +120,8 @@ public class PartnerInformationController {
     	PartnerInformation _partnerInformation = partnerInformationData.get();
     
     	if(date!=null) {
-    	_partnerInformation.setClosurePartnership(new Date());
-    	_partnerInformation.getHub().setDateOfDismiss(new Date());
+    	_partnerInformation.setClosurePartnership(LocalDate.now());
+    	_partnerInformation.getHub().setDateOfDismiss(LocalDate.now());
     	hubRepository.save(_partnerInformation.getHub());
     	}
     	return new ResponseEntity<>(partnerInformationRepository.save(_partnerInformation), HttpStatus.OK);

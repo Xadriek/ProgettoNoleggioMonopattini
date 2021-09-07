@@ -2,6 +2,7 @@ package it.uniroma3.siw.rentalev.controller;
 
 
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -9,7 +10,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import it.uniroma3.siw.rentalev.model.Address;
 import it.uniroma3.siw.rentalev.model.CustomerInformation;
+import it.uniroma3.siw.rentalev.model.EContract;
 import it.uniroma3.siw.rentalev.payload.request.RentRequest;
 import it.uniroma3.siw.rentalev.repository.CustomerInformationRepository;
 import it.uniroma3.siw.rentalev.repository.RentRepository;
@@ -39,6 +41,7 @@ public class CustomerInformationController {
 
 
   @GetMapping("/customerInformations")
+  @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<List<CustomerInformation>> getAllCustomerInformations() {
     try {
       List<CustomerInformation> customerInformations = new ArrayList<CustomerInformation>();
@@ -70,18 +73,35 @@ public class CustomerInformationController {
   }
 
   @PostMapping("/customerInformations")
+  @PreAuthorize("hasRole('CUSTOMER')")
   public ResponseEntity<CustomerInformation> createCustomerInformation(@RequestBody RentRequest rentRequest) {
     try {
     Address _address= new Address(rentRequest.getStreet(), rentRequest.getCap(), rentRequest.getNumberStreet(), rentRequest.getMunicipality(), rentRequest.getCity(), rentRequest.getCountry());
       CustomerInformation _customerInformation =new CustomerInformation( rentRequest.getName(),rentRequest.getSurname(),rentRequest.getTelephon(),_address,rentRequest.getUserEmail(),rentRequest.getUsername());
       _customerInformation.getRent().getContract().setPlan(rentRequest.getPlan());
+      _customerInformation.getRent().setFinishRent(calculateFinishRent(_customerInformation.getRent().getStartRent(),rentRequest.getPlan()));
       CustomerInformation customerInformation =customerInformationRepository.save(_customerInformation);
       return new ResponseEntity<>(customerInformation, HttpStatus.CREATED);
     } catch (Exception e) {
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
-  @PutMapping("/customerInformations/{id}")
+  private LocalDate calculateFinishRent(LocalDate startRent, EContract plan) {
+	LocalDate finish=null;
+	if(plan.equals(EContract.PIANO_TARIFFARIO1)) {
+		finish= startRent.plusMonths(3);
+	}
+	if(plan.equals(EContract.PIANO_TARIFFARIO2)) {
+		finish= startRent.plusMonths(6);
+	}
+	if(plan.equals(EContract.PIANO_TARIFFARIO3)) {
+		finish= startRent.plusMonths(12);
+	}
+	
+	return finish;
+}
+
+@PutMapping("/customerInformations/{id}")
   public ResponseEntity<CustomerInformation> updateCustomerInformation(@PathVariable("id") long id, @RequestBody Boolean isActive) {
     Optional<CustomerInformation> customerInformationData = customerInformationRepository.findById(id);
 
@@ -119,12 +139,13 @@ public class CustomerInformationController {
 
 
   @GetMapping("/customerInformation/{email}")
+  @PreAuthorize("hasRole('CUSTOMER')")
   public ResponseEntity<CustomerInformation> getCustomerInformationByEmail(@PathVariable("email") String emailRequest) {
-    CustomerInformation customerInformationData = customerInformationRepository.findByEmail(emailRequest);
+	  Optional<CustomerInformation> customerInformationData = customerInformationRepository.findByEmail(emailRequest);
     
     
-    if (customerInformationData.getName()!=null) {
-        return new ResponseEntity<>(customerInformationData, HttpStatus.OK);
+    if (customerInformationData.isPresent()) {
+        return new ResponseEntity<>(customerInformationData.get(), HttpStatus.OK);
       } else {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
       }

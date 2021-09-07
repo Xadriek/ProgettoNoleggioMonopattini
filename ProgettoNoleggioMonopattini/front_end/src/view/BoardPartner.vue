@@ -19,7 +19,7 @@
             class="text-center"
           >
             <b-button variant="primary">
-              I Swap effettuati sono : <b-badge variant="light">{{countCoinTransationComplete}}</b-badge>
+              I Swap effettuati sono : <b-badge variant="light">{{countCoinTransationsComplete}}</b-badge>
             </b-button>
           </b-card>
 
@@ -74,6 +74,15 @@
                                 </b-iconstack>
                                 Complete Swap
                              </b-button>
+                              <b-alert
+                          v-model="showTop1"
+                          class="position-fixed fixed-top m-0 rounded-0"
+                          style="z-index: 2000"
+                          variant="success"
+                          dismissible
+                        >
+                          Swap is complete, please refresh
+                        </b-alert>
                              </b-button-group>
                       </b-list-group-item>
                       
@@ -140,6 +149,15 @@
                              <b-button variant="outline-primary" @click="showMsgBoxBattery()">
                           <b-icon icon="x-circle"></b-icon> Add Battery
                              </b-button>
+                              <b-alert
+                          v-model="showTop2"
+                          class="position-fixed fixed-top m-0 rounded-0"
+                          style="z-index: 2000"
+                          variant="success"
+                          dismissible
+                        >
+                          Battery has been added, please refresh
+                        </b-alert>
                              </b-button-group>
                       </b-list-group-item>
                     </b-list-group>
@@ -160,6 +178,15 @@
                              <b-button variant="outline-primary" @click="showMsgBoxBatteryState(battery)">
                           <b-icon icon="x-circle"></b-icon> Change State Battery
                              </b-button>
+                              <b-alert
+                          v-model="showTop3"
+                          class="position-fixed fixed-top m-0 rounded-0"
+                          style="z-index: 2000"
+                          variant="success"
+                          dismissible
+                        >
+                          State of battery has been changed, please refresh
+                        </b-alert>
                              </b-button-group>
                       </b-list-group-item>
                       
@@ -202,6 +229,9 @@ export default {
   data() {
     return {
       show: true,
+      showTop1: false,
+      showTop2: false,
+      showTop3: false,
       countCoinTransationComplete:0,
       countBatteryCharged:0,
       geocode:{
@@ -251,6 +281,7 @@ export default {
         response=>{
           console.log(response.data);
           coinTransation=response.data;
+          this.showTop1=true;
           
         }
       )
@@ -270,6 +301,7 @@ export default {
       batteryService.createBattery(this.currentPartner.hub.id).then(
         response=>{
           console.log(response.data);
+          this.showTop2=true;
           
 
         }
@@ -292,6 +324,7 @@ export default {
           console.log(response.data);
           battery=response.data;
           this.update();
+          this.showTop3=true;
         }
       )
     },
@@ -311,7 +344,7 @@ export default {
         response=>{
           console.log(response.data);
           this.batteries=response.data;
-          this.countBatteryCharged=this.batteries.filter(battery=>battery.state=='CARICA').length;
+          this.countBatteryCharged=this.batteries.filter(battery=>battery.state=="CARICA").length;
           
         }
       )
