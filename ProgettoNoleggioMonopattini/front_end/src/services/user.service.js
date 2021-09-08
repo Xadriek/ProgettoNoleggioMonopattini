@@ -25,6 +25,13 @@ class UserService {
   updateRole(user){
     return axios.put(API_URL + 'users'+ '/'+ user.id,{headers: authHeader()});
   }
+  updatePassword(user){
+    return axios.post(API_URL + 'users'+ '/'+'update',{
+      id:user.id,
+      oldPassword:user.oldPassword,
+      newPassword:user.password
+    },{headers: authHeader()});
+  }
 }
 
 export default new UserService();

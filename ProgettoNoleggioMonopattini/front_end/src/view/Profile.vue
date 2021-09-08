@@ -130,6 +130,7 @@ import coinTransationService from "../services/coinTransation.service";
 import customerInformationService from "../services/customerInformation.service";
 import partnerInformationService from "../services/partnerInformation.service";
 import User from "../model/user";
+import userService from '../services/user.service';
 
 export default {
   name: "Profile",
@@ -152,6 +153,7 @@ export default {
   },
   mounted() {
     if (this.currentUser) {
+      this.user.id=this.currentUser.id;
       this.user.username = this.currentUser.username;
       this.user.email = this.currentUser.email;
       console.log(this.user);
@@ -218,19 +220,12 @@ export default {
       this.submitted = true;
       this.$validator.validate().then((isValid) => {
         if (isValid) {
-          this.$store.dispatch("auth/update", this.user).then(
-            (data) => {
-              this.message = data.message;
-              this.successful = true;
-            },
-            (error) => {
-              this.message =
-                (error.response && error.response.data) ||
-                error.message ||
-                error.toString();
-              this.successful = false;
+          console.log(this.user);
+          userService.updatePassword(this.user).then(
+            response=>{
+              console.log(response.statusText);
             }
-          );
+          )
         }
       });
     },

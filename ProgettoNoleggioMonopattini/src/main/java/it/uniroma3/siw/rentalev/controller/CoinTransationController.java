@@ -150,7 +150,7 @@ public class CoinTransationController {
 		}
 	}  
 	@PutMapping("/coinTransations/{id}")
-	@PreAuthorize("hasRole('PARTNER')")
+	
 	public ResponseEntity<CoinTransation> updateCoinTransation(@PathVariable("id") long id) {
 		Swap _exitSwap=null;
 		Optional<CoinTransation> coinTransactionData = coinTransationRepository.findById(id);
