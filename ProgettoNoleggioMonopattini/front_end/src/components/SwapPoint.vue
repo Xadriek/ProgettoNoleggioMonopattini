@@ -22,6 +22,15 @@
        <b-button type="submit" variant="primary" class="m-1" @click="showMsgBoxOne">Conferma</b-button>
       
       <b-button type="reset" variant="danger" class="m-1" >Annulla</b-button>
+      <b-alert
+                          v-model="showTop"
+                          class="position-fixed fixed-top m-0 rounded-0"
+                          style="z-index: 2000"
+                          variant="success"
+                          dismissible
+                        >
+                          Swap is initializated, please refresh
+                        </b-alert>
       </div>
       <div v-else-if="this.selectedPartner.id!=null">Non hai abbastanza monete</div>
     </b-form>
@@ -48,7 +57,8 @@ export default {
       requestBody:{
         partnerId:0,
         customerId:0,
-        coin:0
+        coin:0,
+        showTop1: false,
       },
       customerCoin:Number,
       show: true,
@@ -87,6 +97,7 @@ export default {
       coinTransationService.saveCoinTransaction(this.requestBody).then(
         response=>{
           console.log(response.data);
+          this.showTop=true;
         }
       );
     },
