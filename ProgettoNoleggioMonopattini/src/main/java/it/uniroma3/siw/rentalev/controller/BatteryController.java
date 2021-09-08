@@ -97,7 +97,7 @@ public class BatteryController {
     }
   }
   @PutMapping("/batteries/{id}")
-  @PreAuthorize("hasRole('PARTNER')")
+  
   public ResponseEntity<Battery> updateBattery(@PathVariable("id") long id) {
     Optional<Battery> batteryData = batteryRepository.findById(id);
     if(batteryData.isPresent()) {
