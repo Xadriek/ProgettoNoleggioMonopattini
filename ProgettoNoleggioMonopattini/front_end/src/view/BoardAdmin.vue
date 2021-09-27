@@ -1,404 +1,417 @@
 <template>
-<div class="container">
-  <div>
+  <div class="container">
     <div>
       <div>
         <div>
-          <b-card-group deck>
-            <b-card
-              bg-variant="primary"
-              text-variant="white"
-              header="Numero Noleggi"
-              class="text-center"
-            >
-              <b-button variant="primary">
-                I Noleggi Attivi sono:
-                <b-badge variant="light">{{ countRent }}</b-badge>
-              </b-button>
-            </b-card>
+          <div>
+            <b-card-group deck>
+              <b-card
+                bg-variant="primary"
+                text-variant="white"
+                header="Numero Noleggi"
+                class="text-center"
+              >
+                <b-button variant="primary">
+                  I Noleggi Attivi sono:
+                  <b-badge variant="light">{{ countRent }}</b-badge>
+                </b-button>
+              </b-card>
 
-            <b-card
-              bg-variant="secondary"
-              text-variant="white"
-              header="Numero Hub"
-              class="text-center"
-            >
-              <b-button variant="secondary">
-                Il Numero di Hub Attivi:
-                <b-badge variant="light">{{ countHub }}</b-badge>
-              </b-button>
-            </b-card>
+              <b-card
+                bg-variant="secondary"
+                text-variant="white"
+                header="Numero Hub"
+                class="text-center"
+              >
+                <b-button variant="secondary">
+                  Il Numero di Hub Attivi:
+                  <b-badge variant="light">{{ countHub }}</b-badge>
+                </b-button>
+              </b-card>
 
-            <b-card
-              bg-variant="success"
-              text-variant="white"
-              header="Numero Transazioni"
-              class="text-center"
-            >
-              <b-button variant="info">
-                Il Numero Transazioni:
-                <b-badge variant="light">{{ countTransation }}</b-badge>
-              </b-button>
-            </b-card>
-          </b-card-group>
-        </div>
+              <b-card
+                bg-variant="success"
+                text-variant="white"
+                header="Numero Transazioni"
+                class="text-center"
+              >
+                <b-button variant="info">
+                  Il Numero Transazioni:
+                  <b-badge variant="light">{{ countTransation }}</b-badge>
+                </b-button>
+              </b-card>
+            </b-card-group>
+          </div>
 
-        <div>
-          <b-card no-body>
-            <b-tabs card>
-              <b-tab no-body title="Customer">
-                <b-list-group>
-                  <b-list-group horizontal="md" fluid="md" active>
-                    <b-list-group-item>id</b-list-group-item>
-                    <b-list-group-item>Username </b-list-group-item>
-                    <b-list-group-item>Email</b-list-group-item>
-                    <b-list-group-item>Name</b-list-group-item>
-                    <b-list-group-item>Surname </b-list-group-item>
-                    <b-list-group-item>Telephon</b-list-group-item>
-                    <b-list-group-item>Address </b-list-group-item>
-                    <b-list-group-item>Coin </b-list-group-item>
-                    <b-list-group-item>Rent</b-list-group-item>
-                  </b-list-group>
-                  <b-list-group
-                    horizontal="md"
-                    fluid="md"
-                    active
-                    v-for="customer in customers"
-                    v-bind:key="customer.id" 
-                  >
-                    <b-list-group-item>{{ customer.id }}</b-list-group-item>
-                    <b-list-group-item
-                      >{{ customer.username }}
-                    </b-list-group-item>
-                    <b-list-group-item>{{ customer.email }} </b-list-group-item>
-                    <b-list-group-item>{{ customer.name }} </b-list-group-item>
-                    <b-list-group-item
-                      >{{ customer.surname }}
-                    </b-list-group-item>
-                    <b-list-group-item
-                      >{{ customer.telephon }}
-                    </b-list-group-item>
-                    <b-list-group-item
-                      >{{ customer.address.street
-                      }}{{ customer.address.numberStreet
-                      }}{{ customer.address.city }}</b-list-group-item
+          <div>
+            <b-card no-body>
+              <b-tabs card>
+                <b-tab no-body title="Customer">
+                  <table>
+                    <b-tr>
+                      <b-th>id</b-th>
+                      <b-th>Username </b-th>
+                      <b-th>Email</b-th>
+                      <b-th>Name</b-th>
+                      <b-th>Surname </b-th>
+                      <b-th>Telephon</b-th>
+                      <b-th>Address </b-th>
+                      <b-th>Coin </b-th>
+                      <b-th>Rent</b-th>
+                      <b-th>Is Active</b-th>
+                      <b-th>Action</b-th>
+                    </b-tr>
+                    <b-tr
+                      v-for="customer in customers"
+                      v-bind:key="customer.id"
                     >
-                    <b-list-group-item>
-                      <div>
-                        <label for="sb-inline"></label>
-                        <b-form-spinbutton
-                          size="sm"
-                          id="sb-inline"
-                          v-model="customer.customerWallet.coin"
-                          inline
-                        ></b-form-spinbutton>
-                        <b-button
-                          size="sm"
-                          squared
-                          variant="outline-success"
-                          @click="updateWallet(customer.customerWallet)"
-                          >Aggiorna</b-button
-                        >
-                        <b-alert
-                          v-model="showTop1"
-                          class="position-fixed fixed-top m-0 rounded-0"
-                          style="z-index: 2000"
-                          variant="success"
-                          dismissible
-                        >
-                          Wallet updated, please refresh
-                        </b-alert>
-                      </div>
-                    </b-list-group-item>
-                    <b-list-group-item
-                      >{{ customer.rent.id
-                      }}{{ customer.rent.contract.plan }}</b-list-group-item
-                    >
-                    <b-list-group-item>
-                      <b-iconstack v-if="customer.rent.ongoing == true">
-                        <b-icon stacked icon="square"></b-icon>
-                        <b-icon stacked icon="check"></b-icon>
-                      </b-iconstack>
-
-                      <b-iconstack v-else-if="customer.rent.ongoing == false">
-                        <b-icon stacked icon="square"></b-icon>
-                        <b-icon stacked icon="x-circle"></b-icon>
-                      </b-iconstack>
-                    </b-list-group-item>
-                    <b-list-group-item>
-                      <b-button-group>
-                        <b-button
-                          variant="outline-primary"
-                          @click="showMsgBoxOne(customer.rent, 'dismiss')"
-                        >
-                          <b-icon icon="x-circle"></b-icon> Dismiss Rent
-                        </b-button>
-                        <b-alert
-                          v-model="showTop2"
-                          class="position-fixed fixed-top m-0 rounded-0"
-                          style="z-index: 2000"
-                          variant="success"
-                          dismissible
-                        >
-                          Rent dismissed, please refresh
-                        </b-alert>
-                      </b-button-group>
-                    </b-list-group-item>
-                  </b-list-group>
-                </b-list-group>
-              </b-tab>
-
-              <b-tab no-body title="Partner">
-                <b-list-group>
-                  <b-list-group horizontal="md" fluid="md" active>
-                    <b-list-group-item>id</b-list-group-item>
-                    <b-list-group-item>Username </b-list-group-item>
-                    <b-list-group-item>P.Iva </b-list-group-item>
-                    <b-list-group-item>Address </b-list-group-item>
-                    <b-list-group-item>Coin </b-list-group-item>
-                    <b-list-group-item>StartPartnership</b-list-group-item>
-                    <b-list-group-item>ClosurePartnership</b-list-group-item>
-                    <b-list-group-item>Hub</b-list-group-item>
-                  </b-list-group>
-                  <b-list-group
-                    horizontal="md"
-                    fluid="md"
-                    active
-                    v-for="partner in partners"
-                    v-bind:key="partner.id"
-                  >
-                    <b-list-group-item>{{ partner.id }}</b-list-group-item>
-                    <b-list-group-item
-                      >{{ partner.username }}
-                    </b-list-group-item>
-                    <b-list-group-item>{{ partner.pIva }} </b-list-group-item>
-                    <b-list-group-item
-                      >{{ partner.address.street
-                      }}{{ partner.address.numberStreet
-                      }}{{ partner.address.city }}</b-list-group-item
-                    >
-                    <b-list-group-item
-                      >{{ partner.partnerWallet.coin }}
-                    </b-list-group-item>
-                    <b-list-group-item>{{
-                      partner.startPartnership
-                    }}</b-list-group-item>
-                    <b-list-group-item v-if="partner.closurePartnership != null"
-                      >{{ partner.closurePartnership }}
-                    </b-list-group-item>
-                    <b-list-group-item v-else
-                      >Partnerhip in course</b-list-group-item
-                    >
-                    <b-list-group-item>{{ partner.hub.id }}</b-list-group-item>
-                    <b-list-group-item>
-                      <b-button-group>
-                        <b-button
-                          variant="outline-primary"
-                          @click="showMsgBoxTwo(partner, 'dismiss')"
-                        >
-                          <b-icon icon="x-circle"></b-icon> Dismiss PartnerShip
-                        </b-button>
-                        <b-alert
-                          v-model="showTop3"
-                          class="position-fixed fixed-top m-0 rounded-0"
-                          style="z-index: 2000"
-                          variant="success"
-                          dismissible
-                        >
-                          Partnership has been dismissed, please refresh
-                        </b-alert>
-                      </b-button-group>
-                    </b-list-group-item>
-                  </b-list-group>
-                </b-list-group>
-              </b-tab>
-
-              <b-tab no-body title="Rents">
-                <b-list-group>
-                  <b-list-group horizontal="md" fluid="md" active>
-                    <b-list-group-item>id</b-list-group-item>
-                    <b-list-group-item>Start </b-list-group-item>
-                    <b-list-group-item>Finish </b-list-group-item>
-                    <b-list-group-item>Number Policy </b-list-group-item>
-                    <b-list-group-item>Scooter </b-list-group-item>
-                    <b-list-group-item>Plan</b-list-group-item>
-                    <b-list-group-item>Ongoing</b-list-group-item>
-                  </b-list-group>
-                  <b-list-group
-                    horizontal="md"
-                    fluid="md"
-                    active
-                    v-for="rent in rents"
-                    v-bind:key="rent.id"
-                  >
-                    <b-list-group-item>{{ rent.id }}</b-list-group-item>
-                    <b-list-group-item>{{ rent.startRent }} </b-list-group-item>
-                    <b-list-group-item v-if="rent.finishRent != null"
-                      >{{ rent.finishRent }}
-                    </b-list-group-item>
-                    <b-list-group-item v-else>rent in course</b-list-group-item>
-                    <b-list-group-item>{{
-                      rent.numberPolicy
-                    }}</b-list-group-item>
-                    <b-list-group-item
-                      >{{ rent.scooter.id }}
-                    </b-list-group-item>
-                    <b-list-group-item>{{
-                      rent.contract.plan
-                    }}</b-list-group-item>
-                    <b-list-group-item>
-                      <b-iconstack v-if="rent.ongoing == true">
-                        <b-icon stacked icon="square"></b-icon>
-                        <b-icon stacked icon="check"></b-icon>
-                      </b-iconstack>
-
-                      <b-iconstack v-else-if="rent.ongoing == false">
-                        <b-icon stacked icon="square"></b-icon>
-                        <b-icon stacked icon="x-circle"></b-icon>
-                      </b-iconstack>
-                    </b-list-group-item>
-                    <b-list-group-item>
-                      <b-button-group>
-                        <b-button
-                          variant="outline-primary"
-                          @click="showMsgBoxOne(rent, 'dismiss')"
-                        >
-                          <b-icon icon="x-circle"></b-icon> Dismiss Rent
-                        </b-button>
-                        <b-alert
-                          v-model="showTop2"
-                          class="position-fixed fixed-top m-0 rounded-0"
-                          style="z-index: 2000"
-                          variant="success"
-                          dismissible
-                        >
-                          Rent has been dismissed, please refresh
-                        </b-alert>
-                      </b-button-group>
-                    </b-list-group-item>
-                  </b-list-group>
-                </b-list-group>
-              </b-tab>
-
-              <b-tab no-body title="CoinTransations">
-                <b-list-group>
-                  <b-list-group horizontal="md" fluid="md" active>
-                    <b-list-group-item>id</b-list-group-item>
-                    <b-list-group-item>From Customer </b-list-group-item>
-                    <b-list-group-item>To Partner </b-list-group-item>
-                    <b-list-group-item>Log create </b-list-group-item>
-                    <b-list-group-item>Coin </b-list-group-item>
-                    <b-list-group-item>EntrySwap</b-list-group-item>
-                    <b-list-group-item>ExitSwap</b-list-group-item>
-                    <b-list-group-item>Complete</b-list-group-item>
-                  </b-list-group>
-                  <b-list-group
-                    horizontal="md"
-                    fluid="md"
-                    active
-                    v-for="coinTransation in coinTransations"
-                    v-bind:key="coinTransation.id"
-                  >
-                    <b-list-group-item>{{
-                      coinTransation.id
-                    }}</b-list-group-item>
-                    <b-list-group-item
-                      >{{ coinTransation.fromCustomer.username
-                      }}{{ coinTransation.fromCustomer.email }}
-                    </b-list-group-item>
-                    <b-list-group-item
-                      >{{ coinTransation.toPartner.username
-                      }}{{ coinTransation.toPartner.email }}
-                    </b-list-group-item>
-                    <b-list-group-item>{{
-                      coinTransation.logTransition
-                    }}</b-list-group-item>
-                    <b-list-group-item
-                      >{{ coinTransation.coin }}
-                    </b-list-group-item>
-                    <b-list-group-item>{{
-                      coinTransation.entrySwap.id
-                    }}</b-list-group-item>
-                    <b-list-group-item v-if="coinTransation.exitSwap != null"
-                      >{{ coinTransation.exitSwap.id }}
-                    </b-list-group-item>
-                    <b-list-group-item v-else
-                      >CoinTransation in course</b-list-group-item
-                    >
-                    <b-list-group-item>
-                      <b-iconstack v-if="coinTransation.isComplete == true">
-                        <b-icon stacked icon="square"></b-icon>
-                        <b-icon stacked icon="check"></b-icon>
-                      </b-iconstack>
-
-                      <b-iconstack
-                        v-else-if="coinTransation.isComplete == false"
+                      <b-th >{{ customer.id }}</b-th>
+                      <b-th
+                        >{{ customer.username }}
+                      </b-th>
+                      <b-th
+                        >{{ customer.email }}
+                      </b-th>
+                      <b-th
+                        >{{ customer.name }}
+                      </b-th>
+                      <b-th
+                        >{{ customer.surname }}
+                      </b-th>
+                      <b-th
+                        >{{ customer.telephon }}
+                      </b-th>
+                      <b-th
+                        >{{ customer.address.street
+                        }}{{ customer.address.numberStreet
+                        }}{{ customer.address.city }}</b-th
                       >
-                        <b-icon stacked icon="square"></b-icon>
-                        <b-icon stacked icon="x-circle"></b-icon>
-                      </b-iconstack>
-                    </b-list-group-item>
+                      <b-th>
+                        <div>
+                          <label for="sb-inline"></label>
+                          <b-form-spinbutton
+                            size="sm"
+                            id="sb-inline"
+                            v-model="customer.customerWallet.coin"
+                            inline
+                          ></b-form-spinbutton>
+                          <b-button
+                            size="sm"
+                            squared
+                            variant="outline-success"
+                            @click="updateWallet(customer.customerWallet)"
+                            >Aggiorna</b-button
+                          >
+                          <b-alert
+                            v-model="showTop1"
+                            class="position-fixed fixed-top m-0 rounded-0"
+                            style="z-index: 2000"
+                            variant="success"
+                            dismissible
+                          >
+                            Wallet updated, please refresh
+                          </b-alert>
+                        </div>
+                      </b-th>
+                      <b-th
+                        >{{ customer.rent.id
+                        }}{{ customer.rent.contract.plan }}</b-th
+                      >
+                      <b-th>
+                        <b-iconstack v-if="customer.rent.ongoing == true">
+                          <b-icon stacked icon="square"></b-icon>
+                          <b-icon stacked icon="check"></b-icon>
+                        </b-iconstack>
+
+                        <b-iconstack v-else-if="customer.rent.ongoing == false">
+                          <b-icon stacked icon="square"></b-icon>
+                          <b-icon stacked icon="x-circle"></b-icon>
+                        </b-iconstack>
+                      </b-th>
+                      <b-th>
+                        <b-button-group>
+                          <b-button
+                            variant="outline-primary"
+                            @click="showMsgBoxOne(customer.rent, 'dismiss')"
+                          >
+                            <b-icon icon="x-circle"></b-icon> Dismiss Rent
+                          </b-button>
+                          <b-alert
+                            v-model="showTop2"
+                            class="position-fixed fixed-top m-0 rounded-0"
+                            style="z-index: 2000"
+                            variant="success"
+                            dismissible
+                          >
+                            Rent dismissed, please refresh
+                          </b-alert>
+                        </b-button-group>
+                      </b-th>
+                    </b-tr>
+                  </table>
+                </b-tab>
+
+                <b-tab no-body title="Partner">
+                  
+                  <b-list-group>
+                    <b-list-group horizontal="md" fluid="md" active>
+                      <b-list-group-item>id</b-list-group-item>
+                      <b-list-group-item>Username </b-list-group-item>
+                      <b-list-group-item>P.Iva </b-list-group-item>
+                      <b-list-group-item>Address </b-list-group-item>
+                      <b-list-group-item>Coin </b-list-group-item>
+                      <b-list-group-item>StartPartnership</b-list-group-item>
+                      <b-list-group-item>ClosurePartnership</b-list-group-item>
+                      <b-list-group-item>Hub</b-list-group-item>
+                    </b-list-group>
+                    <b-list-group
+                      horizontal="md"
+                      fluid="md"
+                      active
+                      v-for="partner in partners"
+                      v-bind:key="partner.id"
+                    >
+                      <b-list-group-item>{{ partner.id }}</b-list-group-item>
+                      <b-list-group-item
+                        >{{ partner.username }}
+                      </b-list-group-item>
+                      <b-list-group-item>{{ partner.pIva }} </b-list-group-item>
+                      <b-list-group-item
+                        >{{ partner.address.street
+                        }}{{ partner.address.numberStreet
+                        }}{{ partner.address.city }}</b-list-group-item
+                      >
+                      <b-list-group-item
+                        >{{ partner.partnerWallet.coin }}
+                      </b-list-group-item>
+                      <b-list-group-item>{{
+                        partner.startPartnership
+                      }}</b-list-group-item>
+                      <b-list-group-item
+                        v-if="partner.closurePartnership != null"
+                        >{{ partner.closurePartnership }}
+                      </b-list-group-item>
+                      <b-list-group-item v-else
+                        >Partnerhip in course</b-list-group-item
+                      >
+                      <b-list-group-item>{{
+                        partner.hub.id
+                      }}</b-list-group-item>
+                      <b-list-group-item>
+                        <b-button-group>
+                          <b-button
+                            variant="outline-primary"
+                            @click="showMsgBoxTwo(partner, 'dismiss')"
+                          >
+                            <b-icon icon="x-circle"></b-icon> Dismiss
+                            PartnerShip
+                          </b-button>
+                          <b-alert
+                            v-model="showTop3"
+                            class="position-fixed fixed-top m-0 rounded-0"
+                            style="z-index: 2000"
+                            variant="success"
+                            dismissible
+                          >
+                            Partnership has been dismissed, please refresh
+                          </b-alert>
+                        </b-button-group>
+                      </b-list-group-item>
+                    </b-list-group>
                   </b-list-group>
-                </b-list-group>
-              </b-tab>
-              <b-tab title="Utenti">
-                <b-list-group>
-                  <b-list-group horizontal="md" fluid="md" active>
-                  <b-list-group-item>id</b-list-group-item>
-                    <b-list-group-item>Username</b-list-group-item>
-                    <b-list-group-item>Email </b-list-group-item>
-                    <b-list-group-item>Role </b-list-group-item>
-                </b-list-group>
-                <b-list-group
-                    horizontal="md"
-                    fluid="md"
-                    active
-                    v-for="user in users"
-                    v-bind:key="user.id"
-                  >
-                    <b-list-group-item>
-                      {{user.id}}
+                </b-tab>
+
+                <b-tab no-body title="Rents">
+                  <b-list-group>
+                    <b-list-group horizontal="md" fluid="md" active>
+                      <b-list-group-item>id</b-list-group-item>
+                      <b-list-group-item>Start </b-list-group-item>
+                      <b-list-group-item>Finish </b-list-group-item>
+                      <b-list-group-item>Number Policy </b-list-group-item>
+                      <b-list-group-item>Scooter </b-list-group-item>
+                      <b-list-group-item>Plan</b-list-group-item>
+                      <b-list-group-item>Ongoing</b-list-group-item>
+                    </b-list-group>
+                    <b-list-group
+                      horizontal="md"
+                      fluid="md"
+                      active
+                      v-for="rent in rents"
+                      v-bind:key="rent.id"
+                    >
+                      <b-list-group-item>{{ rent.id }}</b-list-group-item>
+                      <b-list-group-item
+                        >{{ rent.startRent }}
                       </b-list-group-item>
-                    <b-list-group-item
-                      >{{ user.username}}
-                    </b-list-group-item>
-                    <b-list-group-item
-                      >{{ user.email}}
-                    </b-list-group-item>
-                    <b-list-group-item
-                      ><ul>
-      <li v-for="(role,index) in user.roles" :key="index">{{role.name}}</li>
-    </ul>
-                    </b-list-group-item>
-                    <b-list-group-item>
-                      <b-button-group>
-                        <b-button
-                          variant="outline-primary"
-                          @click="changeRole(user)"
-                        >
-                          <b-icon icon="x-circle"></b-icon>Change Role in Partner
-                        </b-button>
-                        <b-alert
-                          v-model="showTop4"
-                          class="position-fixed fixed-top m-0 rounded-0"
-                          style="z-index: 2000"
-                          variant="success"
-                          dismissible
-                        >
-                          Role has been changed, please refresh
-                        </b-alert>
-                      </b-button-group>
+                      <b-list-group-item v-if="rent.finishRent != null"
+                        >{{ rent.finishRent }}
                       </b-list-group-item>
-                </b-list-group>
-                </b-list-group>
-              </b-tab>
-            </b-tabs>
-          </b-card>
+                      <b-list-group-item v-else
+                        >rent in course</b-list-group-item
+                      >
+                      <b-list-group-item>{{
+                        rent.numberPolicy
+                      }}</b-list-group-item>
+                      <b-list-group-item
+                        >{{ rent.scooter.id }}
+                      </b-list-group-item>
+                      <b-list-group-item>{{
+                        rent.contract.plan
+                      }}</b-list-group-item>
+                      <b-list-group-item>
+                        <b-iconstack v-if="rent.ongoing == true">
+                          <b-icon stacked icon="square"></b-icon>
+                          <b-icon stacked icon="check"></b-icon>
+                        </b-iconstack>
+
+                        <b-iconstack v-else-if="rent.ongoing == false">
+                          <b-icon stacked icon="square"></b-icon>
+                          <b-icon stacked icon="x-circle"></b-icon>
+                        </b-iconstack>
+                      </b-list-group-item>
+                      <b-list-group-item>
+                        <b-button-group>
+                          <b-button
+                            variant="outline-primary"
+                            @click="showMsgBoxOne(rent, 'dismiss')"
+                          >
+                            <b-icon icon="x-circle"></b-icon> Dismiss Rent
+                          </b-button>
+                          <b-alert
+                            v-model="showTop2"
+                            class="position-fixed fixed-top m-0 rounded-0"
+                            style="z-index: 2000"
+                            variant="success"
+                            dismissible
+                          >
+                            Rent has been dismissed, please refresh
+                          </b-alert>
+                        </b-button-group>
+                      </b-list-group-item>
+                    </b-list-group>
+                  </b-list-group>
+                </b-tab>
+
+                <b-tab no-body title="CoinTransations">
+                  <b-list-group>
+                    <b-list-group horizontal="md" fluid="md" active>
+                      <b-list-group-item>id</b-list-group-item>
+                      <b-list-group-item>From Customer </b-list-group-item>
+                      <b-list-group-item>To Partner </b-list-group-item>
+                      <b-list-group-item>Log create </b-list-group-item>
+                      <b-list-group-item>Coin </b-list-group-item>
+                      <b-list-group-item>EntrySwap</b-list-group-item>
+                      <b-list-group-item>ExitSwap</b-list-group-item>
+                      <b-list-group-item>Complete</b-list-group-item>
+                    </b-list-group>
+                    <b-list-group
+                      horizontal="md"
+                      fluid="md"
+                      active
+                      v-for="coinTransation in coinTransations"
+                      v-bind:key="coinTransation.id"
+                    >
+                      <b-list-group-item>{{
+                        coinTransation.id
+                      }}</b-list-group-item>
+                      <b-list-group-item
+                        >{{ coinTransation.fromCustomer.username
+                        }}{{ coinTransation.fromCustomer.email }}
+                      </b-list-group-item>
+                      <b-list-group-item
+                        >{{ coinTransation.toPartner.username
+                        }}{{ coinTransation.toPartner.email }}
+                      </b-list-group-item>
+                      <b-list-group-item>{{
+                        coinTransation.logTransition
+                      }}</b-list-group-item>
+                      <b-list-group-item
+                        >{{ coinTransation.coin }}
+                      </b-list-group-item>
+                      <b-list-group-item>{{
+                        coinTransation.entrySwap.id
+                      }}</b-list-group-item>
+                      <b-list-group-item v-if="coinTransation.exitSwap != null"
+                        >{{ coinTransation.exitSwap.id }}
+                      </b-list-group-item>
+                      <b-list-group-item v-else
+                        >CoinTransation in course</b-list-group-item
+                      >
+                      <b-list-group-item>
+                        <b-iconstack v-if="coinTransation.isComplete == true">
+                          <b-icon stacked icon="square"></b-icon>
+                          <b-icon stacked icon="check"></b-icon>
+                        </b-iconstack>
+
+                        <b-iconstack
+                          v-else-if="coinTransation.isComplete == false"
+                        >
+                          <b-icon stacked icon="square"></b-icon>
+                          <b-icon stacked icon="x-circle"></b-icon>
+                        </b-iconstack>
+                      </b-list-group-item>
+                    </b-list-group>
+                  </b-list-group>
+                </b-tab>
+                <b-tab title="Utenti">
+                  <b-list-group>
+                    <b-list-group horizontal="md" fluid="md" active>
+                      <b-list-group-item>id</b-list-group-item>
+                      <b-list-group-item>Username</b-list-group-item>
+                      <b-list-group-item>Email </b-list-group-item>
+                      <b-list-group-item>Role </b-list-group-item>
+                    </b-list-group>
+                    <b-list-group
+                      horizontal="md"
+                      fluid="md"
+                      active
+                      v-for="user in users"
+                      v-bind:key="user.id"
+                    >
+                      <b-list-group-item>
+                        {{ user.id }}
+                      </b-list-group-item>
+                      <b-list-group-item
+                        >{{ user.username }}
+                      </b-list-group-item>
+                      <b-list-group-item>{{ user.email }} </b-list-group-item>
+                      <b-list-group-item
+                        ><ul>
+                          <li v-for="(role, index) in user.roles" :key="index">
+                            {{ role.name }}
+                          </li>
+                        </ul>
+                      </b-list-group-item>
+                      <b-list-group-item>
+                        <b-button-group>
+                          <b-button
+                            variant="outline-primary"
+                            @click="changeRole(user)"
+                          >
+                            <b-icon icon="x-circle"></b-icon>Change Role in
+                            Partner
+                          </b-button>
+                          <b-alert
+                            v-model="showTop4"
+                            class="position-fixed fixed-top m-0 rounded-0"
+                            style="z-index: 2000"
+                            variant="success"
+                            dismissible
+                          >
+                            Role has been changed, please refresh
+                          </b-alert>
+                        </b-button-group>
+                      </b-list-group-item>
+                    </b-list-group>
+                  </b-list-group>
+                </b-tab>
+              </b-tabs>
+            </b-card>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 </template>
 
 <script>
@@ -408,7 +421,7 @@ import RentService from "../services/rent.service";
 import CoinTransationService from "../services/coinTransation.service";
 import rentService from "../services/rent.service";
 import walletService from "../services/wallet.service";
-import userService from '../services/user.service';
+import userService from "../services/user.service";
 
 export default {
   name: "admin",
@@ -417,7 +430,7 @@ export default {
       customers: [],
       partners: [],
       rents: [],
-      users:[],
+      users: [],
       coinTransations: [],
       countHub: 0,
       countTransation: 0,
@@ -425,8 +438,7 @@ export default {
       showTop1: false,
       showTop2: false,
       showTop3: false,
-      showTop4: false
-      
+      showTop4: false,
     };
   },
   mounted() {
@@ -446,7 +458,7 @@ export default {
       walletService.updateWallet(customerWallet).then((response) => {
         console.log(response.data);
         customerWallet = response.data;
-        this.showTop1=true;
+        this.showTop1 = true;
       });
     },
     showMsgBoxOne(rent, dismiss) {
@@ -476,7 +488,7 @@ export default {
         console.log(response.data);
         rent = response.data;
         this.allRents;
-        this.showTop2=true;
+        this.showTop2 = true;
       });
     },
     dismissPartner(partner, dismiss) {
@@ -486,7 +498,7 @@ export default {
           console.log(response.data);
           partner = response.data;
           this.allPartners;
-          this.showTop3=true;
+          this.showTop3 = true;
         }
       );
     },
@@ -563,24 +575,19 @@ export default {
         }
       );
     },
-    allUsers(){
+    allUsers() {
       console.log("users");
-      userService.getAllUsers().then(
-        response=>{
-          console.log(response.data);
-          this.users=response.data;
-          
-        }
-      )
+      userService.getAllUsers().then((response) => {
+        console.log(response.data);
+        this.users = response.data;
+      });
     },
-    changeRole(user){
-      userService.updateRole(user).then(
-        response=>{
-          console.log(response.data);
-          this.showTop4=true;
-        }
-      )
-    }
+    changeRole(user) {
+      userService.updateRole(user).then((response) => {
+        console.log(response.data);
+        this.showTop4 = true;
+      });
+    },
   },
 };
 </script>
