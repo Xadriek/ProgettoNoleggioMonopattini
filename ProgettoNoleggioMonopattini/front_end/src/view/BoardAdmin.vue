@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="sfondo">
     <div>
       <div>
         <div>
@@ -49,17 +49,17 @@
                 <b-tab no-body title="Customer">
                   <table>
                     <b-tr>
-                      <b-th>id</b-th>
-                      <b-th>Username </b-th>
-                      <b-th>Email</b-th>
-                      <b-th>Name</b-th>
-                      <b-th>Surname </b-th>
-                      <b-th>Telephon</b-th>
-                      <b-th>Address </b-th>
-                      <b-th>Coin </b-th>
-                      <b-th>Rent</b-th>
-                      <b-th>Is Active</b-th>
-                      <b-th>Action</b-th>
+                      <b-th class="field">ID</b-th>
+                      <b-th class="field">USERNAME </b-th>
+                      <b-th class="field">EMAIL</b-th>
+                      <b-th class="field">NAME</b-th>
+                      <b-th class="field" >SURNAME </b-th>
+                      <b-th class="field">TELEPHON</b-th>
+                      <b-th class="field">ADDRESS </b-th>
+                      <b-th class="field">COIN </b-th>
+                      <b-th class="field">RENT</b-th>
+                      <b-th class="field">IS ACTIVE</b-th>
+                      
                     </b-tr>
                     <b-tr
                       v-for="customer in customers"
@@ -83,8 +83,10 @@
                       </b-th>
                       <b-th
                         >{{ customer.address.street
-                        }}{{ customer.address.numberStreet
-                        }}{{ customer.address.city }}</b-th
+                        }},
+                        {{ customer.address.numberStreet
+                        }},
+                        {{ customer.address.city }}</b-th
                       >
                       <b-th>
                         <div>
@@ -115,7 +117,8 @@
                       </b-th>
                       <b-th
                         >{{ customer.rent.id
-                        }}{{ customer.rent.contract.plan }}</b-th
+                        }}
+                        {{ customer.rent.contract.plan }}</b-th
                       >
                       <b-th>
                         <b-iconstack v-if="customer.rent.ongoing == true">
@@ -154,14 +157,14 @@
                 <b-tab no-body title="Partner">
                   <table>
                     <b-tr>
-                      <b-th>id</b-th>
-                      <b-th>Username </b-th>
-                      <b-th>P.Iva </b-th>
-                      <b-th>Address</b-th>
-                      <b-th>Coin </b-th>
-                      <b-th>StartPartnership</b-th>
-                      <b-th>ClosurePartnership</b-th>
-                      <b-th>Hub</b-th>                      
+                      <b-th class="field">ID</b-th>
+                      <b-th class="field">USERNAME </b-th>
+                      <b-th class="field">P.IVA </b-th>
+                      <b-th class="field">ADDRESS</b-th>
+                      <b-th class="field">COIN </b-th>
+                      <b-th class="field">START PARTNERSHIP</b-th>
+                      <b-th class="field">CLOSURE PARTNERSHIP</b-th>
+                      <b-th class="field">HUB</b-th>                      
                     </b-tr> 
                     <b-tr
                       v-for="partner in partners"
@@ -172,8 +175,10 @@
                       <b-th>{{ partner.pIva }}</b-th>
                       <b-th>{{ partner.pIva }}</b-th>
                       <b-th>{{ partner.address.street
-                        }}{{ partner.address.numberStreet
-                        }}{{ partner.address.city }}</b-th>
+                        }},
+                        {{ partner.address.numberStreet
+                        }},
+                        {{ partner.address.city }}</b-th>
                       <b-th>{{ partner.partnerWallet.coin }}</b-th>
                       <b-th>{{partner.startPartnership}}</b-th>
                       <b-th v-if="partner.closurePartnership != null"> {{ partner.closurePartnership }} </b-th>
@@ -210,13 +215,13 @@
                 <b-tab no-body title="Rents">
                 <table>
                     <b-tr>
-                      <b-th>id</b-th>
-                      <b-th>Start</b-th>
-                      <b-th>Finish</b-th>
-                      <b-th>Number Policy</b-th>
-                      <b-th>Scooter</b-th>
-                      <b-th>Plan</b-th>
-                      <b-th>Ongoing</b-th>
+                      <b-th class="field">ID</b-th>
+                      <b-th class="field">START</b-th>
+                      <b-th class="field">FINISH</b-th>
+                      <b-th class="field">NUMBER POLICY</b-th>
+                      <b-th class="field">SCOOTER</b-th>
+                      <b-th class="field">PLAN</b-th>
+                      <b-th class="field">ONGOING</b-th>
                     </b-tr>
                     <b-tr
                       v-for="rent in rents"
@@ -269,21 +274,24 @@
                 <b-tab no-body title="CoinTransations">
                     <table>
                     <b-tr>
-                      <b-th>id</b-th>
-                      <b-th>From Customer</b-th>
-                      <b-th>To Partner</b-th>
-                      <b-th>Log create</b-th>
-                      <b-th>Coin</b-th>
-                      <b-th>EntrySwap</b-th>
-                      <b-th>ExitSwap</b-th>
-                      <b-th>Complete</b-th>
+                      <b-th class="field">ID</b-th>
+                      <b-th class="field">FROM CUSTOMER</b-th>
+                      <b-th class="field">TO PARTNER</b-th>
+                      <b-th class="field">LOG CREATE</b-th>
+                      <b-th class="field">COIN</b-th>
+                      <b-th class="field">ENTRY SWAP</b-th>
+                      <b-th class="field">EXIT SWAP</b-th>
+                      <b-th class="field">COMPLETE</b-th>
                     </b-tr>
                     <b-tr
                       v-for="coinTransation in coinTransations"
                       v-bind:key="coinTransation.id"
                     >
                       <b-th>{{coinTransation.id}}</b-th>
-                      <b-th>{{coinTransation.fromCustomer.username}}{{ coinTransation.fromCustomer.email }}</b-th>
+                      <b-th>{{coinTransation.fromCustomer.username}}
+                        {{ coinTransation.fromCustomer.email }}</b-th>
+                      <b-th>{{coinTransation.toPartner.username}}
+                        {{ coinTransation.toPartner.email }}</b-th>
                       <b-th>{{coinTransation.logTransition}}</b-th>
                       <b-th>{{coinTransation.coin }}</b-th>
                       <b-th>{{coinTransation.entrySwap.id}}</b-th>
@@ -312,10 +320,10 @@
                 <b-tab title="Utenti">
                   <table>
                     <b-tr>
-                      <b-th>id</b-th>
-                      <b-th>Username</b-th>
-                      <b-th>Email</b-th>
-                      <b-th>Role</b-th>
+                      <b-th class="field">ID</b-th>
+                      <b-th class="field">USERNAME</b-th>
+                      <b-th class="field">EMAIL</b-th>
+                      <b-th class="field">ROLE</b-th>
                     </b-tr>
                     <b-tr
                       v-for="user in users"
@@ -547,3 +555,23 @@ export default {
   },
 };
 </script>
+<style scoped>
+th{
+  
+  width: 200px;
+  height: 50px;
+  font-weight: normal;
+  border-style: outset;
+}
+.field{
+  font-weight: bold;
+   width: 300px;
+  height: 50px;
+}
+.sfondo{
+  width: 100%;
+  height: 100%;
+  padding-left: 10%;
+  padding-right: 10%;
+}
+</style>

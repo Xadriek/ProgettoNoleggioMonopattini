@@ -1,5 +1,5 @@
 <template>
-  <div class="container" >
+  <div class="sfondo" >
     <header >
       
     </header>
@@ -28,10 +28,10 @@
           <b-card  title="Swap in corso">
             <table>
                     <b-tr>
-                      <b-th>id</b-th>
-                      <b-th>Event Log</b-th>
-                      <b-th>Scooter</b-th>
-                      <b-th>Customer Username</b-th>
+                      <b-th class="field">ID</b-th>
+                      <b-th class="field">EVENT LOG</b-th>
+                      <b-th class="field">SCOOTER</b-th>
+                      <b-th class="field">CUSTOMER USERNAME</b-th>
                     </b-tr>
                     <b-tr
                       v-for="coinTransation in coinTransationsNotComplete"
@@ -70,12 +70,12 @@
 
             <table>
                     <b-tr>
-                      <b-th>id</b-th>
-                      <b-th>From Customer</b-th>
-                      <b-th>To Partner</b-th>
-                      <b-th>Log</b-th>
-                      <b-th>Coin</b-th>
-                      <b-th>Complete</b-th>
+                      <b-th class="field">ID</b-th>
+                      <b-th class="field">FROM CUSTOMER</b-th>
+                      <b-th class="field">TO PARTNER</b-th>
+                      <b-th class="field">LOG</b-th>
+                      <b-th class="field">COIN</b-th>
+                      <b-th class="field">COMPLETE</b-th>
                     </b-tr>
                      <b-tr
                       v-for="coinTransation in coinTransations"
@@ -181,3 +181,23 @@ export default {
   
 };
 </script>
+<style>
+ th{
+  
+  width: 250px;
+  height: 50px;
+  font-weight: normal;
+  border-style: outset;
+  text-align: center;
+}
+.field{
+  font-weight: bold;
+}
+.sfondo{
+  width: 100%;
+  height: 100%;
+  padding-left: 20%;
+  padding-right: 20%;
+}
+
+</style>

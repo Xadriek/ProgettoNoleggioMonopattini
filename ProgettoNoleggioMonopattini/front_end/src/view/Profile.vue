@@ -16,26 +16,39 @@
       
     <div v-if="this.currentUser.roles.includes('ROLE_CUSTOMER') && userProfile.username!=null">
 
-    <b-card-text><strong>Nome:</strong>{{userProfile.name}}</b-card-text>
-    <b-card-text><strong>Cognome:</strong>{{userProfile.surname}}</b-card-text>
-    <b-card-text><strong>Telefono:</strong>{{userProfile.telephon}}</b-card-text>
-    <b-card-text><strong>Monete nel Wallet:</strong>{{userProfile.customerWallet.coin}}</b-card-text>
-    <b-card-text><strong>ID Noleggio:</strong>{{userProfile.rent.id}}</b-card-text>
-    <b-card-text><strong>Username:</strong>{{userProfile.username}}</b-card-text>
+    <b-card-text><strong>Nome:</strong>
+    {{userProfile.name}}</b-card-text>
+    <b-card-text><strong>Cognome:</strong>
+    {{userProfile.surname}}</b-card-text>
+    <b-card-text><strong>Telefono:</strong>
+    {{userProfile.telephon}}</b-card-text>
+    <b-card-text><strong>Monete nel Wallet:</strong>
+    {{userProfile.customerWallet.coin}}</b-card-text>
+    <b-card-text><strong>ID Noleggio:</strong>
+    {{userProfile.rent.id}}</b-card-text>
+    <b-card-text><strong>Username:</strong>
+    {{userProfile.username}}</b-card-text>
     
 </div> 
 
 <div v-if="this.currentUser.roles.includes('ROLE_PARTNER')">
-    <b-card-text><strong>Nome:</strong>{{userProfile.name}}</b-card-text>
-   <b-card-text><strong>P.Iva:</strong>{{userProfile.pIva}}</b-card-text>
-   <b-card-text><strong>Telefono:</strong>{{userProfile.telephon}}</b-card-text>
-   <b-card-text><strong>Monete nel Wallet:</strong>{{userProfile.partnerWallet.coin}}</b-card-text>
-   <b-card-text><strong>Username:</strong>{{userProfile.username}}</b-card-text>
+    <b-card-text><strong>Nome:</strong>
+    {{userProfile.name}}</b-card-text>
+   <b-card-text><strong>P.Iva:</strong>
+   {{userProfile.pIva}}</b-card-text>
+   <b-card-text><strong>Telefono:</strong>
+   {{userProfile.telephon}}</b-card-text>
+   <b-card-text><strong>Monete nel Wallet:</strong>
+   {{userProfile.partnerWallet.coin}}</b-card-text>
+   <b-card-text><strong>Username:</strong>
+   {{userProfile.username}}</b-card-text>
  
 </div> 
 <p></p>
-   <b-card-text><strong>Numero Transazioni: </strong>{{numCoinTransation}}</b-card-text>
-  <b-card-text><strong>Email: </strong>{{currentUser.email}}</b-card-text>
+   <b-card-text><strong>Numero Transazioni: </strong>
+   {{numCoinTransation}}</b-card-text>
+  <b-card-text><strong>Email: </strong>
+  {{currentUser.email}}</b-card-text>
   <b-card-text><strong>Ruolo Operativo: </strong>
     <ul>
       <li v-for="(role,index) in currentUser.roles" :key="index">{{role}}</li>

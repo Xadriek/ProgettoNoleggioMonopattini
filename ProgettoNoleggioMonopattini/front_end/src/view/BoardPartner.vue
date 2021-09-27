@@ -1,5 +1,5 @@
 <template>
-<div class="container">
+<div class="sfondo">
   <div>
     <div>
       </div>
@@ -41,10 +41,10 @@
             <b-tab no-body title="Swap in Arrivo">
                 <table>
                     <b-tr>
-                      <b-th>id</b-th>
-                      <b-th>Event Log</b-th>
-                      <b-th>Scooter</b-th>
-                      <b-th>Customer Username</b-th>
+                      <b-th class="field">ID</b-th>
+                      <b-th class="field">EVENT LOG</b-th>
+                      <b-th class="field">SCOOTER</b-th>
+                      <b-th class="field">CUSTOMER USERNAME</b-th>
                     </b-tr>
                     <b-tr
                       v-for="coinTransation in coinTransationsNotComplete"
@@ -85,12 +85,12 @@
             <b-tab no-body title="Swap Terminati">
                 <table>
                     <b-tr>
-                      <b-th >id</b-th>
-                      <b-th>From Customer</b-th>
-                      <b-th>To Partner</b-th>
-                      <b-th>Log</b-th>
-                      <b-th>Coin</b-th>
-                      <b-th>Complete</b-th>
+                      <b-th  class="field">ID</b-th>
+                      <b-th class="field">FROM CUSTOMER</b-th>
+                      <b-th class="field">TO PARTNER</b-th>
+                      <b-th class="field">LOG</b-th>
+                      <b-th class="field">COIN</b-th>
+                      <b-th class="field">COMPLETE</b-th>
                     </b-tr>
                     <b-tr
                       v-for="coinTransation in coinTransations"
@@ -117,17 +117,17 @@
 
             <b-tab no-body title="Batterie">
                 <table>
-                    <b-tr>
-                      <b-th>Id</b-th>
-                      <b-th>Voltage</b-th>
-                      <b-th>Capacity</b-th>
-                      <b-th>Date Immission</b-th>
-                      <b-th>State</b-th>
-                      <b-th>
+                    <b-tr >
+                      <b-th class="field">ID</b-th>
+                      <b-th class="field">VOLTAGE</b-th>
+                      <b-th class="field">CAPACITY</b-th>
+                      <b-th class="field">DATE IMMISSION</b-th>
+                      <b-th class="field">STATE</b-th>
+                      <b-th class="field">
                         <div>
                           <b-button-group>
-                             <b-button variant="outline-primary" @click="showMsgBoxBattery()">
-                          <b-icon icon="x-circle"></b-icon> Add Battery
+                             <b-button variant="outline-success" @click="showMsgBoxBattery()">
+                          <b-icon icon="battery-full"></b-icon> Add Battery
                              </b-button>
                               <b-alert
                           v-model="showTop2"
@@ -155,7 +155,7 @@
                         <div>
                           <b-button-group>
                              <b-button variant="outline-primary" @click="showMsgBoxBatteryState(battery)">
-                          <b-icon icon="x-circle"></b-icon> Change State Battery
+                          <b-icon icon="battery-charging"></b-icon> Change State Battery
                              </b-button>
                               <b-alert
                           v-model="showTop3"
@@ -330,3 +330,6 @@ export default {
 
 };
 </script>
+<style>
+
+</style>
