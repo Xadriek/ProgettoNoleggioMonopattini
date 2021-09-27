@@ -1,5 +1,10 @@
 <template>
-  <v-footer
+<div class="container">
+<p>
+</p>
+<p>
+</p>
+ <v-footer
     dark
     padless
   >
@@ -9,7 +14,7 @@
       tile
     >
       <v-card-title class="teal">
-        <strong class="subheading">Get connected with us on social networks!</strong>
+        <strong class="subheading">Condividi la tua esperienza sui social!</strong>
 
         <v-spacer></v-spacer>
 
@@ -27,10 +32,11 @@
       </v-card-title>
 
       <v-card-text class="py-2 white--text text-center">
-        {{ new Date().getFullYear() }} — <strong>Vuetify</strong>
+        {{ new Date().getFullYear() }} — <strong>Copyright Noleggio Monopattino</strong>
       </v-card-text>
     </v-card>
   </v-footer>
+</div>
 </template>
 
 <script>
@@ -38,10 +44,10 @@
     name: "AddFooter",
     data: () => ({
       icons: [
-        'mdi-facebook',
-        'mdi-twitter',
-        'mdi-linkedin',
-        'mdi-instagram',
+        'facebook',
+        'twitter',
+        'linkedin',
+        'instagram',
       ],
     }),
   }
