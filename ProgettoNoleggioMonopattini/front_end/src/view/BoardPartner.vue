@@ -47,7 +47,7 @@
                       <b-th>Customer Username</b-th>
                     </b-tr>
                     <b-tr
-                      v-for="coinTransation in coinTransations"
+                      v-for="coinTransation in coinTransationsNotComplete"
                       v-bind:key="coinTransation.id"
                     >
                       <b-th>{{coinTransation.id}}</b-th>

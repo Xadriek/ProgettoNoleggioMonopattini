@@ -2,7 +2,7 @@
   <div class="container">
     <header class="jumbotron">
       <h3>
-        <strong>{{currentUser.username}}</strong> Profilo di Autenticazione
+        <strong>Profilo di Autenticazione: {{currentUser.username}}</strong> 
       </h3>
     </header>
 
@@ -11,22 +11,17 @@
 <div>
   <b-card-group deck>
     
-     <b-card title="Informazioni aggiuntive utenza" header-tag="header" footer-tag="footer">
-      <template #header>
-        <h6 class="mb-0">Identificativo Token:
-        {{currentUser.accessToken.substring(0, 20)}} ... {{currentUser.accessToken.substr(currentUser.accessToken.length - 20)}}</h6>
-        <h6 class="mb-0">ID assegnato:
-        {{currentUser.id}}</h6>
-      </template>
+     <b-card >
+      
       
     <div v-if="this.currentUser.roles.includes('ROLE_CUSTOMER') && userProfile.username!=null">
 
     <b-card-text><strong>Nome:</strong>{{userProfile.name}}</b-card-text>
     <b-card-text><strong>Cognome:</strong>{{userProfile.surname}}</b-card-text>
     <b-card-text><strong>Telefono:</strong>{{userProfile.telephon}}</b-card-text>
-    <b-card-text><strong>Monete nel Wallet</strong>{{userProfile.customerWallet.coin}}</b-card-text>
-    <b-card-text><strong>ID Noleggio</strong>{{userProfile.rent.id}}</b-card-text>
-    <b-card-text><strong>Username</strong>{{userProfile.username}}</b-card-text>
+    <b-card-text><strong>Monete nel Wallet:</strong>{{userProfile.customerWallet.coin}}</b-card-text>
+    <b-card-text><strong>ID Noleggio:</strong>{{userProfile.rent.id}}</b-card-text>
+    <b-card-text><strong>Username:</strong>{{userProfile.username}}</b-card-text>
     
 </div> 
 
@@ -34,11 +29,11 @@
     <b-card-text><strong>Nome:</strong>{{userProfile.name}}</b-card-text>
    <b-card-text><strong>P.Iva:</strong>{{userProfile.pIva}}</b-card-text>
    <b-card-text><strong>Telefono:</strong>{{userProfile.telephon}}</b-card-text>
-   <b-card-text><strong>Monete nel Wallet</strong>{{userProfile.partnerWallet.coin}}</b-card-text>
-   <b-card-text><strong>Username</strong>{{userProfile.username}}</b-card-text>
+   <b-card-text><strong>Monete nel Wallet:</strong>{{userProfile.partnerWallet.coin}}</b-card-text>
+   <b-card-text><strong>Username:</strong>{{userProfile.username}}</b-card-text>
  
 </div> 
-
+<p></p>
    <b-card-text><strong>Numero Transazioni: </strong>{{numCoinTransation}}</b-card-text>
   <b-card-text><strong>Email: </strong>{{currentUser.email}}</b-card-text>
   <b-card-text><strong>Ruolo Operativo: </strong>
@@ -55,7 +50,7 @@
       <form name="form" @submit.prevent="handleUpdate">
         <div v-if="!successful">
       <div class="form-group">
-            <label for="password">Vecchia Password</label>
+            <label for="password">Vecchia Password:</label>
             <input
               v-model="user.oldPassword"
               v-validate="'required|min:6|max:40'"
@@ -69,7 +64,7 @@
             >{{errors.first('password')}}</div>
           </div>
        <div class="form-group">
-            <label for="password">Nuova Password</label>
+            <label for="password">Nuova Password:</label>
             <input
               v-model="user.password"
               v-validate="'required|min:6|max:40'"
@@ -99,7 +94,7 @@
 
      
       <template #footer>
-        <em>Stato utenza</em>
+        
       </template>
     </b-card>
   </b-card-group>
