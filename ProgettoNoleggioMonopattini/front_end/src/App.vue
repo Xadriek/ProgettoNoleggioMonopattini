@@ -52,6 +52,10 @@
     <div >
       <router-view />
     </div>
+     <app-footer></app-footer>
+    <div>
+ 
+</div>
   </div>
 </template>
 

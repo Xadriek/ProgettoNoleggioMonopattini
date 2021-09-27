@@ -1,4 +1,5 @@
 <template>
+<div class="container">
   <div>
     <div>
       <div>
@@ -63,7 +64,7 @@
                     fluid="md"
                     active
                     v-for="customer in customers"
-                    v-bind:key="customer.id"
+                    v-bind:key="customer.id" 
                   >
                     <b-list-group-item>{{ customer.id }}</b-list-group-item>
                     <b-list-group-item
@@ -397,6 +398,7 @@
       </div>
     </div>
   </div>
+</div>
 </template>
 
 <script>

@@ -2,79 +2,53 @@
   <div class="container">
     <header class="jumbotron">
       <h3>
-        <strong>{{currentUser.username}}</strong> Profile
+        <strong>{{currentUser.username}}</strong> Profilo di Autenticazione
       </h3>
     </header>
-    <p>
-      <strong>Token:</strong>
-      {{currentUser.accessToken.substring(0, 20)}} ... {{currentUser.accessToken.substr(currentUser.accessToken.length - 20)}}
-    </p>
-    <p>
-    <strong>Id:</strong>
-    {{currentUser.id}}
-    </p>
-<div v-if="this.currentUser.roles.includes('ROLE_CUSTOMER') && userProfile.username!=null">
-    <p>
-    <strong>Nome:</strong>
-    {{userProfile.name}}
-    </p>
-    <p>
-    <strong>Cognome:</strong>
-    {{userProfile.surname}}
-    </p>
-    <p>
-    <strong>Telefono:</strong>
-    {{userProfile.telephon}}
-    </p>        
-    <p>
-    <strong>Monete nel Wallet</strong>
-    {{userProfile.customerWallet.coin}}
-    </p>
-    <p>
-    <strong>ID Noleggio</strong>
-    {{userProfile.rent.id}}
-    </p>
-        <p>
-    <strong>Username</strong>
-    {{userProfile.username}}
-    </p>
+
+
+
+<div>
+  <b-card-group deck>
+    
+     <b-card title="Informazioni aggiuntive utenza" header-tag="header" footer-tag="footer">
+      <template #header>
+        <h6 class="mb-0">Identificativo Token:
+        {{currentUser.accessToken.substring(0, 20)}} ... {{currentUser.accessToken.substr(currentUser.accessToken.length - 20)}}</h6>
+        <h6 class="mb-0">ID assegnato:
+        {{currentUser.id}}</h6>
+      </template>
+      
+    <div v-if="this.currentUser.roles.includes('ROLE_CUSTOMER') && userProfile.username!=null">
+
+    <b-card-text><strong>Nome:</strong>{{userProfile.name}}</b-card-text>
+    <b-card-text><strong>Cognome:</strong>{{userProfile.surname}}</b-card-text>
+    <b-card-text><strong>Telefono:</strong>{{userProfile.telephon}}</b-card-text>
+    <b-card-text><strong>Monete nel Wallet</strong>{{userProfile.customerWallet.coin}}</b-card-text>
+    <b-card-text><strong>ID Noleggio</strong>{{userProfile.rent.id}}</b-card-text>
+    <b-card-text><strong>Username</strong>{{userProfile.username}}</b-card-text>
+    
 </div> 
 
 <div v-if="this.currentUser.roles.includes('ROLE_PARTNER')">
-    <p>
-    <strong>Nome:</strong>
-    {{userProfile.name}}
-    </p>
-    <p>
-    <strong>P.Iva:</strong>
-    {{userProfile.pIva}}
-    </p>
-    <p>
-    <strong>Telefono:</strong>
-    {{userProfile.telephon}}
-    </p>        
-    <p>
-    <strong>Monete nel Wallet</strong>
-    {{userProfile.partnerWallet.coin}}
-    </p>
-    <p>
-    <strong>Username</strong>
-    {{userProfile.username}}
-    </p>
+    <b-card-text><strong>Nome:</strong>{{userProfile.name}}</b-card-text>
+   <b-card-text><strong>P.Iva:</strong>{{userProfile.pIva}}</b-card-text>
+   <b-card-text><strong>Telefono:</strong>{{userProfile.telephon}}</b-card-text>
+   <b-card-text><strong>Monete nel Wallet</strong>{{userProfile.partnerWallet.coin}}</b-card-text>
+   <b-card-text><strong>Username</strong>{{userProfile.username}}</b-card-text>
+ 
 </div> 
-    <p>
-    <strong>Numero Transazioni</strong>
-    {{numCoinTransation}}
-    </p>   
-   <p>
-      <strong>Email:</strong>
-      {{currentUser.email}}
-    </p>
-    <strong>Authorities:</strong>
+
+   <b-card-text><strong>Numero Transazioni: </strong>{{numCoinTransation}}</b-card-text>
+  <b-card-text><strong>Email: </strong>{{currentUser.email}}</b-card-text>
+  <b-card-text><strong>Ruolo Operativo: </strong>
     <ul>
       <li v-for="(role,index) in currentUser.roles" :key="index">{{role}}</li>
     </ul>
-    <div>
+    
+</b-card-text>
+
+<div>
       <b-button v-b-toggle.collapse-2 class="m-1">Modifica Password</b-button>
       <b-collapse id="collapse-2">
     <b-card>
@@ -122,6 +96,19 @@
       >{{message}}</div>
   </b-collapse>
     </div>
+
+     
+      <template #footer>
+        <em>Stato utenza</em>
+      </template>
+    </b-card>
+  </b-card-group>
+</div>
+
+    
+
+
+
     </div>
 </template>
 
