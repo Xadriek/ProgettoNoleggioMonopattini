@@ -52,7 +52,7 @@
     <div >
       <router-view />
     </div>
-     <app-footer></app-footer>
+     <AddFooter/>
     <div>
  
 </div>
@@ -60,7 +60,9 @@
 </template>
 
 <script>
+import AddFooter from "./components/AddFooter.vue";
 export default {
+  components:{AddFooter},
   computed: {
     currentUser() {
       return this.$store.state.auth.user;
