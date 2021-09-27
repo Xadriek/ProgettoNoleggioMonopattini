@@ -51,18 +51,15 @@
     </div>
     <div >
       <router-view />
-    </div>
-     <AddFooter/>
-    <div>
- 
+  
 </div>
   </div>
 </template>
 
 <script>
-import AddFooter from "./components/AddFooter.vue";
+
 export default {
-  components:{AddFooter},
+  
   computed: {
     currentUser() {
       return this.$store.state.auth.user;
