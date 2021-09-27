@@ -25,32 +25,24 @@
         </b-collapse>
 
         <b-collapse id="listaswappoint">
-
           <b-card  title="Swap in corso">
-
-              <b-list-group >
-                    <b-list-group horizontal="md"
-                     fluid="md"
-                    active 
-                  >
-                      <b-list-group-item>id</b-list-group-item>
-                      <b-list-group-item>Event Log</b-list-group-item>
-                      <b-list-group-item>Scooter  </b-list-group-item>
-                      <b-list-group-item>Customer Username   </b-list-group-item>
-                    </b-list-group>
-                    <b-list-group horizontal="md"
-                     fluid="md"
-                    active
-                    
-                    v-for="coinTransation in coinTransationsNotComplete"
-                    v-bind:key="coinTransation.id"
-                    >
-                      <b-list-group-item>{{coinTransation.id}}</b-list-group-item>
-                      <b-list-group-item>{{coinTransation.logTransition}}   </b-list-group-item>
-                      <b-list-group-item>{{coinTransation.entrySwap.scooter.id}}     </b-list-group-item>
-                      <b-list-group-item>{{coinTransation.fromCustomer.username}}</b-list-group-item>
-                       <b-list-group-item>
-                        <b-button-group>
+            <table>
+                    <b-tr>
+                      <b-th>id</b-th>
+                      <b-th>Event Log</b-th>
+                      <b-th>Scooter</b-th>
+                      <b-th>Customer Username</b-th>
+                    </b-tr>
+                    <b-tr
+                      v-for="coinTransation in coinTransations"
+                      v-bind:key="coinTransation.id">
+                      <b-th>{{coinTransation.id}}</b-th>
+                      <b-th>{{coinTransation.logTransition}}</b-th>
+                      <b-th>{{coinTransation.entrySwap.scooter.id}} </b-th>
+                      <b-th>{{coinTransation.fromCustomer.username}}</b-th>
+                      <b-th>
+                        <div>
+                         <b-button-group>
                              <b-button variant="outline-danger" @click="showMsgBoxDelete(coinTransation)">
                           <b-icon icon="x-circle"></b-icon> Delete Swap
                              </b-button>
@@ -63,53 +55,48 @@
                         >
                           Swap is delete, please refresh
                         </b-alert>
-                             </b-button-group>
-                      </b-list-group-item>
-                      
-                    </b-list-group>
-                </b-list-group>
+                             </b-button-group> 
+                        </div>
+                      </b-th>
+                      <b-th></b-th>
+                      <b-th></b-th>
+                      <b-th></b-th>
+                    </b-tr>
+                  </table>
+
           </b-card>
           <b-card  title="Swap Terminati">
 
-               <b-list-group >
-                    <b-list-group horizontal="md"
-                     fluid="md"
-                    active 
-                  >
-                      <b-list-group-item>id</b-list-group-item>
-                      <b-list-group-item>From Customer</b-list-group-item>
-                      <b-list-group-item>To Partner  </b-list-group-item>
-                      <b-list-group-item>Log  </b-list-group-item>
-                      <b-list-group-item>Coin  </b-list-group-item>
-                      <b-list-group-item>Complete</b-list-group-item>
-                    </b-list-group>
-                    <b-list-group horizontal="md"
-                     fluid="md"
-                    active
-                    
-                    v-for="coinTransation in coinTransationsComplete"
-                    v-bind:key="coinTransation.id"
-                    >
-                      <b-list-group-item>{{coinTransation.id}}</b-list-group-item>
-                      <b-list-group-item>{{coinTransation.fromCustomer.username}}   </b-list-group-item>
-                      <b-list-group-item>{{coinTransation.toPartner.username}}     </b-list-group-item>
-                      <b-list-group-item>{{coinTransation.logTransition}}</b-list-group-item>
-                      <b-list-group-item>{{coinTransation.coin}}       </b-list-group-item>
-                      <b-list-group-item >
-                           <b-iconstack v-if="coinTransation.isComplete==true" >
+
+            <table>
+                    <b-tr>
+                      <b-th>id</b-th>
+                      <b-th>From Customer</b-th>
+                      <b-th>To Partner</b-th>
+                      <b-th>Log</b-th>
+                      <b-th>Coin</b-th>
+                      <b-th>Complete</b-th>
+                    </b-tr>
+                     <b-tr
+                      v-for="coinTransation in coinTransations"
+                      v-bind:key="coinTransation.id">
+                      <b-th>{{coinTransation.id}}</b-th>
+                      <b-th>{{coinTransation.fromCustomer.username}}</b-th>
+                      <b-th>{{coinTransation.toPartner.username}} </b-th>
+                      <b-th>{{coinTransation.logTransition}}</b-th>
+                      <b-th>{{coinTransation.coin}}</b-th>
+                      <b-th>
+                        <div>
+                          <b-iconstack v-if="coinTransation.isComplete==true" >
                                 <b-icon stacked icon="square"></b-icon>
                                 <b-icon stacked icon="check"></b-icon>
                                 </b-iconstack>
-                      </b-list-group-item>
                       
-                    </b-list-group>
-                </b-list-group>
-
+                        </div>
+                      </b-th>
+                    </b-tr>
+                  </table>
             </b-card>
-
-
-
-
         </b-collapse>
       </div>
     </div>
