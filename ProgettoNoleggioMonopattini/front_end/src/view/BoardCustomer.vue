@@ -78,7 +78,7 @@
                       <b-th class="field">COMPLETE</b-th>
                     </b-tr>
                      <b-tr
-                      v-for="coinTransation in coinTransations"
+                      v-for="coinTransation in coinTransationsComplete"
                       v-bind:key="coinTransation.id">
                       <b-th>{{coinTransation.id}}</b-th>
                       <b-th>{{coinTransation.fromCustomer.username}}</b-th>
