@@ -331,5 +331,22 @@ export default {
 };
 </script>
 <style>
+ th{
+  
+  width: 250px;
+  height: 50px;
+  font-weight: normal;
+  border-style: outset;
+  text-align: center;
+}
+.field{
+  font-weight: bold;
+}
+.sfondo{
+  width: 100%;
+  height: 100%;
+  padding-left: 20%;
+  padding-right: 20%;
+}
 
 </style>
