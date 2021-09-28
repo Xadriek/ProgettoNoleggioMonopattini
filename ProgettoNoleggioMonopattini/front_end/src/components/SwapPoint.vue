@@ -32,7 +32,8 @@
       
       <b-button type="reset" variant="danger" class="m-1" >Annulla</b-button>
       </div>
-      <div v-else-if="this.selectedPartner.id!=null">Non hai abbastanza monete</div>
+      <div v-else-if="this.selectedPartner.id!=null ">Non hai abbastanza monete</div>
+      <div v-else-if=" this.numBatteries==0">Non ha batterie disponibili</div>
     </b-form>
   </div>
 </template>
