@@ -54,8 +54,7 @@
     <div>
       <b-container fluid class="text-center">
         <b-row class="mb-3">
-          <b-col md="4" class="p-3 bg-default"
-            >1 of 3
+          <b-col md="4" class="p-3 bg-default">
             <div>
               <b-card
                 title="Partner"
@@ -74,8 +73,7 @@
               </b-card>
             </div>
           </b-col>
-          <b-col md="4" class="p-3 bg-default"
-            >2 of 3
+          <b-col md="4" class="p-3 bg-default" >
             <div>
               <b-card
                 title="Scooter"
@@ -94,8 +92,7 @@
               </b-card>
             </div>
           </b-col>
-          <b-col md="4" class="p-3 bg-default"
-            >3 of 3
+          <b-col md="4" class="p-3 bg-default" >
             <div>
               <b-card
                 title="Batterie"

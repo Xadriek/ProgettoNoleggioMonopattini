@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <nav class="navbar navbar-expand navbar-dark bg-dark">
-      <a href class="navbar-brand" @click.prevent>Fox</a>
+      <a href class="navbar-brand" @click.prevent>RentalEv     </a>
       <div class="navbar-nav mr-auto">
         <li class="nav-item">
           <router-link to="/home" class="nav-link">
@@ -51,12 +51,15 @@
     </div>
     <div >
       <router-view />
-    </div>
+  
+</div>
   </div>
 </template>
 
 <script>
+
 export default {
+  
   computed: {
     currentUser() {
       return this.$store.state.auth.user;

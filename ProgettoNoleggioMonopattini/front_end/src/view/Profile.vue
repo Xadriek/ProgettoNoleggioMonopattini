@@ -2,86 +2,80 @@
   <div class="container">
     <header class="jumbotron">
       <h3>
-        <strong>{{currentUser.username}}</strong> Profile
+        <strong>Profilo di Autenticazione: {{currentUser.username}}</strong> 
       </h3>
     </header>
-    <p>
-      <strong>Token:</strong>
-      {{currentUser.accessToken.substring(0, 20)}} ... {{currentUser.accessToken.substr(currentUser.accessToken.length - 20)}}
-    </p>
-    <p>
-    <strong>Id:</strong>
-    {{currentUser.id}}
-    </p>
-<div v-if="this.currentUser.roles.includes('ROLE_CUSTOMER') && userProfile.username!=null">
-    <p>
-    <strong>Nome:</strong>
-    {{userProfile.name}}
-    </p>
-    <p>
-    <strong>Cognome:</strong>
-    {{userProfile.surname}}
-    </p>
-    <p>
-    <strong>Telefono:</strong>
-    {{userProfile.telephon}}
-    </p>        
-    <p>
-    <strong>Monete nel Wallet</strong>
-    {{userProfile.customerWallet.coin}}
-    </p>
-    <p>
-    <strong>ID Noleggio</strong>
-    {{userProfile.rent.id}}
-    </p>
-        <p>
-    <strong>Username</strong>
-    {{userProfile.username}}
-    </p>
+
+<div>
+  
+  <b-card-group deck>
+
+     <b-card img-src="images\26-600x300.png" img-alt="Image" img-top border-variant="primary"
+        header="Benvenuto"
+        header-bg-variant="primary"
+        header-text-variant="white"
+        align="center">
+      <b-card-text>
+        Da questo momento puoi accedere ai menu per attivare le funzioni prescelte.
+      </b-card-text>
+      
+    </b-card>
+    
+     <b-card header="Informazioni di Accesso"
+        header-bg-variant="primary"
+        header-text-variant="white"
+        align="center">
+           
+    <div v-if="this.currentUser.roles.includes('ROLE_CUSTOMER') && userProfile.username!=null">
+
+    <b-card-text><strong>Nome:</strong>
+    {{userProfile.name}}</b-card-text>
+    <b-card-text><strong>Cognome:</strong>
+    {{userProfile.surname}}</b-card-text>
+    <b-card-text><strong>Telefono:</strong>
+    {{userProfile.telephon}}</b-card-text>
+    <b-card-text><strong>Monete nel Wallet:</strong>
+    {{userProfile.customerWallet.coin}}</b-card-text>
+    <b-card-text><strong>ID Noleggio:</strong>
+    {{userProfile.rent.id}}</b-card-text>
+    <b-card-text><strong>Username:</strong>
+    {{userProfile.username}}</b-card-text>
+    
 </div> 
 
 <div v-if="this.currentUser.roles.includes('ROLE_PARTNER')">
-    <p>
-    <strong>Nome:</strong>
-    {{userProfile.name}}
-    </p>
-    <p>
-    <strong>P.Iva:</strong>
-    {{userProfile.pIva}}
-    </p>
-    <p>
-    <strong>Telefono:</strong>
-    {{userProfile.telephon}}
-    </p>        
-    <p>
-    <strong>Monete nel Wallet</strong>
-    {{userProfile.partnerWallet.coin}}
-    </p>
-    <p>
-    <strong>Username</strong>
-    {{userProfile.username}}
-    </p>
+    <b-card-text><strong>Nome:</strong>
+    {{userProfile.name}}</b-card-text>
+   <b-card-text><strong>P.Iva:</strong>
+   {{userProfile.pIva}}</b-card-text>
+   <b-card-text><strong>Telefono:</strong>
+   {{userProfile.telephon}}</b-card-text>
+   <b-card-text><strong>Monete nel Wallet:</strong>
+   {{userProfile.partnerWallet.coin}}</b-card-text>
+   <b-card-text><strong>Username:</strong>
+   {{userProfile.username}}</b-card-text>
+ 
 </div> 
-    <p>
-    <strong>Numero Transazioni</strong>
-    {{numCoinTransation}}
-    </p>   
-   <p>
-      <strong>Email:</strong>
-      {{currentUser.email}}
-    </p>
-    <strong>Authorities:</strong>
+<p></p>
+   <b-card-text><strong>Numero Transazioni: </strong>
+   {{numCoinTransation}}</b-card-text>
+  <b-card-text><strong>Email: </strong>
+  {{currentUser.email}}</b-card-text>
+  <b-card-text><strong>Ruolo Operativo: </strong>
     <ul>
-      <li v-for="(role,index) in currentUser.roles" :key="index">{{role}}</li>
+      <div v-for="(role,index) in currentUser.roles" :key="index">{{role}}</div>
     </ul>
-    <div>
+    
+</b-card-text>
+
+<div>
       <b-button v-b-toggle.collapse-2 class="m-1">Modifica Password</b-button>
       <b-collapse id="collapse-2">
     <b-card>
       <form name="form" @submit.prevent="handleUpdate">
         <div v-if="!successful">
       <div class="form-group">
-            <label for="password">Vecchia Password</label>
+            <label for="password">Vecchia Password:</label>
             <input
               v-model="user.oldPassword"
               v-validate="'required|min:6|max:40'"
@@ -95,7 +89,7 @@
             >{{errors.first('password')}}</div>
           </div>
        <div class="form-group">
-            <label for="password">Nuova Password</label>
+            <label for="password">Nuova Password:</label>
             <input
               v-model="user.password"
               v-validate="'required|min:6|max:40'"
@@ -122,6 +116,17 @@
       >{{message}}</div>
   </b-collapse>
     </div>
+
+     
+      
+    </b-card>
+  </b-card-group>
+</div>
+
+    
+
+
+
     </div>
 </template>
 

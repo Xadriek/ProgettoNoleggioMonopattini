@@ -1,7 +1,6 @@
 <template>
+<div class="sfondo">
   <div>
-    
-
     <div>
       </div>
       
@@ -40,31 +39,24 @@
         <b-card no-body>
           <b-tabs card>
             <b-tab no-body title="Swap in Arrivo">
-              
-             
-              <b-list-group >
-                    <b-list-group horizontal="md"
-                     fluid="md"
-                    active 
-                  >
-                      <b-list-group-item>id</b-list-group-item>
-                      <b-list-group-item>Event Log</b-list-group-item>
-                      <b-list-group-item>Scooter  </b-list-group-item>
-                      <b-list-group-item>Customer Username   </b-list-group-item>
-                    </b-list-group>
-                    <b-list-group horizontal="md"
-                     fluid="md"
-                    active
-                    
-                    v-for="coinTransation in coinTransationsNotComplete"
-                    v-bind:key="coinTransation.id"
+                <table>
+                    <b-tr>
+                      <b-th class="field">ID</b-th>
+                      <b-th class="field">EVENT LOG</b-th>
+                      <b-th class="field">SCOOTER</b-th>
+                      <b-th class="field">CUSTOMER USERNAME</b-th>
+                    </b-tr>
+                    <b-tr
+                      v-for="coinTransation in coinTransationsNotComplete"
+                      v-bind:key="coinTransation.id"
                     >
-                      <b-list-group-item>{{coinTransation.id}}</b-list-group-item>
-                      <b-list-group-item>{{coinTransation.logTransition}}   </b-list-group-item>
-                      <b-list-group-item>{{coinTransation.entrySwap.scooter.id}}     </b-list-group-item>
-                      <b-list-group-item>{{coinTransation.fromCustomer.username}}</b-list-group-item>
-                      <b-list-group-item>
-                        <b-button-group>
+                      <b-th>{{coinTransation.id}}</b-th>
+                      <b-th>{{coinTransation.logTransition}}</b-th>
+                      <b-th>{{coinTransation.entrySwap.scooter.id}}</b-th>
+                      <b-th>{{coinTransation.fromCustomer.username}}</b-th>
+                      <b-th>
+                        <div>
+                          <b-button-group>
                              <b-button variant="outline-primary" @click="showMsgBoxIncompleteSwap(coinTransation)">
                          <b-iconstack >
                                 <b-icon stacked icon="square"></b-icon>
@@ -84,70 +76,58 @@
                           Swap is complete, please refresh
                         </b-alert>
                              </b-button-group>
-                      </b-list-group-item>
-                      
-                    </b-list-group>
-                </b-list-group>
-
-
-
+                        </div>
+                      </b-th>                      
+                    </b-tr>
+                  </table>
             </b-tab>
 
             <b-tab no-body title="Swap Terminati">
-
-               <b-list-group >
-                    <b-list-group horizontal="md"
-                     fluid="md"
-                    active 
-                  >
-                      <b-list-group-item>id</b-list-group-item>
-                      <b-list-group-item>From Customer</b-list-group-item>
-                      <b-list-group-item>To Partner  </b-list-group-item>
-                      <b-list-group-item>Log  </b-list-group-item>
-                      <b-list-group-item>Coin  </b-list-group-item>
-                      <b-list-group-item>Complete</b-list-group-item>
-                    </b-list-group>
-                    <b-list-group horizontal="md"
-                     fluid="md"
-                    active
-                    
-                    v-for="coinTransation in coinTransationsComplete"
-                    v-bind:key="coinTransation.id"
-                    >
-                      <b-list-group-item>{{coinTransation.id}}</b-list-group-item>
-                      <b-list-group-item>{{coinTransation.fromCustomer.username}}   </b-list-group-item>
-                      <b-list-group-item>{{coinTransation.toPartner.username}}     </b-list-group-item>
-                      <b-list-group-item>{{coinTransation.logTransition}}</b-list-group-item>
-                      <b-list-group-item>{{coinTransation.coin}}       </b-list-group-item>
-                      <b-list-group-item >
-                           <b-iconstack v-if="coinTransation.isComplete==true" >
+                <table>
+                    <b-tr>
+                      <b-th  class="field">ID</b-th>
+                      <b-th class="field">FROM CUSTOMER</b-th>
+                      <b-th class="field">TO PARTNER</b-th>
+                      <b-th class="field">LOG</b-th>
+                      <b-th class="field">COIN</b-th>
+                      <b-th class="field">COMPLETE</b-th>
+                    </b-tr>
+                    <b-tr
+                      v-for="coinTransation in coinTransations"
+                      v-bind:key="coinTransation.id">
+                      <b-th>{{coinTransation.id}}</b-th>
+                      <b-th>{{coinTransation.fromCustomer.username}}</b-th>
+                      <b-th>{{coinTransation.toPartner.username}}</b-th>
+                      <b-th>{{coinTransation.logTransition}}</b-th>
+                      <b-th>{{coinTransation.coin}}</b-th>
+                      <b-th>
+                        <div>
+                          <b-iconstack v-if="coinTransation.isComplete==true" >
                                 <b-icon stacked icon="square"></b-icon>
                                 <b-icon stacked icon="check"></b-icon>
                                 </b-iconstack>
-                      </b-list-group-item>
-                      
-                    </b-list-group>
-                </b-list-group>
-
+                        </div>
+                      </b-th>
+                      <b-th></b-th>
+                      <b-th></b-th>
+                      <b-th></b-th>
+                    </b-tr>
+                  </table>
             </b-tab>
 
             <b-tab no-body title="Batterie">
-             
-
-             <b-list-group >
-                    <b-list-group horizontal="md"
-                     fluid="md"
-                    active 
-                  >
-                      <b-list-group-item>id</b-list-group-item>
-                      <b-list-group-item>Voltage</b-list-group-item>
-                      <b-list-group-item>Capacity</b-list-group-item>
-                      <b-list-group-item>Date Immission</b-list-group-item>
-                      <b-list-group-item>State</b-list-group-item>
-                      <b-list-group-item>
-                        <b-button-group>
-                             <b-button variant="outline-primary" @click="showMsgBoxBattery()">
-                          <b-icon icon="x-circle"></b-icon> Add Battery
+                <table>
+                    <b-tr >
+                      <b-th class="field">ID</b-th>
+                      <b-th class="field">VOLTAGE</b-th>
+                      <b-th class="field">CAPACITY</b-th>
+                      <b-th class="field">DATE IMMISSION</b-th>
+                      <b-th class="field">STATE</b-th>
+                      <b-th class="field">
+                        <div>
+                          <b-button-group>
+                             <b-button variant="outline-success" @click="showMsgBoxBattery()">
+                          <b-icon icon="battery-full"></b-icon> Add Battery
                              </b-button>
                               <b-alert
                           v-model="showTop2"
@@ -159,24 +139,23 @@
                           Battery has been added, please refresh
                         </b-alert>
                              </b-button-group>
-                      </b-list-group-item>
-                    </b-list-group>
-                    <b-list-group horizontal="md"
-                     fluid="md"
-                    active
-                    
-                    v-for="battery in batteries"
-                    v-bind:key="battery.id"
+                        </div>
+                      </b-th>
+                    </b-tr>
+                    <b-tr
+                      v-for="battery in batteries"
+                      v-bind:key="battery.id"
                     >
-                      <b-list-group-item>{{battery.id}}</b-list-group-item>
-                      <b-list-group-item>{{battery.voltage}}   </b-list-group-item>
-                      <b-list-group-item>{{battery.capacity}}     </b-list-group-item>
-                      <b-list-group-item>{{battery.dateOfBirth}}</b-list-group-item>
-                      <b-list-group-item>{{battery.state}}       </b-list-group-item>
-                      <b-list-group-item>
-                        <b-button-group>
+                      <b-th>{{battery.id}}</b-th>
+                      <b-th>{{battery.voltage}}</b-th>
+                      <b-th>{{battery.capacity}}</b-th>
+                      <b-th>{{battery.dateOfBirth}}</b-th>
+                      <b-th>{{battery.state}}</b-th>
+                      <b-th>
+                        <div>
+                          <b-button-group>
                              <b-button variant="outline-primary" @click="showMsgBoxBatteryState(battery)">
-                          <b-icon icon="x-circle"></b-icon> Change State Battery
+                          <b-icon icon="battery-charging"></b-icon> Change State Battery
                              </b-button>
                               <b-alert
                           v-model="showTop3"
@@ -188,25 +167,20 @@
                           State of battery has been changed, please refresh
                         </b-alert>
                              </b-button-group>
-                      </b-list-group-item>
-                      
-                    </b-list-group>
-                </b-list-group>
-
-            </b-tab>
-            
-            
-            <b-tab title="Aiuto">
-              
-              <b-card-text>
-                Qui scriviamo un minimo di spiegazione che può essere utile se vuoi
-              </b-card-text>
+                        </div>
+                      </b-th>
+                      <b-th></b-th>
+                      <b-th></b-th>
+                      <b-th></b-th>
+                    </b-tr>
+                  </table>
             </b-tab>
           </b-tabs>
         </b-card>
       </div>
     </div>
   </div>
+</div>
 </template>
 
 <script>
@@ -356,3 +330,6 @@ export default {
 
 };
 </script>
+<style>
+
+</style>

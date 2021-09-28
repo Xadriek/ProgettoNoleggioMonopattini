@@ -12,14 +12,23 @@
       </div>
       <b-card title="Swap Point scelto" class="mb-2">
         <b-list-group>
-          <b-list-group-item >{{selectedPartner.name}}</b-list-group-item>
-          <b-list-group-item >{{address.street}} {{address.numberStreet}} {{address.cap}} {{address.municipality}} {{address.city}}</b-list-group-item>
-          <b-list-group-item > <p> batterie disponibili</p>{{numBatteries}}</b-list-group-item>
-          <b-list-group-item >{{selectedPartner.telephon}}</b-list-group-item>
+          <b-list-group-item ><p>Nome:</p>{{selectedPartner.name}}</b-list-group-item>
+          <b-list-group-item ><p>Indirizzo:</p>{{address.street}} {{address.numberStreet}}, 00{{address.cap}}, {{address.municipality}}, {{address.city}}</b-list-group-item>
+          <b-list-group-item > <p>Batterie disponibili:</p>{{numBatteries}}</b-list-group-item>
+          <b-list-group-item ><p>Telefono:</p>{{selectedPartner.telephon}}</b-list-group-item>
         </b-list-group>
       </b-card>
       <div v-if="show2">
        <b-button type="submit" variant="primary" class="m-1" @click="showMsgBoxOne">Conferma</b-button>
+      <b-alert
+                          v-model="pippo"
+                          class="position-fixed fixed-top m-0 rounded-0"
+                          style="z-index: 2000"
+                          variant="success"
+                          dismissible
+                        >
+                          Swap is initializated, please refresh
+                        </b-alert>
       
       <b-button type="reset" variant="danger" class="m-1" >Annulla</b-button>
       </div>
@@ -48,11 +57,13 @@ export default {
       requestBody:{
         partnerId:0,
         customerId:0,
-        coin:0
+        coin:0,
+        
       },
       customerCoin:Number,
       show: true,
       show2:false,
+      pippo: false,
       selectedPartner:{},
       batteries:[],
       address:{},
@@ -87,6 +98,7 @@ export default {
       coinTransationService.saveCoinTransaction(this.requestBody).then(
         response=>{
           console.log(response.data);
+          
         }
       );
     },
@@ -97,6 +109,7 @@ export default {
             if(value){
               console.log(value);
               this.initSwap();
+              this.pippo=true;
             }
           })
          
@@ -145,3 +158,10 @@ export default {
   },
 };
 </script>
+<style scoped>
+p{
+  font-family: Arial, Helvetica, sans-serif;
+  font-style: italic;
+  font-weight: bold;
+}
+</style>
