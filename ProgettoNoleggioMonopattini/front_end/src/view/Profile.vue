@@ -6,14 +6,26 @@
       </h3>
     </header>
 
-
-
 <div>
+  
   <b-card-group deck>
+
+     <b-card img-src="images\26-600x300.png" img-alt="Image" img-top border-variant="primary"
+        header="Benvenuto"
+        header-bg-variant="primary"
+        header-text-variant="white"
+        align="center">
+      <b-card-text>
+        Da questo momento puoi accedere ai menu per attivare le funzioni prescelte.
+      </b-card-text>
+      
+    </b-card>
     
-     <b-card >
-      
-      
+     <b-card header="Informazioni di Accesso"
+        header-bg-variant="primary"
+        header-text-variant="white"
+        align="center">
+           
     <div v-if="this.currentUser.roles.includes('ROLE_CUSTOMER') && userProfile.username!=null">
 
     <b-card-text><strong>Nome:</strong>
@@ -51,7 +63,7 @@
   {{currentUser.email}}</b-card-text>
   <b-card-text><strong>Ruolo Operativo: </strong>
     <ul>
-      <li v-for="(role,index) in currentUser.roles" :key="index">{{role}}</li>
+      <div v-for="(role,index) in currentUser.roles" :key="index">{{role}}</div>
     </ul>
     
 </b-card-text>
@@ -106,9 +118,7 @@
     </div>
 
      
-      <template #footer>
-        
-      </template>
+      
     </b-card>
   </b-card-group>
 </div>
