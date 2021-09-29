@@ -172,7 +172,7 @@
                     >
                       <b-th>{{ partner.id }}</b-th>
                       <b-th>{{ partner.username }}</b-th>
-                      <b-th>{{ partner.pIva }}</b-th>
+                      
                       <b-th>{{ partner.pIva }}</b-th>
                       <b-th>{{ partner.address.street
                         }},
